@@ -1,8 +1,10 @@
-﻿![carmechanic](https://github.com/teterum/carmechanic/blob/master/Screenshots/1.png?raw=true)
-![carmechanic2](https://github.com/teterum/carmechanic/blob/master/Screenshots/2.png?raw=true)
-![carmechanic3](https://github.com/teterum/carmechanic/blob/master/Screenshots/3.png?raw=true)
-![carmechanic4](https://github.com/teterum/carmechanic/blob/master/Screenshots/4.png?raw=true)
-![carmechanic5](https://github.com/teterum/carmechanic/blob/master/Screenshots/5.png?raw=true)
+![carmechanic](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/1.png)
+![carmechanic2](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/2.png)
+![carmechanic3](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/3.png)
+![carmechanic4](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/4.png)
+![carmechanic5](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/5.png)
+
+[![Analytics](https://ga-beacon.appspot.com/UA-17476024-7/carmechanic/readme?pixel)](https://github.com/tetreum/carmechanic)
 
 ## About the game
 CarMechanic is an open source car mechanic simulator that allows you to disassembly/assembly cars.
