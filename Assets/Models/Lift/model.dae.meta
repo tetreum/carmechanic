@@ -1,0 +1,1158 @@
+fileFormatVersion: 2
+guid: 0f8ba936e77615844a4c11bf80c403d9
+timeCreated: 1444819374
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: A
+    100002: A 1
+    100004: C_support_foot
+    100006: C_support_foot 1
+    100008: C_support_foot 2
+    100010: C_support_foot 3
+    100012: group_0
+    100014: group_1
+    100016: group_1 1
+    100018: group_10
+    100020: group_10 1
+    100022: group_10 2
+    100024: group_10 3
+    100026: group_11
+    100028: group_11 1
+    100030: group_11 2
+    100032: group_11 3
+    100034: group_12
+    100036: group_13
+    100038: group_2
+    100040: group_2 1
+    100042: group_3
+    100044: group_3 1
+    100046: group_4
+    100048: group_4 1
+    100050: group_5
+    100052: group_5 1
+    100054: group_6
+    100056: group_6 1
+    100058: group_6 2
+    100060: group_6 3
+    100062: group_7
+    100064: group_7 1
+    100066: group_7 2
+    100068: group_7 3
+    100070: group_8
+    100072: group_8 1
+    100074: group_8 2
+    100076: group_8 3
+    100078: group_9
+    100080: group_9 1
+    100082: group_9 2
+    100084: group_9 3
+    100086: H
+    100088: H 1
+    100090: half_2_post_lift
+    100092: half_2_post_lift 1
+    100094: hydro_cylinder
+    100096: hydro_cylinder 1
+    100098: ID101
+    100100: ID101 1
+    100102: ID107
+    100104: ID107 1
+    100106: ID128
+    100108: ID128 1
+    100110: ID134
+    100112: ID134 1
+    100114: ID140
+    100116: ID140 1
+    100118: ID159
+    100120: ID159 1
+    100122: ID172
+    100124: ID172 1
+    100126: ID184
+    100128: ID184 1
+    100130: ID190
+    100132: ID190 1
+    100134: ID196
+    100136: ID196 1
+    100138: ID202
+    100140: ID202 1
+    100142: ID208
+    100144: ID208 1
+    100146: ID214
+    100148: ID214 1
+    100150: ID220
+    100152: ID220 1
+    100154: ID226
+    100156: ID226 1
+    100158: ID240
+    100160: ID240 1
+    100162: ID246
+    100164: ID246 1
+    100166: ID252
+    100168: ID252 1
+    100170: ID258
+    100172: ID258 1
+    100174: ID264
+    100176: ID264 1
+    100178: ID270
+    100180: ID270 1
+    100182: ID276
+    100184: ID276 1
+    100186: ID282
+    100188: ID282 1
+    100190: ID296
+    100192: ID296 1
+    100194: ID296 10
+    100196: ID296 11
+    100198: ID296 12
+    100200: ID296 13
+    100202: ID296 14
+    100204: ID296 15
+    100206: ID296 2
+    100208: ID296 3
+    100210: ID296 4
+    100212: ID296 5
+    100214: ID296 6
+    100216: ID296 7
+    100218: ID296 8
+    100220: ID296 9
+    100222: ID327
+    100224: ID327 1
+    100226: ID333
+    100228: ID333 1
+    100230: ID339
+    100232: ID339 1
+    100234: ID34
+    100236: ID34 1
+    100238: ID345
+    100240: ID345 1
+    100242: ID351
+    100244: ID351 1
+    100246: ID357
+    100248: ID357 1
+    100250: ID363
+    100252: ID363 1
+    100254: ID369
+    100256: ID369 1
+    100258: ID375
+    100260: ID375 1
+    100262: ID381
+    100264: ID381 1
+    100266: ID387
+    100268: ID387 1
+    100270: ID393
+    100272: ID393 1
+    100274: ID399
+    100276: ID399 1
+    100278: ID405
+    100280: ID405 1
+    100282: ID411
+    100284: ID411 1
+    100286: ID417
+    100288: ID417 1
+    100290: ID42
+    100292: ID42 1
+    100294: ID423
+    100296: ID423 1
+    100298: ID429
+    100300: ID429 1
+    100302: ID435
+    100304: ID435 1
+    100306: ID441
+    100308: ID441 1
+    100310: ID447
+    100312: ID447 1
+    100314: ID476
+    100316: ID476 1
+    100318: ID506
+    100320: ID506 1
+    100322: ID506 2
+    100324: ID506 3
+    100326: ID64
+    100328: ID64 1
+    100330: ID70
+    100332: ID70 1
+    100334: instance_0
+    100336: instance_1
+    100338: instance_1 1
+    100340: instance_10
+    100342: instance_10 1
+    100344: instance_11
+    100346: instance_11 1
+    100348: instance_12
+    100350: instance_12 1
+    100352: instance_13
+    100354: instance_13 1
+    100356: instance_14
+    100358: instance_14 1
+    100360: instance_15
+    100362: instance_15 1
+    100364: instance_16
+    100366: instance_16 1
+    100368: instance_17
+    100370: instance_17 1
+    100372: instance_18
+    100374: instance_18 1
+    100376: instance_19
+    100378: instance_19 1
+    100380: instance_2
+    100382: instance_2 1
+    100384: instance_20
+    100386: instance_20 1
+    100388: instance_21
+    100390: instance_21 1
+    100392: instance_22
+    100394: instance_22 1
+    100396: instance_23
+    100398: instance_23 1
+    100400: instance_24
+    100402: instance_24 1
+    100404: instance_25
+    100406: instance_25 1
+    100408: instance_26
+    100410: instance_26 1
+    100412: instance_27
+    100414: instance_28
+    100416: instance_28 1
+    100418: instance_29
+    100420: instance_29 1
+    100422: instance_3
+    100424: instance_3 1
+    100426: instance_30
+    100428: instance_30 1
+    100430: instance_31
+    100432: instance_31 1
+    100434: instance_32
+    100436: instance_32 1
+    100438: instance_33
+    100440: instance_33 1
+    100442: instance_34
+    100444: instance_35
+    100446: instance_4
+    100448: instance_4 1
+    100450: instance_5
+    100452: instance_5 1
+    100454: instance_6
+    100456: instance_6 1
+    100458: instance_7
+    100460: instance_7 1
+    100462: instance_8
+    100464: instance_8 1
+    100466: instance_9
+    100468: instance_9 1
+    100470: K
+    100472: K 1
+    100474: lag_bolt_lift_base
+    100476: lag_bolt_lift_base 1
+    100478: lag_bolt_lift_base 10
+    100480: lag_bolt_lift_base 11
+    100482: lag_bolt_lift_base 12
+    100484: lag_bolt_lift_base 13
+    100486: lag_bolt_lift_base 14
+    100488: lag_bolt_lift_base 15
+    100490: lag_bolt_lift_base 2
+    100492: lag_bolt_lift_base 3
+    100494: lag_bolt_lift_base 4
+    100496: lag_bolt_lift_base 5
+    100498: lag_bolt_lift_base 6
+    100500: lag_bolt_lift_base 7
+    100502: lag_bolt_lift_base 8
+    100504: lag_bolt_lift_base 9
+    100506: Last Saved SketchUp View
+    100508: lock_ladder
+    100510: lock_ladder 1
+    100512: M_2
+    100514: M_2 1
+    100516: //RootNode
+    100518: mohawk_base_plate
+    100520: mohawk_base_plate 1
+    100522: mohawk_logo
+    100524: mohawk_logo 1
+    100526: O_1
+    100528: O_1 1
+    100530: track_wheel
+    100532: track_wheel 1
+    100534: track_wheel 2
+    100536: track_wheel 3
+    100538: track_wheel 4
+    100540: track_wheel 5
+    100542: track_wheel 6
+    100544: track_wheel 7
+    100546: triangle_foot_support
+    100548: triangle_foot_support 1
+    100550: triangle_foot_support 2
+    100552: triangle_foot_support 3
+    100554: vertical_back_plate
+    100556: vertical_back_plate 1
+    100558: vertical_back_plate 2
+    100560: vertical_back_plate 3
+    100562: vertical_C
+    100564: vertical_C 1
+    100566: vertical_C 2
+    100568: vertical_C 3
+    100570: W
+    100572: W 1
+    100574: yellow_lift_arm
+    100576: yellow_lift_arm 1
+    100578: yellow_lift_arm 2
+    100580: yellow_lift_arm 3
+    100582: yellow_sled
+    100584: yellow_sled 1
+    400000: A
+    400002: A 1
+    400004: C_support_foot
+    400006: C_support_foot 1
+    400008: C_support_foot 2
+    400010: C_support_foot 3
+    400012: group_0
+    400014: group_1
+    400016: group_1 1
+    400018: group_10
+    400020: group_10 1
+    400022: group_10 2
+    400024: group_10 3
+    400026: group_11
+    400028: group_11 1
+    400030: group_11 2
+    400032: group_11 3
+    400034: group_12
+    400036: group_13
+    400038: group_2
+    400040: group_2 1
+    400042: group_3
+    400044: group_3 1
+    400046: group_4
+    400048: group_4 1
+    400050: group_5
+    400052: group_5 1
+    400054: group_6
+    400056: group_6 1
+    400058: group_6 2
+    400060: group_6 3
+    400062: group_7
+    400064: group_7 1
+    400066: group_7 2
+    400068: group_7 3
+    400070: group_8
+    400072: group_8 1
+    400074: group_8 2
+    400076: group_8 3
+    400078: group_9
+    400080: group_9 1
+    400082: group_9 2
+    400084: group_9 3
+    400086: H
+    400088: H 1
+    400090: half_2_post_lift
+    400092: half_2_post_lift 1
+    400094: hydro_cylinder
+    400096: hydro_cylinder 1
+    400098: ID101
+    400100: ID101 1
+    400102: ID107
+    400104: ID107 1
+    400106: ID128
+    400108: ID128 1
+    400110: ID134
+    400112: ID134 1
+    400114: ID140
+    400116: ID140 1
+    400118: ID159
+    400120: ID159 1
+    400122: ID172
+    400124: ID172 1
+    400126: ID184
+    400128: ID184 1
+    400130: ID190
+    400132: ID190 1
+    400134: ID196
+    400136: ID196 1
+    400138: ID202
+    400140: ID202 1
+    400142: ID208
+    400144: ID208 1
+    400146: ID214
+    400148: ID214 1
+    400150: ID220
+    400152: ID220 1
+    400154: ID226
+    400156: ID226 1
+    400158: ID240
+    400160: ID240 1
+    400162: ID246
+    400164: ID246 1
+    400166: ID252
+    400168: ID252 1
+    400170: ID258
+    400172: ID258 1
+    400174: ID264
+    400176: ID264 1
+    400178: ID270
+    400180: ID270 1
+    400182: ID276
+    400184: ID276 1
+    400186: ID282
+    400188: ID282 1
+    400190: ID296
+    400192: ID296 1
+    400194: ID296 10
+    400196: ID296 11
+    400198: ID296 12
+    400200: ID296 13
+    400202: ID296 14
+    400204: ID296 15
+    400206: ID296 2
+    400208: ID296 3
+    400210: ID296 4
+    400212: ID296 5
+    400214: ID296 6
+    400216: ID296 7
+    400218: ID296 8
+    400220: ID296 9
+    400222: ID327
+    400224: ID327 1
+    400226: ID333
+    400228: ID333 1
+    400230: ID339
+    400232: ID339 1
+    400234: ID34
+    400236: ID34 1
+    400238: ID345
+    400240: ID345 1
+    400242: ID351
+    400244: ID351 1
+    400246: ID357
+    400248: ID357 1
+    400250: ID363
+    400252: ID363 1
+    400254: ID369
+    400256: ID369 1
+    400258: ID375
+    400260: ID375 1
+    400262: ID381
+    400264: ID381 1
+    400266: ID387
+    400268: ID387 1
+    400270: ID393
+    400272: ID393 1
+    400274: ID399
+    400276: ID399 1
+    400278: ID405
+    400280: ID405 1
+    400282: ID411
+    400284: ID411 1
+    400286: ID417
+    400288: ID417 1
+    400290: ID42
+    400292: ID42 1
+    400294: ID423
+    400296: ID423 1
+    400298: ID429
+    400300: ID429 1
+    400302: ID435
+    400304: ID435 1
+    400306: ID441
+    400308: ID441 1
+    400310: ID447
+    400312: ID447 1
+    400314: ID476
+    400316: ID476 1
+    400318: ID506
+    400320: ID506 1
+    400322: ID506 2
+    400324: ID506 3
+    400326: ID64
+    400328: ID64 1
+    400330: ID70
+    400332: ID70 1
+    400334: instance_0
+    400336: instance_1
+    400338: instance_1 1
+    400340: instance_10
+    400342: instance_10 1
+    400344: instance_11
+    400346: instance_11 1
+    400348: instance_12
+    400350: instance_12 1
+    400352: instance_13
+    400354: instance_13 1
+    400356: instance_14
+    400358: instance_14 1
+    400360: instance_15
+    400362: instance_15 1
+    400364: instance_16
+    400366: instance_16 1
+    400368: instance_17
+    400370: instance_17 1
+    400372: instance_18
+    400374: instance_18 1
+    400376: instance_19
+    400378: instance_19 1
+    400380: instance_2
+    400382: instance_2 1
+    400384: instance_20
+    400386: instance_20 1
+    400388: instance_21
+    400390: instance_21 1
+    400392: instance_22
+    400394: instance_22 1
+    400396: instance_23
+    400398: instance_23 1
+    400400: instance_24
+    400402: instance_24 1
+    400404: instance_25
+    400406: instance_25 1
+    400408: instance_26
+    400410: instance_26 1
+    400412: instance_27
+    400414: instance_28
+    400416: instance_28 1
+    400418: instance_29
+    400420: instance_29 1
+    400422: instance_3
+    400424: instance_3 1
+    400426: instance_30
+    400428: instance_30 1
+    400430: instance_31
+    400432: instance_31 1
+    400434: instance_32
+    400436: instance_32 1
+    400438: instance_33
+    400440: instance_33 1
+    400442: instance_34
+    400444: instance_35
+    400446: instance_4
+    400448: instance_4 1
+    400450: instance_5
+    400452: instance_5 1
+    400454: instance_6
+    400456: instance_6 1
+    400458: instance_7
+    400460: instance_7 1
+    400462: instance_8
+    400464: instance_8 1
+    400466: instance_9
+    400468: instance_9 1
+    400470: K
+    400472: K 1
+    400474: lag_bolt_lift_base
+    400476: lag_bolt_lift_base 1
+    400478: lag_bolt_lift_base 10
+    400480: lag_bolt_lift_base 11
+    400482: lag_bolt_lift_base 12
+    400484: lag_bolt_lift_base 13
+    400486: lag_bolt_lift_base 14
+    400488: lag_bolt_lift_base 15
+    400490: lag_bolt_lift_base 2
+    400492: lag_bolt_lift_base 3
+    400494: lag_bolt_lift_base 4
+    400496: lag_bolt_lift_base 5
+    400498: lag_bolt_lift_base 6
+    400500: lag_bolt_lift_base 7
+    400502: lag_bolt_lift_base 8
+    400504: lag_bolt_lift_base 9
+    400506: Last Saved SketchUp View
+    400508: lock_ladder
+    400510: lock_ladder 1
+    400512: M_2
+    400514: M_2 1
+    400516: //RootNode
+    400518: mohawk_base_plate
+    400520: mohawk_base_plate 1
+    400522: mohawk_logo
+    400524: mohawk_logo 1
+    400526: O_1
+    400528: O_1 1
+    400530: track_wheel
+    400532: track_wheel 1
+    400534: track_wheel 2
+    400536: track_wheel 3
+    400538: track_wheel 4
+    400540: track_wheel 5
+    400542: track_wheel 6
+    400544: track_wheel 7
+    400546: triangle_foot_support
+    400548: triangle_foot_support 1
+    400550: triangle_foot_support 2
+    400552: triangle_foot_support 3
+    400554: vertical_back_plate
+    400556: vertical_back_plate 1
+    400558: vertical_back_plate 2
+    400560: vertical_back_plate 3
+    400562: vertical_C
+    400564: vertical_C 1
+    400566: vertical_C 2
+    400568: vertical_C 3
+    400570: W
+    400572: W 1
+    400574: yellow_lift_arm
+    400576: yellow_lift_arm 1
+    400578: yellow_lift_arm 2
+    400580: yellow_lift_arm 3
+    400582: yellow_sled
+    400584: yellow_sled 1
+    2300000: A
+    2300002: A 1
+    2300004: C_support_foot
+    2300006: C_support_foot 1
+    2300008: C_support_foot 2
+    2300010: C_support_foot 3
+    2300012: group_1
+    2300014: group_1 1
+    2300016: group_10
+    2300018: group_10 1
+    2300020: group_10 2
+    2300022: group_10 3
+    2300024: group_11
+    2300026: group_11 1
+    2300028: group_11 2
+    2300030: group_11 3
+    2300032: group_3
+    2300034: group_3 1
+    2300036: group_4
+    2300038: group_4 1
+    2300040: group_5
+    2300042: group_5 1
+    2300044: group_6
+    2300046: group_6 1
+    2300048: group_6 2
+    2300050: group_6 3
+    2300052: group_8
+    2300054: group_8 1
+    2300056: group_8 2
+    2300058: group_8 3
+    2300060: group_9
+    2300062: group_9 1
+    2300064: group_9 2
+    2300066: group_9 3
+    2300068: H
+    2300070: H 1
+    2300072: half_2_post_lift
+    2300074: half_2_post_lift 1
+    2300076: hydro_cylinder
+    2300078: hydro_cylinder 1
+    2300080: ID101
+    2300082: ID101 1
+    2300084: ID107
+    2300086: ID107 1
+    2300088: ID128
+    2300090: ID128 1
+    2300092: ID134
+    2300094: ID134 1
+    2300096: ID140
+    2300098: ID140 1
+    2300100: ID159
+    2300102: ID159 1
+    2300104: ID172
+    2300106: ID172 1
+    2300108: ID184
+    2300110: ID184 1
+    2300112: ID190
+    2300114: ID190 1
+    2300116: ID196
+    2300118: ID196 1
+    2300120: ID202
+    2300122: ID202 1
+    2300124: ID208
+    2300126: ID208 1
+    2300128: ID214
+    2300130: ID214 1
+    2300132: ID220
+    2300134: ID220 1
+    2300136: ID226
+    2300138: ID226 1
+    2300140: ID240
+    2300142: ID240 1
+    2300144: ID246
+    2300146: ID246 1
+    2300148: ID252
+    2300150: ID252 1
+    2300152: ID258
+    2300154: ID258 1
+    2300156: ID264
+    2300158: ID264 1
+    2300160: ID270
+    2300162: ID270 1
+    2300164: ID276
+    2300166: ID276 1
+    2300168: ID282
+    2300170: ID282 1
+    2300172: ID296
+    2300174: ID296 1
+    2300176: ID296 10
+    2300178: ID296 11
+    2300180: ID296 12
+    2300182: ID296 13
+    2300184: ID296 14
+    2300186: ID296 15
+    2300188: ID296 2
+    2300190: ID296 3
+    2300192: ID296 4
+    2300194: ID296 5
+    2300196: ID296 6
+    2300198: ID296 7
+    2300200: ID296 8
+    2300202: ID296 9
+    2300204: ID327
+    2300206: ID327 1
+    2300208: ID333
+    2300210: ID333 1
+    2300212: ID339
+    2300214: ID339 1
+    2300216: ID34
+    2300218: ID34 1
+    2300220: ID345
+    2300222: ID345 1
+    2300224: ID351
+    2300226: ID351 1
+    2300228: ID357
+    2300230: ID357 1
+    2300232: ID363
+    2300234: ID363 1
+    2300236: ID369
+    2300238: ID369 1
+    2300240: ID375
+    2300242: ID375 1
+    2300244: ID381
+    2300246: ID381 1
+    2300248: ID387
+    2300250: ID387 1
+    2300252: ID393
+    2300254: ID393 1
+    2300256: ID399
+    2300258: ID399 1
+    2300260: ID405
+    2300262: ID405 1
+    2300264: ID411
+    2300266: ID411 1
+    2300268: ID417
+    2300270: ID417 1
+    2300272: ID42
+    2300274: ID42 1
+    2300276: ID423
+    2300278: ID423 1
+    2300280: ID429
+    2300282: ID429 1
+    2300284: ID435
+    2300286: ID435 1
+    2300288: ID441
+    2300290: ID441 1
+    2300292: ID447
+    2300294: ID447 1
+    2300296: ID476
+    2300298: ID476 1
+    2300300: ID506
+    2300302: ID506 1
+    2300304: ID506 2
+    2300306: ID506 3
+    2300308: ID64
+    2300310: ID64 1
+    2300312: ID70
+    2300314: ID70 1
+    2300316: K
+    2300318: K 1
+    2300320: lag_bolt_lift_base
+    2300322: lag_bolt_lift_base 1
+    2300324: lag_bolt_lift_base 10
+    2300326: lag_bolt_lift_base 11
+    2300328: lag_bolt_lift_base 12
+    2300330: lag_bolt_lift_base 13
+    2300332: lag_bolt_lift_base 14
+    2300334: lag_bolt_lift_base 15
+    2300336: lag_bolt_lift_base 2
+    2300338: lag_bolt_lift_base 3
+    2300340: lag_bolt_lift_base 4
+    2300342: lag_bolt_lift_base 5
+    2300344: lag_bolt_lift_base 6
+    2300346: lag_bolt_lift_base 7
+    2300348: lag_bolt_lift_base 8
+    2300350: lag_bolt_lift_base 9
+    2300352: lock_ladder
+    2300354: lock_ladder 1
+    2300356: M_2
+    2300358: M_2 1
+    2300360: mohawk_base_plate
+    2300362: mohawk_base_plate 1
+    2300364: mohawk_logo
+    2300366: mohawk_logo 1
+    2300368: O_1
+    2300370: O_1 1
+    2300372: track_wheel
+    2300374: track_wheel 1
+    2300376: track_wheel 2
+    2300378: track_wheel 3
+    2300380: track_wheel 4
+    2300382: track_wheel 5
+    2300384: track_wheel 6
+    2300386: track_wheel 7
+    2300388: triangle_foot_support
+    2300390: triangle_foot_support 1
+    2300392: triangle_foot_support 2
+    2300394: triangle_foot_support 3
+    2300396: vertical_back_plate
+    2300398: vertical_back_plate 1
+    2300400: vertical_back_plate 2
+    2300402: vertical_back_plate 3
+    2300404: vertical_C
+    2300406: vertical_C 1
+    2300408: vertical_C 2
+    2300410: vertical_C 3
+    2300412: W
+    2300414: W 1
+    2300416: yellow_sled
+    2300418: yellow_sled 1
+    3300000: A
+    3300002: A 1
+    3300004: C_support_foot
+    3300006: C_support_foot 1
+    3300008: C_support_foot 2
+    3300010: C_support_foot 3
+    3300012: group_1
+    3300014: group_1 1
+    3300016: group_10
+    3300018: group_10 1
+    3300020: group_10 2
+    3300022: group_10 3
+    3300024: group_11
+    3300026: group_11 1
+    3300028: group_11 2
+    3300030: group_11 3
+    3300032: group_3
+    3300034: group_3 1
+    3300036: group_4
+    3300038: group_4 1
+    3300040: group_5
+    3300042: group_5 1
+    3300044: group_6
+    3300046: group_6 1
+    3300048: group_6 2
+    3300050: group_6 3
+    3300052: group_8
+    3300054: group_8 1
+    3300056: group_8 2
+    3300058: group_8 3
+    3300060: group_9
+    3300062: group_9 1
+    3300064: group_9 2
+    3300066: group_9 3
+    3300068: H
+    3300070: H 1
+    3300072: half_2_post_lift
+    3300074: half_2_post_lift 1
+    3300076: hydro_cylinder
+    3300078: hydro_cylinder 1
+    3300080: ID101
+    3300082: ID101 1
+    3300084: ID107
+    3300086: ID107 1
+    3300088: ID128
+    3300090: ID128 1
+    3300092: ID134
+    3300094: ID134 1
+    3300096: ID140
+    3300098: ID140 1
+    3300100: ID159
+    3300102: ID159 1
+    3300104: ID172
+    3300106: ID172 1
+    3300108: ID184
+    3300110: ID184 1
+    3300112: ID190
+    3300114: ID190 1
+    3300116: ID196
+    3300118: ID196 1
+    3300120: ID202
+    3300122: ID202 1
+    3300124: ID208
+    3300126: ID208 1
+    3300128: ID214
+    3300130: ID214 1
+    3300132: ID220
+    3300134: ID220 1
+    3300136: ID226
+    3300138: ID226 1
+    3300140: ID240
+    3300142: ID240 1
+    3300144: ID246
+    3300146: ID246 1
+    3300148: ID252
+    3300150: ID252 1
+    3300152: ID258
+    3300154: ID258 1
+    3300156: ID264
+    3300158: ID264 1
+    3300160: ID270
+    3300162: ID270 1
+    3300164: ID276
+    3300166: ID276 1
+    3300168: ID282
+    3300170: ID282 1
+    3300172: ID296
+    3300174: ID296 1
+    3300176: ID296 10
+    3300178: ID296 11
+    3300180: ID296 12
+    3300182: ID296 13
+    3300184: ID296 14
+    3300186: ID296 15
+    3300188: ID296 2
+    3300190: ID296 3
+    3300192: ID296 4
+    3300194: ID296 5
+    3300196: ID296 6
+    3300198: ID296 7
+    3300200: ID296 8
+    3300202: ID296 9
+    3300204: ID327
+    3300206: ID327 1
+    3300208: ID333
+    3300210: ID333 1
+    3300212: ID339
+    3300214: ID339 1
+    3300216: ID34
+    3300218: ID34 1
+    3300220: ID345
+    3300222: ID345 1
+    3300224: ID351
+    3300226: ID351 1
+    3300228: ID357
+    3300230: ID357 1
+    3300232: ID363
+    3300234: ID363 1
+    3300236: ID369
+    3300238: ID369 1
+    3300240: ID375
+    3300242: ID375 1
+    3300244: ID381
+    3300246: ID381 1
+    3300248: ID387
+    3300250: ID387 1
+    3300252: ID393
+    3300254: ID393 1
+    3300256: ID399
+    3300258: ID399 1
+    3300260: ID405
+    3300262: ID405 1
+    3300264: ID411
+    3300266: ID411 1
+    3300268: ID417
+    3300270: ID417 1
+    3300272: ID42
+    3300274: ID42 1
+    3300276: ID423
+    3300278: ID423 1
+    3300280: ID429
+    3300282: ID429 1
+    3300284: ID435
+    3300286: ID435 1
+    3300288: ID441
+    3300290: ID441 1
+    3300292: ID447
+    3300294: ID447 1
+    3300296: ID476
+    3300298: ID476 1
+    3300300: ID506
+    3300302: ID506 1
+    3300304: ID506 2
+    3300306: ID506 3
+    3300308: ID64
+    3300310: ID64 1
+    3300312: ID70
+    3300314: ID70 1
+    3300316: K
+    3300318: K 1
+    3300320: lag_bolt_lift_base
+    3300322: lag_bolt_lift_base 1
+    3300324: lag_bolt_lift_base 10
+    3300326: lag_bolt_lift_base 11
+    3300328: lag_bolt_lift_base 12
+    3300330: lag_bolt_lift_base 13
+    3300332: lag_bolt_lift_base 14
+    3300334: lag_bolt_lift_base 15
+    3300336: lag_bolt_lift_base 2
+    3300338: lag_bolt_lift_base 3
+    3300340: lag_bolt_lift_base 4
+    3300342: lag_bolt_lift_base 5
+    3300344: lag_bolt_lift_base 6
+    3300346: lag_bolt_lift_base 7
+    3300348: lag_bolt_lift_base 8
+    3300350: lag_bolt_lift_base 9
+    3300352: lock_ladder
+    3300354: lock_ladder 1
+    3300356: M_2
+    3300358: M_2 1
+    3300360: mohawk_base_plate
+    3300362: mohawk_base_plate 1
+    3300364: mohawk_logo
+    3300366: mohawk_logo 1
+    3300368: O_1
+    3300370: O_1 1
+    3300372: track_wheel
+    3300374: track_wheel 1
+    3300376: track_wheel 2
+    3300378: track_wheel 3
+    3300380: track_wheel 4
+    3300382: track_wheel 5
+    3300384: track_wheel 6
+    3300386: track_wheel 7
+    3300388: triangle_foot_support
+    3300390: triangle_foot_support 1
+    3300392: triangle_foot_support 2
+    3300394: triangle_foot_support 3
+    3300396: vertical_back_plate
+    3300398: vertical_back_plate 1
+    3300400: vertical_back_plate 2
+    3300402: vertical_back_plate 3
+    3300404: vertical_C
+    3300406: vertical_C 1
+    3300408: vertical_C 2
+    3300410: vertical_C 3
+    3300412: W
+    3300414: W 1
+    3300416: yellow_sled
+    3300418: yellow_sled 1
+    4300000: half_2_post_lift
+    4300002: group_1
+    4300004: ID64
+    4300006: ID70
+    4300008: C_support_foot
+    4300010: vertical_C
+    4300012: vertical_back_plate
+    4300014: ID34
+    4300016: ID42
+    4300018: triangle_foot_support
+    4300020: C_support_foot
+    4300022: vertical_C
+    4300024: vertical_back_plate
+    4300026: ID101
+    4300028: ID107
+    4300030: triangle_foot_support
+    4300032: group_3
+    4300034: ID128
+    4300036: ID134
+    4300038: ID140
+    4300040: group_4
+    4300042: ID159
+    4300044: group_5
+    4300046: ID172
+    4300048: ID184
+    4300050: ID190
+    4300052: ID196
+    4300054: ID202
+    4300056: ID208
+    4300058: ID214
+    4300060: ID220
+    4300062: ID226
+    4300064: mohawk_base_plate
+    4300066: ID240
+    4300068: ID246
+    4300070: ID252
+    4300072: ID258
+    4300074: ID264
+    4300076: ID270
+    4300078: ID276
+    4300080: ID282
+    4300082: lag_bolt_lift_base
+    4300084: ID296
+    4300086: track_wheel
+    4300088: lock_ladder
+    4300090: ID327
+    4300092: ID333
+    4300094: ID339
+    4300096: ID345
+    4300098: ID351
+    4300100: ID357
+    4300102: ID363
+    4300104: ID369
+    4300106: ID375
+    4300108: ID381
+    4300110: ID387
+    4300112: ID393
+    4300114: ID399
+    4300116: ID405
+    4300118: ID411
+    4300120: ID417
+    4300122: ID423
+    4300124: ID429
+    4300126: ID435
+    4300128: ID441
+    4300130: ID447
+    4300132: yellow_sled
+    4300134: hydro_cylinder
+    4300136: ID476
+    4300138: group_6
+    4300140: group_8
+    4300142: group_9
+    4300144: ID506
+    4300146: group_10
+    4300148: group_11
+    4300150: A
+    4300152: H
+    4300154: W
+    4300156: M_2
+    4300158: K
+    4300160: O_1
+    4300162: mohawk_logo
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .0500000007
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
