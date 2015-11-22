@@ -1,13 +1,17 @@
-﻿[YOUTUBE VID]
+﻿![carmechanic](https://github.com/teterum/carmechanic/blob/master/Screenshots/1.png?raw=true)
+![carmechanic2](https://github.com/teterum/carmechanic/blob/master/Screenshots/2.png?raw=true)
+![carmechanic3](https://github.com/teterum/carmechanic/blob/master/Screenshots/3.png?raw=true)
+![carmechanic4](https://github.com/teterum/carmechanic/blob/master/Screenshots/4.png?raw=true)
+![carmechanic5](https://github.com/teterum/carmechanic/blob/master/Screenshots/5.png?raw=true)
 
-** About the game
+## About the game
 CarMechanic is an open source car mechanic simulator that allows you to disassembly/assembly cars.
 
 This game is NOT finished as i would need a full car (including the engine) model to finish the game core.
 
 
 
-** Adding a new vehicle
+## Adding a new vehicle
 
 Notice:
 - You will need Unity.
@@ -47,7 +51,7 @@ If you want to share your vehicle, send the /StreamingAssets/YOU_MODEL/ folder a
 
 
 
-** Credits
+## Credits
 
 - Engine Model:
 Source: http://www.3dvia.com/models/4B9A204153657749/engine-room-3d
@@ -75,7 +79,9 @@ Creator: SoundEffectsFactory
 URL: https://3dwarehouse.sketchup.com/model.html?id=bcd36619f9dfae1b853bf916f291fa0f
 Creator: Joe T.
 
-** Useful resources
+## Useful resources
 
 Other partially made engine models:
 https://3dwarehouse.sketchup.com/collection.html?id=66815d59f0ae427f9c00f10333f1c0b5
+
+[Back to index](#index)
