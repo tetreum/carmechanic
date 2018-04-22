@@ -35,7 +35,8 @@ public class Menu : MonoBehaviour {
 		default: // Test
 			hidePanel("MainPanel");
 			showPanel("EditorModePanel");
-			break;
+            Cursors.setLocked();
+            break;
 		}
 		
 		// always disable DevCamera

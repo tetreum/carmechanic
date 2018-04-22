@@ -12,4 +12,23 @@ public class Cursors
 			return _handle;
 		}
 	}
+
+    public static void setFree(bool visible = true) {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = visible;
+    }
+
+    public static void setLocked() {
+        Cursor.lockState = CursorLockMode.Locked;
+        try {
+            Menu.Instance.StartCoroutine(disableCursor());
+        } catch (System.Exception) { }
+    }
+
+    public static IEnumerator disableCursor() {
+        yield return new WaitForEndOfFrame();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
 }
