@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent (typeof (Collider))]
 public class CarPart : MonoBehaviour {
@@ -25,11 +24,11 @@ public class CarPart : MonoBehaviour {
 
 			if (_assembled) {
 				CarEngine.Instance.disassembledParts.Remove(GetInstanceID());
-				setShader(ShaderMode.Normal);
+				SetShader(ShaderMode.Normal);
 				isTransparent = false;
 			} else {
 				CarEngine.Instance.disassembledParts.Add(GetInstanceID(), this);
-				setShader(ShaderMode.Invisible);
+				SetShader(ShaderMode.Invisible);
 			}
 		}
 	}
@@ -50,7 +49,6 @@ public class CarPart : MonoBehaviour {
 		Invisible = 5,
 	}
 
-
 	void Start () {
 		meshRendered = this.gameObject.GetComponent<MeshRenderer>();
 		mat = meshRendered.material;
@@ -61,7 +59,7 @@ public class CarPart : MonoBehaviour {
 		partData = new PartData();
 	}
 
-	public void setShader (ShaderMode mode, Color color = default(Color))
+	public void SetShader (ShaderMode mode, Color color = default(Color))
 	{
 		meshRendered.enabled = true;
 
@@ -99,7 +97,7 @@ public class CarPart : MonoBehaviour {
 		}
 	}
 
-	void higlightRequirements (bool enable)
+	void HiglightRequirements (bool enable)
 	{
 		foreach (CarPart part in disassemblyRequirements)
 		{
@@ -108,9 +106,9 @@ public class CarPart : MonoBehaviour {
 				continue;
 			}
 			if (enable) {
-				part.setShader(ShaderMode.RedOutline);
+				part.SetShader(ShaderMode.RedOutline);
 			} else {
-				part.setShader(ShaderMode.Normal);
+				part.SetShader(ShaderMode.Normal);
 			}
 		}
 	}
@@ -120,35 +118,35 @@ public class CarPart : MonoBehaviour {
 		// wants to assembly or disassembly the part?
 		if (CarEngine.Instance.currentMode == CarEngine.Mode.Disassembly && isAssembled)
 		{
-			if (!canDisassembly()) {
+			if (!CanDisassembly()) {
 				return;
 			}
 
 			isAssembled = false;
-			playSound(type);
+			PlaySound(type);
 			Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 			Inventory.add(type, status, 1);
 		}
-		else if (CarEngine.Instance.currentMode == CarEngine.Mode.Assembly && canAssembly())
+		else if (CarEngine.Instance.currentMode == CarEngine.Mode.Assembly && CanAssembly())
 		{
 			isAssembled = true;
-			playSound(type);
+			PlaySound(type);
 			Inventory.del(type, status, 1);
 
 			// update assembly mode as they may be new parts that can be assembled now
-			CarEngine.Instance.setAssemblyMode();
+			CarEngine.Instance.SetAssemblyMode();
 		}
 	}
 	
-	void playSound (CarEngine.Part type)
+	void PlaySound (CarEngine.Part type)
 	{
 		switch (type)
 		{
 		case CarEngine.Part.BOLT:
 			SoundManager.Instance.playSound(SoundManager.EFFECT_SCREW, this.gameObject);
 			break;
-		case CarEngine.Part.COVER:
-		case CarEngine.Part.OIL_CAP:
+		//case CarEngine.Part.COVER:
+		//case CarEngine.Part.OIL_CAP:
 		default:
 			SoundManager.Instance.playSound(SoundManager.EFFECT_OPEN_CASE, this.gameObject);
 			break;
@@ -160,11 +158,11 @@ public class CarPart : MonoBehaviour {
 	void OnMouseEnter ()
 	{
 		if (CarEngine.Instance.currentMode == CarEngine.Mode.Disassembly && isAssembled) {
-			higlightRequirements(true);
-			setShader(ShaderMode.Outline);
+			HiglightRequirements(true);
+			SetShader(ShaderMode.Outline);
 			Cursor.SetCursor(Cursors.handle, new Vector2(6, 0), CursorMode.Auto);
 		} else if (isTransparent) {
-			setShader(ShaderMode.Outline);
+			SetShader(ShaderMode.Outline);
 		} else if (CarEngine.Instance.currentMode == CarEngine.Mode.Status) {
 			EditorModePanel.Instance.partStatusPanel.show(type, status);
 		}
@@ -182,16 +180,16 @@ public class CarPart : MonoBehaviour {
 		Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
 		if (CarEngine.Instance.currentMode == CarEngine.Mode.Disassembly && isAssembled) {
-			higlightRequirements(false);
-			setShader(ShaderMode.Normal);
+			HiglightRequirements(false);
+			SetShader(ShaderMode.Normal);
 		} else if (isTransparent) {
-			setShader(ShaderMode.Transparent);
+			SetShader(ShaderMode.Transparent);
 		} else if (CarEngine.Instance.currentMode == CarEngine.Mode.Status) {
 			EditorModePanel.Instance.partStatusPanel.hide();
 		}
 	}
 
-	private bool canDisassembly ()
+	private bool CanDisassembly ()
 	{
 		foreach (CarPart part in disassemblyRequirements) {
 			if (part.isAssembled) {
@@ -201,7 +199,7 @@ public class CarPart : MonoBehaviour {
 		return true;
 	}
 
-	public bool canAssembly ()
+	public bool CanAssembly ()
 	{
 		foreach (CarPart part in assemblyRequirements) {
 			if (!part.isAssembled) {

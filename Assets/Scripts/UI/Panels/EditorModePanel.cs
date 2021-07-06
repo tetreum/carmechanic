@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class EditorModePanel : MonoBehaviour {
 
@@ -14,17 +13,17 @@ public class EditorModePanel : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Instance = this;
-		CarEngine.Instance.setDisassemblyMode();
+		CarEngine.Instance.SetDisassemblyMode();
 	}
 
 	public void setAssemblyMode () {
-		CarEngine.Instance.setAssemblyMode();
+		CarEngine.Instance.SetAssemblyMode();
 	}
 	public void setDisassemblyMode () {
-		CarEngine.Instance.setDisassemblyMode();
+		CarEngine.Instance.SetDisassemblyMode();
 	}
 	public void setStatusMode () {
-		CarEngine.Instance.setStatusMode();
+		CarEngine.Instance.SetStatusMode();
 	}
 
 	public void displayMode (CarEngine.Mode mode)

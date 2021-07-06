@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class MainPanel : MonoBehaviour {
@@ -35,5 +34,10 @@ public class MainPanel : MonoBehaviour {
 	public void Quit()
 	{
 		Application.Quit();
+	}
+
+	IEnumerator()
+	{
+		
 	}
 }
