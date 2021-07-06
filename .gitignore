@@ -37,3 +37,7 @@ ehthumbs.db
 # ==== #
 db1.box
 db1.box.swp
+
+/.idea
+/.dccache
+/Logs
