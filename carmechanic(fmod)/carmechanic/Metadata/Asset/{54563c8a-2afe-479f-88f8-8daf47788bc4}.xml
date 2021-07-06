@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="EncodableAsset" id="{54563c8a-2afe-479f-88f8-8daf47788bc4}">
+		<property name="color">
+			<value>Purple</value>
+		</property>
+		<property name="assetPath">
+			<value>engine/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f780c465-494b-408d-8309-f08b20f574aa}</destination>
+		</relationship>
+	</object>
+</objects>

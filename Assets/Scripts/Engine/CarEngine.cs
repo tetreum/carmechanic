@@ -68,14 +68,14 @@ public class CarEngine : MonoBehaviour {
 	void Update ()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1)) {
-			setDisassemblyMode();
+			SetDisassemblyMode();
 		} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-			setAssemblyMode();
+			SetAssemblyMode();
 		} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-			setStatusMode();
+			SetStatusMode();
 		} else if (Input.GetKeyDown(KeyCode.Escape)) {
 			if (currentSection == Section.Engine) {
-				leaveEditorMode();
+				LeaveEditorMode();
 			} else {
 				Cursor.lockState = CursorLockMode.None;
 			}
@@ -103,7 +103,7 @@ public class CarEngine : MonoBehaviour {
 	}
 
 	// Leaves engine editor mode and enables character controller
-	public void leaveEditorMode ()
+	public void LeaveEditorMode ()
 	{
 		Vector3 pos = Camera.main.transform.position;
 		Transform lastCarPart = selectedCarPart;
@@ -126,18 +126,18 @@ public class CarEngine : MonoBehaviour {
 		#endif
 	}
 				
-	public void setAssemblyMode ()
+	public void SetAssemblyMode ()
 	{
 		currentMode = Mode.Assembly;
-		disableStatusMode();
+		DisableStatusMode();
 
 		CarPart carPart;
 		foreach(KeyValuePair<int, CarPart> entry in disassembledParts)
 		{
 			carPart = entry.Value;
 
-			if (carPart.canAssembly()) {
-				carPart.setShader(CarPart.ShaderMode.Transparent);
+			if (carPart.CanAssembly()) {
+				carPart.SetShader(CarPart.ShaderMode.Transparent);
 			}
 		}
 
@@ -147,19 +147,19 @@ public class CarEngine : MonoBehaviour {
 		}
 	}
 
-	public void setDisassemblyMode ()
+	public void SetDisassemblyMode ()
 	{
 		currentMode = Mode.Disassembly;
-		disableStatusMode();
+		DisableStatusMode();
 
 		CarPart carPart;
 		foreach(KeyValuePair<int, CarPart> entry in disassembledParts)
 		{
 			carPart = entry.Value;
 			
-			if (carPart.canAssembly()) {
+			if (carPart.CanAssembly()) {
 				carPart.isTransparent = false;
-				carPart.setShader(CarPart.ShaderMode.Invisible);
+				carPart.SetShader(CarPart.ShaderMode.Invisible);
 			}
 		}
 
@@ -172,7 +172,7 @@ public class CarEngine : MonoBehaviour {
 	/**
 	* Temporal, there should be a better way rather than making a global find..
 	 */
-	public void disableStatusMode ()
+	public void DisableStatusMode ()
 	{
 		GameObject[] partList = GameObject.FindGameObjectsWithTag("CarPart");
 		CarPart carPart;
@@ -185,11 +185,11 @@ public class CarEngine : MonoBehaviour {
 				continue;
 			}
 
-			carPart.setShader(CarPart.ShaderMode.Normal);
+			carPart.SetShader(CarPart.ShaderMode.Normal);
 		}
 	}
 
-	public void setStatusMode ()
+	public void SetStatusMode ()
 	{
 		currentMode = Mode.Status;
 		GameObject[] partList = GameObject.FindGameObjectsWithTag("CarPart");
@@ -204,11 +204,11 @@ public class CarEngine : MonoBehaviour {
 			}
 
 			if (carPart.status < 20) {
-				carPart.setShader(CarPart.ShaderMode.Normal, Shaders.Red);
+				carPart.SetShader(CarPart.ShaderMode.Normal, Shaders.Red);
 			} else if (carPart.status < 70) {
-				carPart.setShader(CarPart.ShaderMode.Normal, Shaders.Orange);
+				carPart.SetShader(CarPart.ShaderMode.Normal, Shaders.Orange);
 			} else {
-				carPart.setShader(CarPart.ShaderMode.Normal, Shaders.Green);
+				carPart.SetShader(CarPart.ShaderMode.Normal, Shaders.Green);
 			}
 		}
 

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 // this may contain more info in the future
 public class CarInfo
