@@ -1,26 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MainPanel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
 		Service.init ();
-		#if UNITY_EDITOR
-		play();
-		#endif
+		if (Application.platform == RuntimePlatform.LinuxEditor ||
+		    Application.platform == RuntimePlatform.WindowsEditor ||
+		    Application.platform == RuntimePlatform.OSXEditor)
+		{
+			
+			Play();
+		}
 	}
 
-	public void play () {
-		Application.LoadLevel("Garage");
+	public void Play () {
+		SceneManager.LoadScene("Garage");
 
-		#if !UNITY_EDITOR
+		if (Application.platform == RuntimePlatform.LinuxEditor ||
+		    Application.platform == RuntimePlatform.WindowsEditor ||
+		    Application.platform == RuntimePlatform.OSXEditor)
+		{
 			Cursor.lockState = CursorLockMode.Locked;
-		#endif
+		}
 
 		// TEST - Allow custom cars (modding)
 		/*Lift lift = GameObject.Find("LiftButton").GetComponent<Lift>();
 		GameObject car = Instantiate(Service.carList["MURCIELAGO"].prefab) as GameObject;
 		car.transform.SetParent(lift.arms);*/
+	}
+
+	public void Quit()
+	{
+		Application.Quit();
 	}
 }
