@@ -45,3 +45,6 @@ db1.box.swp
 /.idea/.idea.carmechanic/.idea
 .idea/.idea.carmechanic/.idea/workspace.xml
 *.log
+Logs/shadercompiler-UnityShaderCompiler.exe3.log
+Logs/shadercompiler-UnityShaderCompiler.exe1.log
+Logs/AssetImportWorker1.log
