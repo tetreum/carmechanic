@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{b66fc5b5-b208-462c-bbf1-13b2915aa895}">
+		<property name="color">
+			<value>Blue</value>
+		</property>
+		<property name="assetPath">
+			<value>garage/HydraulicLift.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>22.0499992</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>8.2488888888888887</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f780c465-494b-408d-8309-f08b20f574aa}</destination>
+		</relationship>
+	</object>
+</objects>

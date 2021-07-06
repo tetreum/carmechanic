@@ -40,6 +40,7 @@ public class CarPart : MonoBehaviour {
 	private MeshRenderer meshRendered;
 	private Material mat;
 	private bool _assembled = true;
+	private FMOD.Studio.EventInstance instance;
 
 	public enum ShaderMode {
 		Normal = 1,
@@ -138,17 +139,19 @@ public class CarPart : MonoBehaviour {
 		}
 	}
 	
-	void PlaySound (CarEngine.Part type)
+ 	void PlaySound (CarEngine.Part type)
 	{
 		switch (type)
 		{
 		case CarEngine.Part.BOLT:
-			SoundManager.Instance.playSound(SoundManager.EFFECT_SCREW, this.gameObject);
+			instance = FMODUnity.RuntimeManager.CreateInstance("event:/engine/Screw");
+			instance.start();
 			break;
 		//case CarEngine.Part.COVER:
 		//case CarEngine.Part.OIL_CAP:
 		default:
-			SoundManager.Instance.playSound(SoundManager.EFFECT_OPEN_CASE, this.gameObject);
+			instance = FMODUnity.RuntimeManager.CreateInstance("event:/engine/OpenCase");
+			instance.start();
 			break;
 		}
 

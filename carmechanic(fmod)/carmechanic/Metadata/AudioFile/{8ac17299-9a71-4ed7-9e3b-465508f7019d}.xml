@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{8ac17299-9a71-4ed7-9e3b-465508f7019d}">
+		<property name="color">
+			<value>Purple</value>
+		</property>
+		<property name="assetPath">
+			<value>engine/OpenCase.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>22.0499992</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.39183673469387753</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f780c465-494b-408d-8309-f08b20f574aa}</destination>
+		</relationship>
+	</object>
+</objects>
