@@ -38,6 +38,7 @@ ehthumbs.db
 db1.box
 db1.box.swp
 
-/.idea
+/.idea/*
 /.dccache
 /Logs
+/.idea/.idea.carmechanic/.idea
