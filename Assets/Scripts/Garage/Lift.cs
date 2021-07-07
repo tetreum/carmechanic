@@ -24,7 +24,6 @@ public class Lift : MonoBehaviour
 		mat = this.gameObject.GetComponent<MeshRenderer>().material;
 		originalShader = mat.shader;
 		
-		GameObject.Find("car1").transform.SetParent(arms);
 	}
 
 	public void OnMouseDown ()

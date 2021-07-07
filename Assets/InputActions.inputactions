@@ -1,0 +1,12 @@
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "player",
+            "id": "9bc8fda7-4df6-4639-8f36-b9c1f96c4176",
+            "actions": [],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": []
+}
