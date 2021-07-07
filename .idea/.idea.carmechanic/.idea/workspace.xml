@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57c29688-45ee-40f2-aaae-4952e9026d6c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.carmechanic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.carmechanic/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AssetBundles/StandaloneWindows/StandaloneWindows" beforeDir="false" afterPath="$PROJECT_DIR$/AssetBundles/StandaloneWindows/StandaloneWindows" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AssetBundles/StandaloneWindows/StandaloneWindows.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/AssetBundles/StandaloneWindows/StandaloneWindows.manifest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Garage.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Garage.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carmechanic(fmod)/carmechanic/.unsaved/.user/Metadata/Asset/{f780c465-494b-408d-8309-f08b20f574aa}.user.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carmechanic(fmod)/carmechanic/.unsaved/.user/Metadata/Mixer.user.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carmechanic(fmod)/carmechanic/.unsaved/.user/Metadata/Workspace.user.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/AssetBundlesManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AssetBundlesManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/StandaloneWindows" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StreamingAssets/StandaloneWindows" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/StandaloneWindows.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StreamingAssets/StandaloneWindows.manifest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
