@@ -1,6 +1,6 @@
-﻿using System;
+﻿using System.Collections;
+using FMOD.Studio;
 using UnityEngine;
-using System.Collections;
 
 [RequireComponent (typeof (Collider))]
 [RequireComponent (typeof (AudioSource))]
@@ -11,7 +11,7 @@ public class Lift : MonoBehaviour
 	public float maxHeight = 3.01f;
 	public float minHeight = 0.240625f;
 
-	private FMOD.Studio.EventInstance instance;
+	private EventInstance instance;
 	private bool isElevated = false;
 
 	private bool isMoving = false;
@@ -23,9 +23,8 @@ public class Lift : MonoBehaviour
 	{
 		mat = this.gameObject.GetComponent<MeshRenderer>().material;
 		originalShader = mat.shader;
-
-		//TMP - Related to MainPanel.cs#21
-		GameObject.Find("LANCEREVOX").transform.SetParent(this.arms);
+		
+		GameObject.Find("car1").transform.SetParent(arms);
 	}
 
 	public void OnMouseDown ()
@@ -50,10 +49,10 @@ public class Lift : MonoBehaviour
 		mat.shader = originalShader;
 	}
 	
-	bool IsPlaying(FMOD.Studio.EventInstance instance) {
-		FMOD.Studio.PLAYBACK_STATE state;   
+	bool IsPlaying(EventInstance instance) {
+		PLAYBACK_STATE state;   
 		instance.getPlaybackState(out state);
-		return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
+		return state != PLAYBACK_STATE.STOPPED;
 	}
 	IEnumerator startAscension()
 	{

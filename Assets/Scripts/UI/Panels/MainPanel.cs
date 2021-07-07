@@ -1,16 +1,25 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainPanel : MonoBehaviour
 {
-
-	// Use this for initialization
+	public Slider loading_bar;
+	public TMP_Text percentage;
+	public GameObject menu;
+	public GameObject loadingScreen;
+	
 	void Start () {
+		loadingScreen.SetActive(false);
+		menu.SetActive(true);
 	}
 
 	public void Play (string scene)
 	{
+		menu.SetActive(false);
+		loadingScreen.SetActive(true);
 		StartCoroutine(LoadMainMenu(scene));
 
 		if (Application.platform == RuntimePlatform.LinuxEditor ||
@@ -36,8 +45,16 @@ public class MainPanel : MonoBehaviour
 		AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
 		while (!operation.isDone)
 		{
-			Debug.Log(operation.progress);
+			float progress = Mathf.Clamp01(operation.progress);
+			Debug.Log(progress);
+			loading_bar.value = progress;
+			percentage.text = progress * 100 / .9f + "%";
+			
 			yield return null;
+		}
+		if (operation.isDone)
+		{
+			loadingScreen.SetActive(false);
 		}
 	}
 }
