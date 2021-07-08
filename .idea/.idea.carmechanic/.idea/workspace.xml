@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57c29688-45ee-40f2-aaae-4952e9026d6c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.carmechanic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.carmechanic/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Img/fgsoftwarestudio.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Img/fgsoftwarestudio.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Img/fmod.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Img/fmod.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Garage/Lift.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Garage/Lift.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/FpsCounter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utils/FpsCounter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fmod_editor.log" beforeDir="false" afterPath="$PROJECT_DIR$/fmod_editor.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +32,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Editor/CreateAssetBundles.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/AssetBundlesManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Panels/MainPanel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utils/FpsCounter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Garage/Lift.cs" />
     </changedPaths>
   </component>
@@ -83,6 +86,7 @@
       <updated>1625588452600</updated>
       <workItem from="1625588512168" duration="905000" />
       <workItem from="1625589820654" duration="919000" />
+      <workItem from="1625746390066" duration="365000" />
     </task>
     <servers />
   </component>
