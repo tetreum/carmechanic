@@ -4,6 +4,7 @@
     <list default="true" id="57c29688-45ee-40f2-aaae-4952e9026d6c" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/Assets/Img/fgsoftwarestudio.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Assets/Img/fgsoftwarestudio.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.carmechanic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.carmechanic/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Img/fmod.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Img/fmod.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Garage/Lift.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Garage/Lift.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/FpsCounter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utils/FpsCounter.cs" afterDir="false" />
@@ -86,7 +87,7 @@
       <updated>1625588452600</updated>
       <workItem from="1625588512168" duration="905000" />
       <workItem from="1625589820654" duration="919000" />
-      <workItem from="1625746390066" duration="365000" />
+      <workItem from="1625746390066" duration="478000" />
     </task>
     <servers />
   </component>
