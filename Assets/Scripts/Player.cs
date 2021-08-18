@@ -2,41 +2,30 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float minX = -60f;
-    public float maxX = 60f;
-
-    public float sensitivity;
-    public Camera cam;
-
-    private float rotY;
-    private float rotX;
-
-    private void Start()
+    public float walkSpeed = 6.0F;
+    public float jumpSpeed = 8.0F;
+    public float runSpeed = 8.0F;
+    public float gravity = 20.0F;
+ 
+    private Vector3 moveDirection = Vector3.zero;
+    private CharacterController controller;
+ 
+    void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        controller = GetComponent<CharacterController>();
     }
-
-    private void Update()
+ 
+    void Update()
     {
-        rotY += Input.GetAxis("Mouse X") * sensitivity;
-        rotX += Input.GetAxis("Mouse Y") * sensitivity;
-
-        rotX = Mathf.Clamp(rotX, minX, maxX);
-
-        transform.localEulerAngles = new Vector3(0, rotY, 0);
-        cam.transform.localEulerAngles = new Vector3(-rotX, rotY, 0);
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (controller.isGrounded)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection *= walkSpeed;
+            if (Input.GetButton("Jump"))
+                moveDirection.y = jumpSpeed;
         }
-
-        if (Cursor.visible && Input.GetMouseButtonDown(1))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        moveDirection.y -= gravity * Time.deltaTime;
+        controller.Move(moveDirection * Time.deltaTime);
     }
 }
