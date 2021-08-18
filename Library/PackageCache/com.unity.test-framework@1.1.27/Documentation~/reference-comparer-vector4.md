@@ -1,9 +1,6 @@
 # Vector4EqualityComparer
 
-Use this class to compare two [Vector4](https://docs.unity3d.com/ScriptReference/Vector4.html) objects for equality
-with [NUnit](http://www.nunit.org/) constraints. Call `Vector4EqualityComparer.Instance` to perform comparisons using
-default calculation error value 0.0001f. To set a custom test value, instantiate a new comparer using
-the [one argument constructor](#constructor).
+Use this class to compare two [Vector4](https://docs.unity3d.com/ScriptReference/Vector4.html) objects for equality with [NUnit](http://www.nunit.org/) constraints. Call `Vector4EqualityComparer.Instance` to perform comparisons using default calculation error value 0.0001f. To set a custom test value, instantiate a new comparer using the [one argument constructor](#constructor).
 
 ## Static Properties
 

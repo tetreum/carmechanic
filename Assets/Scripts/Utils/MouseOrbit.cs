@@ -8,15 +8,15 @@ public class MouseOrbit : MonoBehaviour
 
     public float xSpeed = 250.0f; // Speed of x rotation
     public float ySpeed = 120.0f; // Speed of y rotation
+    private readonly int yMaxLimit = 80; // y maximum rotation limit
 
     private readonly int yMinLimit = -20; // y minimum rotation limit
-    private readonly int yMaxLimit = 80; // y maximum rotation limit
+    private float oldScrollValue;
+
+    private float smooth;
 
     private float x;
     private float y;
-
-    private float smooth;
-    private float oldScrollValue;
 
     private void Start()
     {

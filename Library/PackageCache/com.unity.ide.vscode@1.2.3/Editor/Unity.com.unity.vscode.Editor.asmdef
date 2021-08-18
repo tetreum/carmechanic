@@ -1,9 +1,9 @@
 {
-  "name": "Unity.VSCode.Editor",
-  "references": [],
-  "optionalUnityReferences": [],
-  "includePlatforms": [
-    "Editor"
-  ],
-  "excludePlatforms": []
+    "name": "Unity.VSCode.Editor",
+    "references": [],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
 }

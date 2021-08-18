@@ -8,6 +8,7 @@ public class MainPanel : MonoBehaviour
 {
     public Slider loading_bar;
     public TMP_Text percentage;
+    public TMP_Text version;
     public GameObject menu;
     public GameObject loadingScreen;
 
@@ -15,6 +16,7 @@ public class MainPanel : MonoBehaviour
     {
         loadingScreen.SetActive(false);
         menu.SetActive(true);
+        version.text = "v" + Application.version;
     }
 
     public void Play(string scene)

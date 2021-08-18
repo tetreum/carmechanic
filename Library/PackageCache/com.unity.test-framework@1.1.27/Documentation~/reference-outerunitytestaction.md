@@ -1,8 +1,6 @@
 # OuterUnityTestAction
 
-`OuterUnityTestAction` is a wrapper outside of the tests, which allows for any tests with this attribute to run code
-before and after the tests. This method allows for yielding commands in the same way as `UnityTest`. The attribute must
-inherit the `NUnit` attribute and implement `IOuterUnityTestAction`.
+`OuterUnityTestAction` is a wrapper outside of the tests, which allows for any tests with this attribute to run code before and after the tests. This method allows for yielding commands in the same way as `UnityTest`. The attribute must inherit the `NUnit` attribute and implement `IOuterUnityTestAction`. 
 
 ## OuterUnityTestAction Example
 
@@ -37,14 +35,13 @@ public class MyOuterActionAttribute : NUnitAttribute, IOuterUnityTestAction
 }
 
 ```
-
 ## Execution order
 
 Unity outer test action is not rerun on domain reload but non-Unity action attributes are:
 
 ![OuterUnityTestAction Execution Order](./images/execution-order-outerunitytestaction.svg)
 
-> **Note**: Some browsers do not support SVG image files. If the image above does not display properly (for example, if you cannot see any text), please try another browser, such as [Google Chrome](https://www.google.com/chrome/) or [Mozilla Firefox](https://www.mozilla.org).
+> **Note**: Some browsers do not support SVG image files. If the image above does not display properly (for example, if you cannot see any text), please try another browser, such as [Google Chrome](https://www.google.com/chrome/) or [Mozilla Firefox](https://www.mozilla.org). 
 
 ### Test actions with domain reload example
 

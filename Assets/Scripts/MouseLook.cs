@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    float yRotation;
-    float xRotation;
-    float lookSensitivity = 5;
-    float currentXRotation;
-    float currentYRotation;
-    float yRotationV;
-    float xRotationV;
-    float lookSmoothnes = 0.1f; 
- 
-    void Update ()
+    private float currentXRotation;
+    private float currentYRotation;
+    private readonly float lookSensitivity = 5;
+    private readonly float lookSmoothnes = 0.1f;
+    private float xRotation;
+    private float xRotationV;
+    private float yRotation;
+    private float yRotationV;
+
+    private void Update()
     {
         yRotation += Input.GetAxis("Mouse X") * lookSensitivity;
         xRotation -= Input.GetAxis("Mouse Y") * lookSensitivity;

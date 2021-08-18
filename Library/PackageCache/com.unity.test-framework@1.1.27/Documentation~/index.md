@@ -1,23 +1,18 @@
 # About Unity Test Framework
 
-The Unity Test Framework (UTF) enables Unity users to test their code in both **Edit Mode** and **Play Mode**, and also
-on target platforms such as [Standalone](https://docs.unity3d.com/Manual/Standalone.html), Android, iOS, etc.
+The Unity Test Framework (UTF) enables Unity users to test their code in both **Edit Mode** and **Play Mode**, and also on target platforms such as [Standalone](https://docs.unity3d.com/Manual/Standalone.html), Android, iOS, etc.
 
-This package provides a standard test framework for users of Unity and developers at Unity so that both benefit from the
-same features and can write tests the same way.
+This package provides a standard test framework for users of Unity and developers at Unity so that both benefit from the same features and can write tests the same way. 
 
-UTF uses a Unity integration of NUnit library, which is an open-source unit testing library for .Net languages. UTF
-currently uses NUnit version 3.5. For more information about NUnit, see
-the [official NUnit website](http://www.nunit.org/) and the [NUnit documentation](https://docs.nunit.org/).
+UTF uses a Unity integration of NUnit library, which is an open-source unit testing library for .Net languages. UTF currently uses NUnit version 3.5. For more information about NUnit, see the [official NUnit website](http://www.nunit.org/) and the [NUnit documentation](https://docs.nunit.org/).
 
-> **Note**: UTF is not a new concept or toolset; it is an adjusted and more descriptive naming for the toolset otherwise known as Unity Test Runner, which is now available as this package.
+> **Note**: UTF is not a new concept or toolset; it is an adjusted and more descriptive naming for the toolset otherwise known as Unity Test Runner, which is now available as this package. 
 
 # Installing Unity Test Framework
 
-To install this package, follow the instructions in
-the [Package Manager documentation](https://docs.unity3d.com/Packages/com.unity.package-manager-ui@latest/index.html).
+To install this package, follow the instructions in the [Package Manager documentation](https://docs.unity3d.com/Packages/com.unity.package-manager-ui@latest/index.html).
 
-> **Note**: Search for the Test Framework package. In Unity 2019.2 and higher, you may need to enable the package before use.
+> **Note**: Search for the Test Framework package. In Unity 2019.2 and higher, you may need to enable the package before use. 
 
 # Using Unity Test Framework
 
@@ -36,13 +31,10 @@ This version of the Unity Test Framework is compatible with the following versio
 Unity Test Framework version 1.0.18 includes the following known limitations:
 
 * The `UnityTest` attribute does not support WebGL and WSA platforms.
-* The `UnityTest` attribute does not
-  support [Parameterized tests](https://github.com/nunit/docs/wiki/Parameterized-Tests) (except for `ValueSource`).
-* The `UnityTest` attribute does not support the `NUnit` [Repeat](https://github.com/nunit/docs/wiki/Repeat-Attribute)
-  attribute.
-* Nested test fixture cannot run from the Editor UI.
-* When using the `NUnit` [Retry](https://github.com/nunit/docs/wiki/Retry-Attribute) attribute in PlayMode tests, it
-  throws `InvalidCastException`.
+* The `UnityTest` attribute does not support [Parameterized tests](https://github.com/nunit/docs/wiki/Parameterized-Tests) (except for `ValueSource`).
+* The `UnityTest` attribute does not support the `NUnit` [Repeat](https://github.com/nunit/docs/wiki/Repeat-Attribute) attribute.
+* Nested test fixture cannot run from the Editor UI. 
+* When using the `NUnit` [Retry](https://github.com/nunit/docs/wiki/Retry-Attribute) attribute in PlayMode tests, it throws `InvalidCastException`.
 * Async tests are not supported in the current version of UTF.
 
 ## Package contents

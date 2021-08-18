@@ -9,21 +9,27 @@ public class Lift : MonoBehaviour
     public float speed = 0.01f;
     public float maxHeight = 3.01f;
     public float minHeight = 0.240625f;
+    private new AudioSource audio;
+    private bool isElevated;
 
     private bool isMoving;
-    private bool isElevated;
-    private Shader originalShader;
     private Material mat;
-    private new AudioSource audio;
+    private Shader originalShader;
 
     public void Start()
     {
         audio = gameObject.GetComponent<AudioSource>();
         mat = gameObject.GetComponent<MeshRenderer>().material;
         originalShader = mat.shader;
+    }
 
-        //TMP - Related to MainPanel.cs#21
-        GameObject.Find("LANCEREVOX").transform.SetParent(arms);
+    public void OnMouseDown()
+    {
+        if (isMoving) return;
+
+        audio.Play();
+        isMoving = true;
+        StartCoroutine("startAscension");
     }
 
     public void OnMouseEnter()
@@ -36,15 +42,6 @@ public class Lift : MonoBehaviour
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         mat.shader = originalShader;
-    }
-
-    public void OnMouseDown()
-    {
-        if (isMoving) return;
-
-        audio.Play();
-        isMoving = true;
-        StartCoroutine("startAscension");
     }
 
     private IEnumerator startAscension()

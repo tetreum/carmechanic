@@ -31,18 +31,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_LandSound; // the sound played when character touches back on ground.
 
         public Camera m_Camera;
-        private bool m_Jump;
-        private float m_YRotation;
-        private Vector2 m_Input;
-        private Vector3 m_MoveDir = Vector3.zero;
+        private AudioSource m_AudioSource;
         private CharacterController m_CharacterController;
         private CollisionFlags m_CollisionFlags;
-        private bool m_PreviouslyGrounded;
-        private Vector3 m_OriginalCameraPosition;
-        private float m_StepCycle;
-        private float m_NextStep;
+        private Vector2 m_Input;
+        private bool m_Jump;
         private bool m_Jumping;
-        private AudioSource m_AudioSource;
+        private Vector3 m_MoveDir = Vector3.zero;
+        private float m_NextStep;
+        private Vector3 m_OriginalCameraPosition;
+        private bool m_PreviouslyGrounded;
+        private float m_StepCycle;
+        private float m_YRotation;
 
         // Use this for initialization
         private void Start()
@@ -80,21 +80,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (!m_CharacterController.isGrounded && !m_Jumping && m_PreviouslyGrounded) m_MoveDir.y = 0f;
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
-        }
-
-        public void LookAt(Transform target)
-        {
-            transform.LookAt(target);
-            m_Camera.transform.LookAt(target);
-            m_MouseLook.Init(transform, m_Camera.transform);
-        }
-
-
-        private void PlayLandingSound()
-        {
-            m_AudioSource.clip = m_LandSound;
-            m_AudioSource.Play();
-            m_NextStep = m_StepCycle + .5f;
         }
 
 
@@ -136,6 +121,32 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
+        }
+
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            var body = hit.collider.attachedRigidbody;
+            //dont move the rigidbody if the character is on top of it
+            if (m_CollisionFlags == CollisionFlags.Below) return;
+
+            if (body == null || body.isKinematic) return;
+            body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
+        }
+
+        public void LookAt(Transform target)
+        {
+            transform.LookAt(target);
+            m_Camera.transform.LookAt(target);
+            m_MouseLook.Init(transform, m_Camera.transform);
+        }
+
+
+        private void PlayLandingSound()
+        {
+            m_AudioSource.clip = m_LandSound;
+            m_AudioSource.Play();
+            m_NextStep = m_StepCycle + .5f;
         }
 
 
@@ -230,17 +241,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void RotateView()
         {
             m_MouseLook.LookRotation(transform, m_Camera.transform);
-        }
-
-
-        private void OnControllerColliderHit(ControllerColliderHit hit)
-        {
-            var body = hit.collider.attachedRigidbody;
-            //dont move the rigidbody if the character is on top of it
-            if (m_CollisionFlags == CollisionFlags.Below) return;
-
-            if (body == null || body.isKinematic) return;
-            body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
         }
     }
 }

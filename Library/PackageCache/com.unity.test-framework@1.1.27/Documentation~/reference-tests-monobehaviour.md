@@ -1,11 +1,8 @@
 # MonoBehaviour tests
 
-`MonoBehaviourTest` is a [coroutine](https://docs.unity3d.com/ScriptReference/Coroutine.html) and a helper for
-writing [MonoBehaviour](https://docs.unity3d.com/ScriptReference/MonoBehaviour.html) tests.
+`MonoBehaviourTest` is a [coroutine](https://docs.unity3d.com/ScriptReference/Coroutine.html) and a helper for writing [MonoBehaviour](https://docs.unity3d.com/ScriptReference/MonoBehaviour.html) tests. 
 
-Yield a `MonoBehaviourTest` when using the `UnityTest` attribute to instantiate the `MonoBehaviour` you wish to test and
-wait for it to finish running. Implement the `IMonoBehaviourTest` interface on the `MonoBehaviour` to state when the
-test completes.
+Yield a `MonoBehaviourTest` when using the `UnityTest` attribute to instantiate the `MonoBehaviour` you wish to test and wait for it to finish running. Implement the `IMonoBehaviourTest` interface on the `MonoBehaviour` to state when the test completes.
 
 ## Example
 
@@ -33,8 +30,7 @@ public class MyMonoBehaviourTest : MonoBehaviour, IMonoBehaviourTest
 
 ## MonoBehaviourTest&lt;T&gt;
 
-This is a wrapper that allows running tests on `MonoBehaviour` scripts. Inherits
-from [CustomYieldInstruction](https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html).
+This is a wrapper that allows running tests on `MonoBehaviour` scripts. Inherits from [CustomYieldInstruction](https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html).
 
 ### Properties
 

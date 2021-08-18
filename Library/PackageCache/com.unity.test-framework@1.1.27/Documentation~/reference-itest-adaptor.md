@@ -1,8 +1,5 @@
 # ITestAdaptor
-
-`ITestAdaptor` is a representation of a node in the test tree implemented as a wrapper around
-the [NUnit](http://www.nunit.org/) [ITest](https://github.com/nunit/nunit/blob/master/src/NUnitFramework/framework/Interfaces/ITest.cs)
-interface.
+`ITestAdaptor` is a representation of a node in the test tree implemented as a wrapper around the [NUnit](http://www.nunit.org/) [ITest](https://github.com/nunit/nunit/blob/master/src/NUnitFramework/framework/Interfaces/ITest.cs) interface.
 
 ## Properties
 

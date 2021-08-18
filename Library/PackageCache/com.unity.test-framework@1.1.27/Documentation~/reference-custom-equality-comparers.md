@@ -1,7 +1,6 @@
 # Custom equality comparers
 
-To enable easier verification of custom Unity type values in your tests we provide you with some custom equality
-comparers:
+To enable easier verification of custom Unity type values in your tests we provide you with some custom equality comparers:
 
 * [ColorEqualityComparer](./reference-comparer-color.md)
 * [FloatEqualityComparer](./reference-comparer-float.md)
@@ -10,10 +9,7 @@ comparers:
 * [Vector3EqualityComparer](./reference-comparer-vector3.md)
 * [Vector4EqualityComparer](./reference-comparer-vector4.md)
 
-Use these classes to compare two objects of the same type for equality within the range of a given tolerance
-using [NUnit ](https://github.com/nunit/docs/wiki/Constraints)or [custom constraints](./reference-custom-constraints.md)
-. Call Instance to apply the default calculation error value to the comparison. To set a specific error value,
-instantiate a new comparer object using a one argument constructor `ctor(float error)`.
+Use these classes to compare two objects of the same type for equality within the range of a given tolerance using [NUnit ](https://github.com/nunit/docs/wiki/Constraints)or [custom constraints](./reference-custom-constraints.md) . Call Instance to apply the default calculation error value to the comparison. To set a specific error value, instantiate a new comparer object using a one argument constructor `ctor(float error)`.
 
 ## Static properties
 

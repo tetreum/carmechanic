@@ -2,8 +2,6 @@
 
 public class EditorTrigger : MonoBehaviour
 {
-    public Type type;
-
     public enum Type
     {
         TopLeftWheel = 1,
@@ -13,6 +11,8 @@ public class EditorTrigger : MonoBehaviour
         Hood = 5,
         Underbody = 6
     }
+
+    public Type type;
 
     public void OnMouseDown()
     {

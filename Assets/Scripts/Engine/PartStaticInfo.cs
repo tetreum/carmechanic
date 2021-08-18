@@ -1,6 +1,6 @@
 ﻿public class PartStaticInfo
 {
-    public int price = 0;
-    public string name;
     public string description;
+    public string name;
+    public int price = 0;
 }

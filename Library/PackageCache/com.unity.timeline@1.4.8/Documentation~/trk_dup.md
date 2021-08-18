@@ -1,7 +1,6 @@
 # Duplicating tracks
 
-Duplicating a track copies its clips, blends, and Inspector properties. If the duplicated track is bound to a
-GameObject, the binding is reset to **None**.
+Duplicating a track copies its clips, blends, and Inspector properties. If the duplicated track is bound to a GameObject, the binding is reset to **None**.
 
 ![Track binding for a duplicated track is reset to **None**](images/timeline_track_duplicate.png)
 

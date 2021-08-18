@@ -5,23 +5,11 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class CarEngine : MonoBehaviour
 {
-    public static CarEngine Instance;
-    public Mode currentMode = Mode.Disassembly;
-    public Section currentSection = Section.Body;
-
-    public Transform selectedCarPart => MouseOrbit.Instance.target;
-
     public enum Mode
     {
         Assembly = 1,
         Disassembly = 2,
         Status = 3
-    }
-
-    public enum Section
-    {
-        Engine = 1,
-        Body = 2
     }
 
     // if you add any new part, you will also have to edit this files:
@@ -59,7 +47,19 @@ public class CarEngine : MonoBehaviour
         TIMING_CHAIN = 28
     }
 
+    public enum Section
+    {
+        Engine = 1,
+        Body = 2
+    }
+
+    public static CarEngine Instance;
+    public Mode currentMode = Mode.Disassembly;
+    public Section currentSection = Section.Body;
+
     public Dictionary<int, CarPart> disassembledParts = new Dictionary<int, CarPart>();
+
+    public Transform selectedCarPart => MouseOrbit.Instance.target;
 
 
     public void Start()

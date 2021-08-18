@@ -4,12 +4,13 @@ using SQLite4Unity3d;
 
 public class PartData
 {
+    public int part;
+    public int quantity;
+
+    public int status = 100;
+
     // SQLite Net does only support single-column primary keys...
     [PrimaryKey] public string key => part + "-" + status;
-
-    public int part;
-    public int status = 100;
-    public int quantity;
 
     private LowData getData()
     {

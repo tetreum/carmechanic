@@ -7,7 +7,7 @@ apiRules:
       type: Namespace
   - exclude:
       uidRegex: ^Common
-      type: Namespace
+      type: Namespace  
   - exclude:
       uidRegex: ^Timeline\.Tests
       type: Namespace

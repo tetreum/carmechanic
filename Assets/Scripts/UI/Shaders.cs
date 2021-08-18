@@ -5,6 +5,16 @@ public class Shaders : MonoBehaviour
 {
     public static Shader _transparent;
 
+    public static Shader _outline;
+
+    public static Shader _silhouetteOnly;
+
+    public static Shader _standardOutlined;
+
+    public static Color Red = new Color(1f, 0f, 0f);
+    public static Color Orange = new Color(1f, 0.557f, 0f);
+    public static Color Green = new Color(0.2f, 1f, 0f);
+
     public static Shader transparent
     {
         get
@@ -13,8 +23,6 @@ public class Shaders : MonoBehaviour
             return _transparent;
         }
     }
-
-    public static Shader _outline;
 
     public static Shader outline
     {
@@ -25,8 +33,6 @@ public class Shaders : MonoBehaviour
         }
     }
 
-    public static Shader _silhouetteOnly;
-
     public static Shader silhouetteOnly
     {
         get
@@ -36,8 +42,6 @@ public class Shaders : MonoBehaviour
         }
     }
 
-    public static Shader _standardOutlined;
-
     public static Shader standardOutlined
     {
         get
@@ -46,10 +50,6 @@ public class Shaders : MonoBehaviour
             return _standardOutlined;
         }
     }
-
-    public static Color Red = new Color(1f, 0f, 0f);
-    public static Color Orange = new Color(1f, 0.557f, 0f);
-    public static Color Green = new Color(0.2f, 1f, 0f);
 
     // from http://answers.unity3d.com/questions/812240/convert-hex-int-to-colorcolor32.html
     public static Color hexToColor(string hex)
