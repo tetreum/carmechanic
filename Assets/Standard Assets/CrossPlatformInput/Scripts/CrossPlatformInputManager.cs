@@ -30,6 +30,9 @@ namespace UnityStandardAssets.CrossPlatformInput
 #endif
         }
 
+
+        public static Vector3 mousePosition => activeInput.MousePosition();
+
         public static void SwitchActiveInputMethod(ActiveInputMethod activeInputMethod)
         {
             switch (activeInputMethod)
@@ -161,9 +164,6 @@ namespace UnityStandardAssets.CrossPlatformInput
         }
 
 
-        public static Vector3 mousePosition => activeInput.MousePosition();
-
-
         public static void SetVirtualMousePositionX(float f)
         {
             activeInput.SetVirtualMousePositionX(f);
@@ -187,10 +187,6 @@ namespace UnityStandardAssets.CrossPlatformInput
         // Could also be implemented by other input devices - kinect, electronic sensors, etc
         public class VirtualAxis
         {
-            public string name { get; }
-            public bool matchWithInputManager { get; }
-
-
             public VirtualAxis(string name)
                 : this(name, true)
             {
@@ -202,6 +198,15 @@ namespace UnityStandardAssets.CrossPlatformInput
                 this.name = name;
                 matchWithInputManager = matchToInputSettings;
             }
+
+            public string name { get; }
+            public bool matchWithInputManager { get; }
+
+
+            public float GetValue { get; private set; }
+
+
+            public float GetValueRaw => GetValue;
 
 
             // removes an axes from the cross platform input system
@@ -216,12 +221,6 @@ namespace UnityStandardAssets.CrossPlatformInput
             {
                 GetValue = value;
             }
-
-
-            public float GetValue { get; private set; }
-
-
-            public float GetValueRaw => GetValue;
         }
 
         // a controller gameobject (eg. a virtual GUI button) should call the
@@ -229,9 +228,6 @@ namespace UnityStandardAssets.CrossPlatformInput
         // Get/Down/Up state of this button.
         public class VirtualButton
         {
-            public string name { get; }
-            public bool matchWithInputManager { get; }
-
             private int m_LastPressedFrame = -5;
             private int m_ReleasedFrame = -5;
 
@@ -247,6 +243,19 @@ namespace UnityStandardAssets.CrossPlatformInput
                 this.name = name;
                 matchWithInputManager = matchToInputSettings;
             }
+
+            public string name { get; }
+            public bool matchWithInputManager { get; }
+
+
+            // these are the states of the button which can be read via the cross platform input system
+            public bool GetButton { get; private set; }
+
+
+            public bool GetButtonDown => m_LastPressedFrame - Time.frameCount == -1;
+
+
+            public bool GetButtonUp => m_ReleasedFrame == Time.frameCount - 1;
 
 
             // A controller gameobject should call this function when the button is pressed down
@@ -271,16 +280,6 @@ namespace UnityStandardAssets.CrossPlatformInput
             {
                 UnRegisterVirtualButton(name);
             }
-
-
-            // these are the states of the button which can be read via the cross platform input system
-            public bool GetButton { get; private set; }
-
-
-            public bool GetButtonDown => m_LastPressedFrame - Time.frameCount == -1;
-
-
-            public bool GetButtonUp => m_ReleasedFrame == Time.frameCount - 1;
         }
     }
 }

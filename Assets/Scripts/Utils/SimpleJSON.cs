@@ -757,6 +757,21 @@ namespace SimpleJSON
 
         public override int Count => m_List.Count;
 
+        public override IEnumerable<JSONNode> Children
+        {
+            get
+            {
+                foreach (var N in m_List)
+                    yield return N;
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            foreach (var N in m_List)
+                yield return N;
+        }
+
         public override void Add(string aKey, JSONNode aItem)
         {
             m_List.Add(aItem);
@@ -775,21 +790,6 @@ namespace SimpleJSON
         {
             m_List.Remove(aNode);
             return aNode;
-        }
-
-        public override IEnumerable<JSONNode> Children
-        {
-            get
-            {
-                foreach (var N in m_List)
-                    yield return N;
-            }
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            foreach (var N in m_List)
-                yield return N;
         }
 
         public override string ToString()
@@ -886,6 +886,21 @@ namespace SimpleJSON
 
         public override int Count => m_Dict.Count;
 
+        public override IEnumerable<JSONNode> Children
+        {
+            get
+            {
+                foreach (var N in m_Dict)
+                    yield return N.Value;
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            foreach (var N in m_Dict)
+                yield return N;
+        }
+
 
         public override void Add(string aKey, JSONNode aItem)
         {
@@ -932,21 +947,6 @@ namespace SimpleJSON
             {
                 return null;
             }
-        }
-
-        public override IEnumerable<JSONNode> Children
-        {
-            get
-            {
-                foreach (var N in m_Dict)
-                    yield return N.Value;
-            }
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            foreach (var N in m_Dict)
-                yield return N;
         }
 
         public override string ToString()
@@ -1011,17 +1011,6 @@ namespace SimpleJSON
     {
         private string m_Data;
 
-
-        public override string Value
-        {
-            get => m_Data;
-            set
-            {
-                m_Data = value;
-                Tag = JSONBinaryTag.Value;
-            }
-        }
-
         public JSONData(string aData)
         {
             m_Data = aData;
@@ -1046,6 +1035,17 @@ namespace SimpleJSON
         public JSONData(int aData)
         {
             AsInt = aData;
+        }
+
+
+        public override string Value
+        {
+            get => m_Data;
+            set
+            {
+                m_Data = value;
+                Tag = JSONBinaryTag.Value;
+            }
         }
 
         public override string ToString()
@@ -1117,8 +1117,8 @@ namespace SimpleJSON
 
     internal class JSONLazyCreator : JSONNode
     {
-        private JSONNode m_Node;
         private readonly string m_Key;
+        private JSONNode m_Node;
 
         public JSONLazyCreator(JSONNode aNode)
         {
@@ -1130,15 +1130,6 @@ namespace SimpleJSON
         {
             m_Node = aNode;
             m_Key = aKey;
-        }
-
-        private void Set(JSONNode aVal)
-        {
-            if (m_Key == null)
-                m_Node.Add(aVal);
-            else
-                m_Node.Add(m_Key, aVal);
-            m_Node = null; // Be GC friendly.
         }
 
         public override JSONNode this[int aIndex]
@@ -1161,59 +1152,6 @@ namespace SimpleJSON
                 tmp.Add(aKey, value);
                 Set(tmp);
             }
-        }
-
-        public override void Add(JSONNode aItem)
-        {
-            var tmp = new JSONArray();
-            tmp.Add(aItem);
-            Set(tmp);
-        }
-
-        public override void Add(string aKey, JSONNode aItem)
-        {
-            var tmp = new JSONClass();
-            tmp.Add(aKey, aItem);
-            Set(tmp);
-        }
-
-        public static bool operator ==(JSONLazyCreator a, object b)
-        {
-            if (b == null)
-                return true;
-            return ReferenceEquals(a, b);
-        }
-
-        public static bool operator !=(JSONLazyCreator a, object b)
-        {
-            return !(a == b);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return true;
-            return ReferenceEquals(this, obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return "";
-        }
-
-        public override string ToString(string aPrefix)
-        {
-            return "";
-        }
-
-        public override string ToJSON(int prefix)
-        {
-            return "";
         }
 
         public override int AsInt
@@ -1294,6 +1232,68 @@ namespace SimpleJSON
                 Set(tmp);
                 return tmp;
             }
+        }
+
+        private void Set(JSONNode aVal)
+        {
+            if (m_Key == null)
+                m_Node.Add(aVal);
+            else
+                m_Node.Add(m_Key, aVal);
+            m_Node = null; // Be GC friendly.
+        }
+
+        public override void Add(JSONNode aItem)
+        {
+            var tmp = new JSONArray();
+            tmp.Add(aItem);
+            Set(tmp);
+        }
+
+        public override void Add(string aKey, JSONNode aItem)
+        {
+            var tmp = new JSONClass();
+            tmp.Add(aKey, aItem);
+            Set(tmp);
+        }
+
+        public static bool operator ==(JSONLazyCreator a, object b)
+        {
+            if (b == null)
+                return true;
+            return ReferenceEquals(a, b);
+        }
+
+        public static bool operator !=(JSONLazyCreator a, object b)
+        {
+            return !(a == b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return true;
+            return ReferenceEquals(this, obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "";
+        }
+
+        public override string ToString(string aPrefix)
+        {
+            return "";
+        }
+
+        public override string ToJSON(int prefix)
+        {
+            return "";
         }
     }
     // End of JSONLazyCreator

@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637649075942186967
-    m_Hash: 1849246787
+      ticks: 637649117685205347
+    m_Hash: 2478558466
   m_LockFileStatus:
     m_FilePath: C:/Users/gabri/Desktop/projects/carmechanic/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637649075942196997
-    m_Hash: 1906443578
+      ticks: 637649117685345362
+    m_Hash: 1711965053
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -92,12 +92,233 @@ m_PackageAssets:
         url: 
         revision: 
         path: 
-    - packageId: com.unity.collab-proxy@1.7.1
+    - packageId: com.unity.burst@1.4.11
       testable: 0
       isDirectDependency: 1
-      version: 1.7.1
+      version: 1.4.11
       source: 1
-      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.collab-proxy@1.7.1
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.burst@1.4.11
+      assetPath: Packages/com.unity.burst
+      name: com.unity.burst
+      displayName: Burst
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Burst is a compiler that translates from IL/.NET bytecode to highly
+        optimized native code using LLVM.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.2.4-preview.5
+        - 0.2.4-preview.7
+        - 0.2.4-preview.11
+        - 0.2.4-preview.12
+        - 0.2.4-preview.13
+        - 0.2.4-preview.14
+        - 0.2.4-preview.15
+        - 0.2.4-preview.16
+        - 0.2.4-preview.17
+        - 0.2.4-preview.18
+        - 0.2.4-preview.19
+        - 0.2.4-preview.20
+        - 0.2.4-preview.21
+        - 0.2.4-preview.22
+        - 0.2.4-preview.23
+        - 0.2.4-preview.24
+        - 0.2.4-preview.25
+        - 0.2.4-preview.30
+        - 0.2.4-preview.31
+        - 0.2.4-preview.33
+        - 0.2.4-preview.34
+        - 0.2.4-preview.37
+        - 0.2.4-preview.41
+        - 0.2.4-preview.45
+        - 0.2.4-preview.48
+        - 0.2.4-preview.50
+        - 1.1.0-preview.2
+        - 1.1.0-preview.3
+        - 1.1.0-preview.4
+        - 1.1.1
+        - 1.1.2
+        - 1.1.3-preview.3
+        - 1.2.0-preview.1
+        - 1.2.0-preview.5
+        - 1.2.0-preview.6
+        - 1.2.0-preview.8
+        - 1.2.0-preview.9
+        - 1.2.0-preview.10
+        - 1.2.0-preview.11
+        - 1.2.0-preview.12
+        - 1.2.0
+        - 1.2.1
+        - 1.2.2
+        - 1.2.3
+        - 1.3.0-preview.1
+        - 1.3.0-preview.2
+        - 1.3.0-preview.3
+        - 1.3.0-preview.4
+        - 1.3.0-preview.5
+        - 1.3.0-preview.6
+        - 1.3.0-preview.7
+        - 1.3.0-preview.8
+        - 1.3.0-preview.9
+        - 1.3.0-preview.10
+        - 1.3.0-preview.11
+        - 1.3.0-preview.12
+        - 1.3.0-preview.13
+        - 1.3.0
+        - 1.3.1
+        - 1.3.2
+        - 1.3.3
+        - 1.3.4
+        - 1.3.5
+        - 1.3.6
+        - 1.3.7
+        - 1.3.8
+        - 1.3.9
+        - 1.4.0-pre.1
+        - 1.4.0-preview.1
+        - 1.4.0-preview.2
+        - 1.4.0-preview.3
+        - 1.4.0-preview.4
+        - 1.4.0-preview.5
+        - 1.4.1-pre.1
+        - 1.4.1-pre.2
+        - 1.4.1
+        - 1.4.2
+        - 1.4.3
+        - 1.4.4-preview.1
+        - 1.4.4-preview.2
+        - 1.4.4
+        - 1.4.5
+        - 1.4.6
+        - 1.4.7
+        - 1.4.8
+        - 1.4.9
+        - 1.4.11
+        - 1.5.0-pre.3
+        - 1.5.0-pre.4
+        - 1.5.0-pre.5
+        - 1.5.0
+        - 1.5.1
+        - 1.5.2
+        - 1.5.3
+        - 1.5.4
+        - 1.5.5
+        - 1.5.6-preview.1
+        - 1.5.6
+        - 1.6.0-pre.2
+        - 1.6.0-pre.3
+        compatible:
+        - 1.1.1
+        - 1.1.2
+        - 1.1.3-preview.3
+        - 1.2.0-preview.1
+        - 1.2.0-preview.5
+        - 1.2.0-preview.6
+        - 1.2.0-preview.8
+        - 1.2.0-preview.9
+        - 1.2.0-preview.10
+        - 1.2.0-preview.11
+        - 1.2.0-preview.12
+        - 1.2.0
+        - 1.2.1
+        - 1.2.2
+        - 1.2.3
+        - 1.3.0-preview.1
+        - 1.3.0-preview.2
+        - 1.3.0-preview.3
+        - 1.3.0-preview.4
+        - 1.3.0-preview.5
+        - 1.3.0-preview.6
+        - 1.3.0-preview.7
+        - 1.3.0-preview.8
+        - 1.3.0-preview.9
+        - 1.3.0-preview.10
+        - 1.3.0-preview.11
+        - 1.3.0-preview.12
+        - 1.3.0-preview.13
+        - 1.3.0
+        - 1.3.1
+        - 1.3.2
+        - 1.3.3
+        - 1.3.4
+        - 1.3.5
+        - 1.3.6
+        - 1.3.7
+        - 1.3.8
+        - 1.3.9
+        - 1.4.0-pre.1
+        - 1.4.0-preview.1
+        - 1.4.0-preview.2
+        - 1.4.0-preview.3
+        - 1.4.0-preview.4
+        - 1.4.0-preview.5
+        - 1.4.1-pre.1
+        - 1.4.1-pre.2
+        - 1.4.1
+        - 1.4.2
+        - 1.4.3
+        - 1.4.4-preview.1
+        - 1.4.4-preview.2
+        - 1.4.4
+        - 1.4.5
+        - 1.4.6
+        - 1.4.7
+        - 1.4.8
+        - 1.4.9
+        - 1.4.11
+        - 1.5.0-pre.3
+        - 1.5.0-pre.4
+        - 1.5.0-pre.5
+        - 1.5.0
+        - 1.5.1
+        - 1.5.2
+        - 1.5.3
+        - 1.5.4
+        - 1.5.5
+        - 1.5.6-preview.1
+        - 1.5.6
+        - 1.6.0-pre.2
+        - 1.6.0-pre.3
+        verified: 1.4.11
+      dependencies:
+      - name: com.unity.mathematics
+        version: 1.2.1
+      resolvedDependencies:
+      - name: com.unity.mathematics
+        version: 1.2.1
+      keywords: []
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637647218870000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/burst.git
+        revision: c83df660c0d74770426df5d334e9062f74502b9c
+        path: 
+    - packageId: com.unity.collab-proxy@1.9.0
+      testable: 0
+      isDirectDependency: 1
+      version: 1.9.0
+      source: 1
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.collab-proxy@1.9.0
       assetPath: Packages/com.unity.collab-proxy
       name: com.unity.collab-proxy
       displayName: Version Control
@@ -163,12 +384,8 @@ m_PackageAssets:
         - 2.1.0-preview.5
         - 2.1.0-preview.6
         verified: 1.7.1
-      dependencies:
-      - name: com.unity.nuget.newtonsoft-json
-        version: 2.0.0
-      resolvedDependencies:
-      - name: com.unity.nuget.newtonsoft-json
-        version: 2.0.0
+      dependencies: []
+      resolvedDependencies: []
       keywords:
       - backup
       - cloud
@@ -195,13 +412,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637616921650000000
+      datePublishedTicks: 637637594290000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/com.unity.cloud.collaborate.git
-        revision: 30ef59f552633de9ff0401db4e73ac89982d4ac0
+        revision: 51447944a1e7d94937e6b7f9e887d58f5097ed13
         path: 
     - packageId: com.unity.ide.rider@2.0.7
       testable: 0
@@ -465,6 +682,178 @@ m_PackageAssets:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/com.unity.ide.vscode.git
         revision: b5ec9b38109e52b1b26597d521e4df75e042ebb9
+        path: 
+    - packageId: com.unity.render-pipelines.high-definition@10.5.1
+      testable: 0
+      isDirectDependency: 1
+      version: 10.5.1
+      source: 1
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.render-pipelines.high-definition@10.5.1
+      assetPath: Packages/com.unity.render-pipelines.high-definition
+      name: com.unity.render-pipelines.high-definition
+      displayName: High Definition RP
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: The High Definition Render Pipeline (HDRP) is a high-fidelity
+        Scriptable Render Pipeline built by Unity to target modern (Compute Shader
+        compatible) platforms. HDRP utilizes Physically-Based Lighting techniques,
+        linear lighting, HDR lighting, and a configurable hybrid Tile/Cluster deferred/Forward
+        lighting architecture and gives you the tools you need to create games, technical
+        demos, animations, and more to a high graphical standard.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.1.21
+        - 0.1.27
+        - 0.1.28
+        - 1.0.0-beta
+        - 1.0.1-beta
+        - 1.1.1-preview
+        - 1.1.2-preview
+        - 1.1.4-preview
+        - 1.1.5-preview
+        - 1.1.8-preview
+        - 1.1.10-preview
+        - 1.1.11-preview
+        - 2.0.1-preview
+        - 2.0.3-preview
+        - 2.0.4-preview
+        - 2.0.4-preview.1
+        - 2.0.5-preview
+        - 2.0.6-preview
+        - 2.0.7-preview
+        - 2.0.8-preview
+        - 3.0.0-preview
+        - 3.1.0-preview
+        - 3.3.0-preview
+        - 4.0.0-preview
+        - 4.0.1-preview
+        - 4.1.0-preview
+        - 4.2.0-preview
+        - 4.3.0-preview
+        - 4.6.0-preview
+        - 4.8.0-preview
+        - 4.9.0-preview
+        - 4.10.0-preview
+        - 5.0.0-preview
+        - 5.1.0-preview
+        - 5.2.0-preview
+        - 5.2.1-preview
+        - 5.2.2-preview
+        - 5.2.3-preview
+        - 5.3.1-preview
+        - 5.6.1-preview
+        - 5.7.2-preview
+        - 5.8.2-preview
+        - 5.9.0-preview
+        - 5.10.0-preview
+        - 5.13.0-preview
+        - 5.16.1-preview
+        - 6.5.2-preview
+        - 6.5.3-preview
+        - 6.7.1-preview
+        - 6.9.0-preview
+        - 6.9.1-preview
+        - 6.9.2-preview
+        - 7.0.0
+        - 7.0.1
+        - 7.1.1
+        - 7.1.2
+        - 7.1.5
+        - 7.1.6
+        - 7.1.7
+        - 7.1.8
+        - 7.2.0
+        - 7.2.1
+        - 7.3.1
+        - 7.4.1
+        - 7.4.2
+        - 7.4.3
+        - 7.5.1
+        - 7.5.2
+        - 7.5.3
+        - 7.6.0
+        - 7.7.0
+        - 7.7.1
+        - 8.0.1
+        - 8.1.0
+        - 8.2.0
+        - 8.3.1
+        - 9.0.0-preview.13
+        - 9.0.0-preview.33
+        - 9.0.0-preview.54
+        - 9.0.0-preview.71
+        - 10.0.0-preview.27
+        - 10.1.0
+        - 10.2.0
+        - 10.2.1
+        - 10.2.2
+        - 10.3.1
+        - 10.3.2
+        - 10.4.0
+        - 10.5.0
+        - 10.5.1
+        - 10.6.0
+        compatible:
+        - 10.5.1
+        - 10.6.0
+        verified: 10.5.1
+      dependencies:
+      - name: com.unity.render-pipelines.core
+        version: 10.5.1
+      - name: com.unity.shadergraph
+        version: 10.5.1
+      - name: com.unity.visualeffectgraph
+        version: 10.5.1
+      - name: com.unity.render-pipelines.high-definition-config
+        version: 10.5.1
+      resolvedDependencies:
+      - name: com.unity.render-pipelines.core
+        version: 10.5.1
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      - name: com.unity.shadergraph
+        version: 10.5.1
+      - name: com.unity.searcher
+        version: 4.3.2
+      - name: com.unity.visualeffectgraph
+        version: 10.5.1
+      - name: com.unity.render-pipelines.high-definition-config
+        version: 10.5.1
+      keywords:
+      - graphics
+      - performance
+      - rendering
+      - render
+      - pipeline
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637605793240000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/Graphics.git
+        revision: 73f32e8fcc2d0cbf3b73a16a5e30eb5cede41576
         path: 
     - packageId: com.unity.test-framework@1.1.27
       testable: 0
@@ -2735,59 +3124,138 @@ m_PackageAssets:
         url: https://github.cds.internal.unity3d.com/unity/com.unity.ext.nunit.git
         revision: 29ea4d6504a5f58fb3a6934db839aa80ae6d9d88
         path: 
-    - packageId: com.unity.nuget.newtonsoft-json@2.0.0
+    - packageId: com.unity.render-pipelines.core@10.5.1
       testable: 0
       isDirectDependency: 0
-      version: 2.0.0
+      version: 10.5.1
       source: 1
-      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0
-      assetPath: Packages/com.unity.nuget.newtonsoft-json
-      name: com.unity.nuget.newtonsoft-json
-      displayName: Newtonsoft Json
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.render-pipelines.core@10.5.1
+      assetPath: Packages/com.unity.render-pipelines.core
+      name: com.unity.render-pipelines.core
+      displayName: Core RP Library
       author:
         name: 
         email: 
         url: 
       category: 
       type: 
-      description: 'Newtonsoft Json for use in Unity projects and Unity packages.
-        Currently synced to version 12.0.2.
-
-
-        This package is used for advanced
-        json serialization and deserialization. Most Unity users will be better suited
-        using the existing json tools built into Unity.
-
-        To avoid assembly
-        clashes, please use this package if you intend to use Newtonsoft Json.'
+      description: SRP Core makes it easier to create or customize a Scriptable Render
+        Pipeline (SRP). SRP Core contains reusable code, including boilerplate code
+        for working with platform-specific graphics APIs, utility functions for common
+        rendering operations, and  shader libraries. The code in SRP Core is use
+        by the High Definition Render Pipeline (HDRP) and Universal Render Pipeline
+        (URP). If you are creating a custom SRP from scratch or customizing a prebuilt
+        SRP, using SRP Core will save you time.
       status: 4
       errors: []
       versions:
         all:
-        - 1.0.0-preview.2
-        - 1.0.0-preview.3
-        - 1.0.0-preview.4
-        - 1.0.1-preview.1
-        - 1.1.2
-        - 2.0.0-preview
-        - 2.0.0-preview.1
-        - 2.0.0-preview.2
-        - 2.0.0
-        - 2.0.1-preview.1
+        - 0.1.21
+        - 0.1.27
+        - 0.1.28
+        - 1.0.0-beta
+        - 1.0.1-beta
+        - 1.1.1-preview
+        - 1.1.2-preview
+        - 1.1.4-preview
+        - 1.1.5-preview
+        - 1.1.8-preview
+        - 1.1.10-preview
+        - 1.1.11-preview
+        - 2.0.1-preview
+        - 2.0.3-preview
+        - 2.0.4-preview
+        - 2.0.4-preview.1
+        - 2.0.5-preview
+        - 2.0.6-preview
+        - 2.0.7-preview
+        - 2.0.8-preview
+        - 3.0.0-preview
+        - 3.1.0-preview
+        - 3.3.0-preview
+        - 4.0.0-preview
+        - 4.0.1-preview
+        - 4.1.0-preview
+        - 4.2.0-preview
+        - 4.3.0-preview
+        - 4.6.0-preview
+        - 4.8.0-preview
+        - 4.9.0-preview
+        - 4.10.0-preview
+        - 5.0.0-preview
+        - 5.1.0
+        - 5.2.0
+        - 5.2.1
+        - 5.2.2
+        - 5.2.3
+        - 5.3.1
+        - 5.6.1
+        - 5.7.2
+        - 5.8.2
+        - 5.9.0
+        - 5.10.0
+        - 5.13.0
+        - 5.16.1
+        - 6.5.2
+        - 6.5.3
+        - 6.7.1
+        - 6.9.0
+        - 6.9.1
+        - 6.9.2
+        - 7.0.0
+        - 7.0.1
+        - 7.1.1
+        - 7.1.2
+        - 7.1.5
+        - 7.1.6
+        - 7.1.7
+        - 7.1.8
+        - 7.2.0
+        - 7.2.1
+        - 7.3.1
+        - 7.4.1
+        - 7.4.2
+        - 7.4.3
+        - 7.5.1
+        - 7.5.2
+        - 7.5.3
+        - 7.6.0
+        - 7.7.0
+        - 7.7.1
+        - 8.0.1
+        - 8.1.0
+        - 8.2.0
+        - 8.3.1
+        - 9.0.0-preview.13
+        - 9.0.0-preview.35
+        - 9.0.0-preview.38
+        - 9.0.0-preview.60
+        - 9.0.0-preview.77
+        - 10.0.0-preview.30
+        - 10.1.0
+        - 10.2.0
+        - 10.2.1
+        - 10.2.2
+        - 10.3.1
+        - 10.3.2
+        - 10.4.0
+        - 10.5.0
+        - 10.5.1
+        - 10.6.0
         compatible:
-        - 1.0.0-preview.2
-        - 1.0.0-preview.3
-        - 1.0.0-preview.4
-        - 1.0.1-preview.1
-        - 1.1.2
-        - 2.0.0-preview
-        - 2.0.0-preview.1
-        - 2.0.0-preview.2
-        - 2.0.0
-        - 2.0.1-preview.1
-        verified: 2.0.0
-      dependencies: []
-      resolvedDependencies: []
+        - 10.5.1
+        - 10.6.0
+        verified: 10.5.1
+      dependencies:
+      - name: com.unity.ugui
+        version: 1.0.0
+      resolvedDependencies:
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
       keywords: []
       registry:
         id: main
@@ -2801,13 +3269,549 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637237898320000000
+      datePublishedTicks: 637605791650000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
-        url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.newtonsoft-json.git
-        revision: d2fd6ed876261bbd82f59199ad711e7667bf633a
+        url: git+https://github.com/Unity-Technologies/Graphics.git
+        revision: 73f32e8fcc2d0cbf3b73a16a5e30eb5cede41576
+        path: 
+    - packageId: com.unity.shadergraph@10.5.1
+      testable: 0
+      isDirectDependency: 0
+      version: 10.5.1
+      source: 1
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.shadergraph@10.5.1
+      assetPath: Packages/com.unity.shadergraph
+      name: com.unity.shadergraph
+      displayName: Shader Graph
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: The Shader Graph package adds a visual Shader editing tool to
+        Unity. You can use this tool to create Shaders in a visual way instead of
+        writing code. Specific render pipelines can implement specific graph features.
+        Currently, both the High Definition Rendering Pipeline and the Universal
+        Rendering Pipeline support Shader Graph.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.1.8
+        - 0.1.9
+        - 0.1.17
+        - 1.0.0-beta
+        - 1.1.1-preview
+        - 1.1.2-preview
+        - 1.1.3-preview
+        - 1.1.4-preview
+        - 1.1.5-preview
+        - 1.1.6-preview
+        - 1.1.8-preview
+        - 1.1.9-preview
+        - 2.0.1-preview
+        - 2.0.3-preview
+        - 2.0.4-preview
+        - 2.0.4-preview.1
+        - 2.0.5-preview
+        - 2.0.6-preview
+        - 2.0.7-preview
+        - 2.0.8-preview
+        - 3.0.0-preview
+        - 3.1.0-preview
+        - 3.3.0-preview
+        - 4.0.0-preview
+        - 4.0.1-preview
+        - 4.1.0-preview
+        - 4.2.0-preview
+        - 4.3.0-preview
+        - 4.6.0-preview
+        - 4.8.0-preview
+        - 4.9.0-preview
+        - 4.10.0-preview
+        - 5.0.0-preview
+        - 5.1.0
+        - 5.2.0
+        - 5.2.1
+        - 5.2.2
+        - 5.2.3
+        - 5.3.1
+        - 5.6.1
+        - 5.7.2
+        - 5.8.2
+        - 5.9.0
+        - 5.10.0
+        - 5.13.0
+        - 5.16.1
+        - 6.5.2
+        - 6.5.3
+        - 6.7.1
+        - 6.9.0
+        - 6.9.1
+        - 6.9.2
+        - 7.0.0
+        - 7.0.1
+        - 7.1.1
+        - 7.1.2
+        - 7.1.5
+        - 7.1.6
+        - 7.1.7
+        - 7.1.8
+        - 7.2.0
+        - 7.2.1
+        - 7.3.1
+        - 7.4.1
+        - 7.4.2
+        - 7.4.3
+        - 7.5.1
+        - 7.5.2
+        - 7.5.3
+        - 7.6.0
+        - 7.7.0
+        - 7.7.1
+        - 8.0.1
+        - 8.1.0
+        - 8.2.0
+        - 8.3.1
+        - 9.0.0-preview.14
+        - 9.0.0-preview.34
+        - 9.0.0-preview.55
+        - 9.0.0-preview.72
+        - 10.0.0-preview.27
+        - 10.1.0
+        - 10.2.0
+        - 10.2.1
+        - 10.2.2
+        - 10.3.1
+        - 10.3.2
+        - 10.4.0
+        - 10.5.0
+        - 10.5.1
+        - 10.6.0
+        compatible:
+        - 10.5.1
+        - 10.6.0
+        verified: 10.5.1
+      dependencies:
+      - name: com.unity.render-pipelines.core
+        version: 10.5.1
+      - name: com.unity.searcher
+        version: 4.3.2
+      resolvedDependencies:
+      - name: com.unity.render-pipelines.core
+        version: 10.5.1
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      - name: com.unity.searcher
+        version: 4.3.2
+      keywords: []
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637605793850000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/Graphics.git
+        revision: 73f32e8fcc2d0cbf3b73a16a5e30eb5cede41576
+        path: 
+    - packageId: com.unity.visualeffectgraph@10.5.1
+      testable: 0
+      isDirectDependency: 0
+      version: 10.5.1
+      source: 1
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.visualeffectgraph@10.5.1
+      assetPath: Packages/com.unity.visualeffectgraph
+      name: com.unity.visualeffectgraph
+      displayName: Visual Effect Graph
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: The Visual Effect Graph is a node based visual effect editor.
+        It allows you to author next generation visual effects that Unity simulates
+        directly on the GPU. The Visual Effect Graph is production-ready for the
+        High Definition Render Pipeline and runs on all platforms supported by it.
+        Full support for the Universal Render Pipeline and compatible mobile devices
+        is still in development.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 4.3.0-preview
+        - 4.6.0-preview
+        - 4.8.0-preview
+        - 4.9.0-preview
+        - 4.10.0-preview
+        - 5.2.0-preview
+        - 5.2.1-preview
+        - 5.2.3-preview
+        - 5.3.1-preview
+        - 5.6.1-preview
+        - 5.7.2-preview
+        - 5.8.2-preview
+        - 5.10.0-preview
+        - 5.13.0-preview
+        - 5.16.1-preview
+        - 6.5.2-preview
+        - 6.5.3-preview
+        - 6.7.1-preview
+        - 6.9.0-preview
+        - 6.9.1-preview
+        - 6.9.2-preview
+        - 7.0.0
+        - 7.0.1
+        - 7.1.1
+        - 7.1.2
+        - 7.1.5
+        - 7.1.6
+        - 7.1.7
+        - 7.1.8
+        - 7.2.0
+        - 7.2.1
+        - 7.3.1
+        - 7.4.1
+        - 7.4.2
+        - 7.4.3
+        - 7.5.1
+        - 7.5.2
+        - 7.5.3
+        - 7.6.0
+        - 7.7.0
+        - 7.7.1
+        - 8.0.1
+        - 8.1.0
+        - 8.2.0
+        - 8.3.1
+        - 9.0.0-preview.13
+        - 9.0.0-preview.33
+        - 9.0.0-preview.54
+        - 9.0.0-preview.71
+        - 10.0.0-preview.27
+        - 10.1.0
+        - 10.2.0
+        - 10.2.1
+        - 10.2.2
+        - 10.3.1
+        - 10.3.2
+        - 10.4.0
+        - 10.5.0
+        - 10.5.1
+        - 10.6.0
+        compatible:
+        - 10.5.1
+        - 10.6.0
+        verified: 10.5.1
+      dependencies:
+      - name: com.unity.shadergraph
+        version: 10.5.1
+      - name: com.unity.render-pipelines.core
+        version: 10.5.1
+      resolvedDependencies:
+      - name: com.unity.shadergraph
+        version: 10.5.1
+      - name: com.unity.render-pipelines.core
+        version: 10.5.1
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      - name: com.unity.searcher
+        version: 4.3.2
+      keywords:
+      - vfx
+      - visualeffect
+      - graph
+      - effect
+      - particles
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637605796850000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/Graphics.git
+        revision: 73f32e8fcc2d0cbf3b73a16a5e30eb5cede41576
+        path: 
+    - packageId: com.unity.render-pipelines.high-definition-config@10.5.1
+      testable: 0
+      isDirectDependency: 0
+      version: 10.5.1
+      source: 1
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.render-pipelines.high-definition-config@10.5.1
+      assetPath: Packages/com.unity.render-pipelines.high-definition-config
+      name: com.unity.render-pipelines.high-definition-config
+      displayName: High Definition RP Config
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Configuration files for the High Definition Render Pipeline.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 7.0.0
+        - 7.0.1
+        - 7.1.1
+        - 7.1.2
+        - 7.1.5
+        - 7.1.6
+        - 7.1.7
+        - 7.1.8
+        - 7.2.0
+        - 7.2.1
+        - 7.3.1
+        - 7.4.1
+        - 7.4.2
+        - 7.4.3
+        - 7.5.1
+        - 7.5.2
+        - 7.5.3
+        - 7.6.0
+        - 7.7.0
+        - 7.7.1
+        - 8.0.1
+        - 8.1.0
+        - 8.2.0
+        - 8.3.1
+        - 9.0.0-preview.15
+        - 9.0.0-preview.35
+        - 9.0.0-preview.57
+        - 9.0.0-preview.74
+        - 10.0.0-preview.27
+        - 10.1.0
+        - 10.2.0
+        - 10.2.1
+        - 10.2.2
+        - 10.3.1
+        - 10.3.2
+        - 10.4.0
+        - 10.5.0
+        - 10.5.1
+        - 10.6.0
+        compatible:
+        - 10.5.1
+        - 10.6.0
+        verified: 10.5.1
+      dependencies:
+      - name: com.unity.render-pipelines.core
+        version: 10.5.1
+      resolvedDependencies:
+      - name: com.unity.render-pipelines.core
+        version: 10.5.1
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      keywords: []
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637605793550000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/Graphics.git
+        revision: 73f32e8fcc2d0cbf3b73a16a5e30eb5cede41576
+        path: 
+    - packageId: com.unity.mathematics@1.2.1
+      testable: 0
+      isDirectDependency: 0
+      version: 1.2.1
+      source: 1
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.mathematics@1.2.1
+      assetPath: Packages/com.unity.mathematics
+      name: com.unity.mathematics
+      displayName: Mathematics
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Unity's C# SIMD math library providing vector types and math functions
+        with a shader like syntax.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.0.12-preview.2
+        - 0.0.12-preview.5
+        - 0.0.12-preview.8
+        - 0.0.12-preview.10
+        - 0.0.12-preview.11
+        - 0.0.12-preview.13
+        - 0.0.12-preview.17
+        - 0.0.12-preview.19
+        - 0.0.12-preview.20
+        - 1.0.0-preview.1
+        - 1.0.1
+        - 1.1.0-preview.1
+        - 1.1.0
+        - 1.2.1
+        compatible:
+        - 0.0.12-preview.2
+        - 0.0.12-preview.5
+        - 0.0.12-preview.8
+        - 0.0.12-preview.10
+        - 0.0.12-preview.11
+        - 0.0.12-preview.13
+        - 0.0.12-preview.17
+        - 0.0.12-preview.19
+        - 0.0.12-preview.20
+        - 1.0.0-preview.1
+        - 1.0.1
+        - 1.1.0-preview.1
+        - 1.1.0
+        - 1.2.1
+        verified: 1.2.1
+      dependencies: []
+      resolvedDependencies: []
+      keywords:
+      - unity
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637324062630000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/Unity.Mathematics.git
+        revision: 71412d94b7a0b0fdbb3195a5e6559bf6a761e91a
+        path: 
+    - packageId: com.unity.searcher@4.3.2
+      testable: 0
+      isDirectDependency: 0
+      version: 4.3.2
+      source: 1
+      resolvedPath: C:\Users\gabri\Desktop\projects\carmechanic\Library\PackageCache\com.unity.searcher@4.3.2
+      assetPath: Packages/com.unity.searcher
+      name: com.unity.searcher
+      displayName: Searcher
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: General search window for use in the Editor. First target use
+        is for GraphView node search.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 4.0.0-preview
+        - 4.0.0
+        - 4.0.7-preview
+        - 4.0.7
+        - 4.0.8-preview
+        - 4.0.9
+        - 4.1.0-preview
+        - 4.1.0
+        - 4.2.0
+        - 4.3.0
+        - 4.3.1
+        - 4.3.2
+        - 4.6.0-preview
+        - 4.7.0-preview
+        compatible:
+        - 4.0.0-preview
+        - 4.0.0
+        - 4.0.7-preview
+        - 4.0.7
+        - 4.0.8-preview
+        - 4.0.9
+        - 4.1.0-preview
+        - 4.1.0
+        - 4.2.0
+        - 4.3.0
+        - 4.3.1
+        - 4.3.2
+        - 4.6.0-preview
+        - 4.7.0-preview
+        verified: 4.3.2
+      dependencies: []
+      resolvedDependencies: []
+      keywords:
+      - search
+      - searcher
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637509898070000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.searcher.git
+        revision: 798bfb84c8f09f7788a3a88c3c16d72c50451530
         path: 
   m_LocalPackages:
     m_LocalFileStatus: []

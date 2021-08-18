@@ -2,30 +2,27 @@ using UnityEngine;
 
 public class DayNight : MonoBehaviour
 {
+    private const int minInDay = 1440;
     public Transform sun;
     public float x_speed = 5f;
     public float y_speed = 5f;
 
-    [Range(0,5)]
-    public float minToSecond = 1f;
+    [Range(0, 5)] public float minToSecond = 1f;
 
-    [SerializeField]
-    private int currentMin;
+    [SerializeField] private int currentMin;
 
-    private const int minInDay = 1440;
-
-    private int dayCount = 0;
+    private int dayCount;
     private float timeSinceLastMin;
-	
-	
-    void Update ()
+
+
+    private void Update()
     {
-        float t = Time.deltaTime;
+        var t = Time.deltaTime;
         // Rotate the sun
         sun.Rotate(new Vector3(x_speed * t, y_speed * t, 0f));
 
         // If a miute in the game world has passed...
-        if(timeSinceLastMin >= minToSecond)
+        if (timeSinceLastMin >= minToSecond)
         {
             timeSinceLastMin = 0f;
             MinutePassed();
@@ -35,22 +32,21 @@ public class DayNight : MonoBehaviour
             timeSinceLastMin += t;
         }
     }
-    
+
     private void MinutePassed()
     {
         ++currentMin;
-        if(currentMin >= minInDay)
+        if (currentMin >= minInDay)
         {
             // Next day
             ++dayCount;
             currentMin = 0;
             Debug.Log("NextDay!");
-            
         }
 
-        int min = currentMin % 60;
-        int hrs = currentMin / 60;
-            
-        Debug.Log("Next minute! " + hrs.ToString() + "   :   " + min.ToString());
+        var min = currentMin % 60;
+        var hrs = currentMin / 60;
+
+        Debug.Log("Next minute! " + hrs + "   :   " + min);
     }
 }

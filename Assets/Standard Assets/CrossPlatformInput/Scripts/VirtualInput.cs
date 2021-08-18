@@ -5,7 +5,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 {
     public abstract class VirtualInput
     {
-        public Vector3 virtualMousePosition { get; private set; }
+        protected List<string> m_AlwaysUseVirtual = new List<string>();
 
 
         protected Dictionary<string, CrossPlatformInputManager.VirtualAxis> m_VirtualAxes =
@@ -15,7 +15,7 @@ namespace UnityStandardAssets.CrossPlatformInput
         protected Dictionary<string, CrossPlatformInputManager.VirtualButton> m_VirtualButtons =
             new Dictionary<string, CrossPlatformInputManager.VirtualButton>();
 
-        protected List<string> m_AlwaysUseVirtual = new List<string>();
+        public Vector3 virtualMousePosition { get; private set; }
         // list of the axis and button names that have been flagged to always use a virtual axis or button
 
 

@@ -17,23 +17,6 @@ namespace UnityStandardAssets.CrossPlatformInput
         }
 
 
-        [Serializable]
-        public class AxisMapping
-        {
-            public enum MappingType
-            {
-                NamedAxis,
-                MousePositionX,
-                MousePositionY,
-                MousePositionZ
-            }
-
-
-            public MappingType type;
-            public string axisName;
-        }
-
-
         public AxisMapping mapping;
         public AxisOptions tiltAroundAxis = AxisOptions.ForwardAxis;
         public float fullTiltAngle = 25;
@@ -41,16 +24,6 @@ namespace UnityStandardAssets.CrossPlatformInput
 
 
         private CrossPlatformInputManager.VirtualAxis m_SteerAxis;
-
-
-        private void OnEnable()
-        {
-            if (mapping.type == AxisMapping.MappingType.NamedAxis)
-            {
-                m_SteerAxis = new CrossPlatformInputManager.VirtualAxis(mapping.axisName);
-                CrossPlatformInputManager.RegisterVirtualAxis(m_SteerAxis);
-            }
-        }
 
 
         private void Update()
@@ -88,9 +61,36 @@ namespace UnityStandardAssets.CrossPlatformInput
         }
 
 
+        private void OnEnable()
+        {
+            if (mapping.type == AxisMapping.MappingType.NamedAxis)
+            {
+                m_SteerAxis = new CrossPlatformInputManager.VirtualAxis(mapping.axisName);
+                CrossPlatformInputManager.RegisterVirtualAxis(m_SteerAxis);
+            }
+        }
+
+
         private void OnDisable()
         {
             m_SteerAxis.Remove();
+        }
+
+
+        [Serializable]
+        public class AxisMapping
+        {
+            public enum MappingType
+            {
+                NamedAxis,
+                MousePositionX,
+                MousePositionY,
+                MousePositionZ
+            }
+
+
+            public MappingType type;
+            public string axisName;
         }
     }
 }

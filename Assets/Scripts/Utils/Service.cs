@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq.Expressions;
 using SimpleJSON;
 using SQLite4Unity3d;
+using UnityEngine;
 
 public class Service
 {
@@ -20,21 +22,24 @@ public class Service
             {
                 var DatabaseName = "CarMechanic.db";
                 string dbPath;
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                {
+                    dbPath = string.Format(@"Assets/StreamingAssets/{0}", DatabaseName);
+                }
+                else
+                {
+                    // check if file exists in Application.persistentDataPath
+                    dbPath = string.Format("{0}/{1}", Application.persistentDataPath, DatabaseName);
 
-#if UNITY_EDITOR
-                dbPath = string.Format(@"Assets/StreamingAssets/{0}", DatabaseName);
-#else
-					// check if file exists in Application.persistentDataPath
-					dbPath = string.Format("{0}/{1}", Application.persistentDataPath, DatabaseName);
+                    if (!File.Exists(dbPath))
+                    {
+                        //string loadDb = Application.dataPath + "/StreamingAssets/" + DatabaseName;
+                        var loadDb = string.Format(@"Assets/StreamingAssets/{0}", DatabaseName);
 
-					if (!File.Exists(dbPath)){
-						//string loadDb = Application.dataPath + "/StreamingAssets/" + DatabaseName;
-						string loadDb = string.Format(@"Assets/StreamingAssets/{0}", DatabaseName);
-					
-						// then save to Application.persistentDataPath
-						File.Copy(loadDb, dbPath);
-					}
-#endif
+                        // then save to Application.persistentDataPath
+                        File.Copy(loadDb, dbPath);
+                    }
+                }
 
                 _db = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
             }

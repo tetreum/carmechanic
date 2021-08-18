@@ -14,10 +14,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float MaximumX = 90F;
         public bool smooth;
         public float smoothTime = 5f;
+        private Quaternion m_CameraTargetRot;
 
 
         private Quaternion m_CharacterTargetRot;
-        private Quaternion m_CameraTargetRot;
 
 
         public void Init(Transform character, Transform camera)

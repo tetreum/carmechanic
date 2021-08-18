@@ -8,17 +8,6 @@ public class DoorHandle : MonoBehaviour
     public string Axis = "X";
     private bool isDragging;
 
-
-    private void OnMouseEnter()
-    {
-        Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
-    }
-
-    private void OnMouseExit()
-    {
-        Cursor.SetCursor(null, Vector2.zero, cursorMode);
-    }
-
     private void Update()
     {
         if (!isDragging) return;
@@ -35,6 +24,17 @@ public class DoorHandle : MonoBehaviour
             case "X":
                 break;
         }
+    }
+
+
+    private void OnMouseEnter()
+    {
+        Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+    }
+
+    private void OnMouseExit()
+    {
+        Cursor.SetCursor(null, Vector2.zero, cursorMode);
     }
 
     private void OnMouseUp()
