@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637649017258371794
-    m_Hash: 495818646
+      ticks: 637649061781401666
+    m_Hash: 1849246787
   m_LockFileStatus:
     m_FilePath: C:/Users/gabri/Desktop/projects/car mechanic/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637649017258481817
-    m_Hash: 3818087737
+      ticks: 637649061781421669
+    m_Hash: 1906443578
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:

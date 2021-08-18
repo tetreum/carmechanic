@@ -1,7 +1,5 @@
 # ExecutionSettings
-
-The `ExecutionSettings` is a set of filters and other settings provided when running a set of tests from
-the [TestRunnerApi](./reference-test-runner-api.md).
+The `ExecutionSettings` is a set of filters and other settings provided when running a set of tests from the [TestRunnerApi](./reference-test-runner-api.md).
 
 ## Constructors
 

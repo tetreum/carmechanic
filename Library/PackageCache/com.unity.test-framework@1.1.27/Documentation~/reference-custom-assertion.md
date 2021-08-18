@@ -1,12 +1,10 @@
 # Custom assertion
 
-A test fails if Unity logs a message other than a regular log or warning message. Use [LogAssert](#logassert) to check
-for an expected message in the log so that the test does not fail when Unity logs the message.
+A test fails if Unity logs a message other than a regular log or warning message. Use [LogAssert](#logassert) to check for an expected message in the log so that the test does not fail when Unity logs the message.
 
 Use `LogAssert.Expect` before running the code under test, as the check for expected logs runs at the end of each frame.
 
-A test also reports a failure, if an expected message does not appear, or if Unity does not log any regular log or
-warning messages.
+A test also reports a failure, if an expected message does not appear, or if Unity does not log any regular log or warning messages.
 
 ## Example
 
@@ -30,8 +28,7 @@ public void LogAssertExample()
 
 ## LogAssert
 
-`LogAssert` lets you expect Unity log messages that would otherwise cause the test to fail. It is available under the
-namespace `UnityEngine.TestTools`, see the Scripting API for more details.
+`LogAssert` lets you expect Unity log messages that would otherwise cause the test to fail. It is available under the namespace `UnityEngine.TestTools`, see the Scripting API for more details.
 
 ### Static properties
 

@@ -11,6 +11,6 @@
             </VisualElement>
         </VisualElement>
 
-        <VisualElement class="divider-horizontal"/>
+        <VisualElement class="divider-horizontal" />
     </VisualElement>
 </UXML>

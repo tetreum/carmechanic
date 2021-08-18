@@ -1,8 +1,6 @@
 # ColorEqualityComparer
 
-Use this class to compare two `Color` objects. `ColorEqualityComparer.Instance` has default calculation error value set
-to 0.01f. To set a test specific error value instantiate a comparer instance using
-the [one argument constructor](#constructors).
+Use this class to compare two `Color` objects. `ColorEqualityComparer.Instance` has default calculation error value set to 0.01f. To set a test specific error value instantiate a comparer instance using the [one argument constructor](#constructors).
 
 ## Static properties
 

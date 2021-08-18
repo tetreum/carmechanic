@@ -1,17 +1,9 @@
 # ICallbacks
+An interface for receiving callbacks when running tests. All test runs invoke the callbacks until the next domain reload.
 
-An interface for receiving callbacks when running tests. All test runs invoke the callbacks until the next domain
-reload.
+The `RunStarted` method runs when the whole test run starts. Then the `TestStarted` method runs with information about the tests it is about to run on an assembly level. Afterward, it runs on a test fixture level and then on the individual test. If the test is a [parameterized test](./https://github.com/nunit/docs/wiki/Parameterized-Tests), then it is also invoked for each parameter combination. After each part of the test tree have completed running, the corresponding `TestFinished` method runs with the test result. At the end of the run, the `RunFinished` event runs with the test result.
 
-The `RunStarted` method runs when the whole test run starts. Then the `TestStarted` method runs with information about
-the tests it is about to run on an assembly level. Afterward, it runs on a test fixture level and then on the individual
-test. If the test is a [parameterized test](./https://github.com/nunit/docs/wiki/Parameterized-Tests), then it is also
-invoked for each parameter combination. After each part of the test tree have completed running, the
-corresponding `TestFinished` method runs with the test result. At the end of the run, the `RunFinished` event runs with
-the test result.
-
-An extended version of the callback, [IErrorCallbacks](./reference-ierror-callbacks.md), extends this `ICallbacks` to
-receive calls when a run fails due to a build error.
+An extended version of the callback, [IErrorCallbacks](./reference-ierror-callbacks.md), extends this `ICallbacks` to receive calls when a run fails due to a build error.
 
 ## Public methods
 
@@ -23,10 +15,7 @@ receive calls when a run fails due to a build error.
 | `void TestFinished(ITestResultAdaptor result)` | Invoked on each node of the test tree once that part of the test tree has finished running. The [ITestResultAdaptor](./reference-itest-result-adaptor.md) represents the results of the current node of the test tree. |
 
 ## Example
-
-An example that sets up a listener on the API. The listener prints the number of failed tests after the run has
-finished:
-
+An example that sets up a listener on the API. The listener prints the number of failed tests after the run has finished:
 ``` C#
 public void SetupListeners()
 {

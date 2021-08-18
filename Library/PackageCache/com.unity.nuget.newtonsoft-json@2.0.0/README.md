@@ -1,5 +1,4 @@
 # com.unity.nuget.newtonsoft-json
-
 Unity Package for [Newtonsoft's JSON library] (https://www.newtonsoft.com/json)
 
 # Version
@@ -17,7 +16,6 @@ Open the manifest.json for your project and add the following entry to your list
 ```
 
 Example:
-
 ```json
 {
   "dependencies": {
@@ -32,8 +30,7 @@ Example:
 
 # Add to your project with version
 
-Open the manifest.json for your project and add the following entry to your list of dependencies with the desired
-version
+Open the manifest.json for your project and add the following entry to your list of dependencies with the desired version
 
 ```json
 "com.unity.nuget.newtonsoft-json": "1.1.2",
@@ -53,24 +50,24 @@ Example:
  }
  ```
 
-# Add to your Package as a dependency
+ # Add to your Package as a dependency
 
-Open the package.json for your project and add the following entry to the dependencies list with the desired Version
+ Open the package.json for your project and add the following entry to the dependencies list with the desired Version
 
 ```json
 "com.unity.nuget.newtonsoft-json": "1.1.2"
 ```
 
 Example:
-
 ```json
  "dependencies": {
 		"com.unity.nuget.newtonsoft-json": "1.1.2"
 	},
 ```
 
+
 # Using the package
 
-In the target package, modify the asmdef to include the `Newtonsoft.Json.dll` under the Assembly References section in
-the asmdef inspector. The section will not appear until the Override References toggle above is toggled on. Once that is
-done, your package will have full access to Newtonsoft Json apis.
+ In the target package, modify the asmdef to include the `Newtonsoft.Json.dll` under the Assembly References section
+ in the asmdef inspector.  The section will not appear until the Override References toggle above is toggled on.
+ Once that is done, your package will have full access to Newtonsoft Json apis.

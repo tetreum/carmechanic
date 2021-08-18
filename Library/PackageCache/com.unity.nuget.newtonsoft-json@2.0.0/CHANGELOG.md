@@ -1,5 +1,4 @@
 # Changelog
-
 All notable changes to this package will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
@@ -73,8 +72,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### This is the third preview release of *Unity Package Nuget.Newtonsoft.Json*.
 
-* Update the documentation for the package and the package description to state that this package is for internal Unity
-  use __only__.
+* Update the documentation for the package and the package description to state that this package is for internal Unity use __only__.
 
 ## [1.0.0-preview.2] - 2019-06-21
 

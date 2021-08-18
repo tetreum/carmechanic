@@ -1,9 +1,6 @@
 # UnitySetUp and UnityTearDown
 
-The `UnitySetUp` and `UnityTearDown` attributes are identical to the standard `SetUp` and `TearDown` attributes, with
-the exception that they allow for [yielding instructions](reference-custom-yield-instructions.md). The `UnitySetUp`
-and `UnityTearDown` attributes expect a return type
-of [IEnumerator](https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerator?view=netframework-4.8).
+The `UnitySetUp` and `UnityTearDown` attributes are identical to the standard `SetUp` and `TearDown` attributes, with the exception that they allow for [yielding instructions](reference-custom-yield-instructions.md). The `UnitySetUp` and `UnityTearDown` attributes expect a return type of [IEnumerator](https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerator?view=netframework-4.8). 
 
 ## UnitySetUp and UnityTeardown example
 
@@ -33,23 +30,15 @@ public class SetUpTearDownExample
 
 ## Execution order
 
-`UnitySetUp` and `UnityTearDown` can be used with either the `Test` or `UnityTest` test attributes. In both cases the
-relative execution order of Unity and non-Unity `SetUp` and `TearDown` attributes is the same. The only difference is
-that a `UnityTest` allows for yielding instructions during the test that can result in a domain reload, in which case
-the non-Unity `SetUp` and `TearDown` methods are re-run before proceeding to the second part of the test.
+`UnitySetUp` and `UnityTearDown` can be used with either the `Test` or `UnityTest` test attributes. In both cases the relative execution order of Unity and non-Unity `SetUp` and `TearDown` attributes is the same. The only difference is that a `UnityTest` allows for yielding instructions during the test that can result in a domain reload, in which case the non-Unity `SetUp` and `TearDown` methods are re-run before proceeding to the second part of the test.
 
 ![SetUp and TearDown Execution Order](./images/execution-order-unitysetup-teardown.svg)
 
-> **Note**: Some browsers do not support SVG image files. If the image above does not display properly (for example, if you cannot see any text), please try another browser, such as [Google Chrome](https://www.google.com/chrome/) or [Mozilla Firefox](https://www.mozilla.org).
+> **Note**: Some browsers do not support SVG image files. If the image above does not display properly (for example, if you cannot see any text), please try another browser, such as [Google Chrome](https://www.google.com/chrome/) or [Mozilla Firefox](https://www.mozilla.org). 
 
 ## Base and Derived classes
 
-The term **base** in the execution order denotes a base class from which a test class inherits. `UnitySetUp`
-and `UnityTearDown` follow the same pattern as NUnit `SetUp` and `TearDown` attributes in determining execution order
-between base classes and their derivatives. `SetUp` methods are called on base classes first, and then on derived
-classes. `TearDown` methods are called on derived classes first, and then on the base class. See
-the [NUnit Documentation](https://docs.nunit.org/articles/nunit/technical-notes/usage/SetUp-and-TearDown.html) for more
-details.
+The term **base** in the execution order denotes a base class from which a test class inherits. `UnitySetUp` and `UnityTearDown` follow the same pattern as NUnit `SetUp` and `TearDown` attributes in determining execution order between base classes and their derivatives. `SetUp` methods are called on base classes first, and then on derived classes. `TearDown` methods are called on derived classes first, and then on the base class. See the [NUnit Documentation](https://docs.nunit.org/articles/nunit/technical-notes/usage/SetUp-and-TearDown.html) for more details.
 
 ### Base and Derived class example
 
@@ -144,7 +133,6 @@ details.
         }
     }
 ```
-
 ### Domain reload example
 
 ```csharp

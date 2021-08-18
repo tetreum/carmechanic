@@ -1,11 +1,8 @@
 # Unity Collaborate Editor Package Code
-
 In this directory, we have all of the package code of Collaborate including its **MVP** architecture.
 
 ## Overview
-
 This is the structure of the directory:
-
 ```none
 <root>
   ├── Unity.SourceControl.asmdef

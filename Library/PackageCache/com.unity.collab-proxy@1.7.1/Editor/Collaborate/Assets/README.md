@@ -1,5 +1,4 @@
 # Assets
-
 This directory contains the non-code assets for the Collaborate UI.
 
 ## Overview
@@ -17,10 +16,8 @@ This directory contains the non-code assets for the Collaborate UI.
 - `UiConstants.cs` conatins a number of static values used to control the UI.
 
 ## Editing
-
 USS and UXML files are inspired by the respective CSS and XML files. USS is a non-struct subset of CSS and each View and
-Component has the option of having its own USS and/or UXML file. For USS, to specifiy dark vs light style, prepend
-a `.dark`
+Component has the option of having its own USS and/or UXML file. For USS, to specifiy dark vs light style, prepend a `.dark`
 or `.light` to the line. For example:
 
 ```css

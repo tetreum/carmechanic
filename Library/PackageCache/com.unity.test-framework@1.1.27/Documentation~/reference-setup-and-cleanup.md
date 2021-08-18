@@ -1,27 +1,19 @@
 # Setup and cleanup at build time
 
-In some cases, it is relevant to perform changes to Unity or the file system before building the tests. In the same way,
-it may be necessary to clean up such changes after the test run. In response to such needs, you can incorporate the
-pre-build setup and post-build cleanup concepts into your tests in one of the following ways:
+In some cases, it is relevant to perform changes to Unity or the file system before building the tests. In the same way, it may be necessary to clean up such changes after the test run. In response to such needs, you can incorporate the pre-build setup and post-build cleanup concepts into your tests in one of the following ways: 
 
 1. Via implementation of `IPrebuildSetup` and `IPostBuildCleanup` interfaces by a test class.
-2. Via applying the `PrebuildSetup` attribute and `PostBuildCleanup` attribute on your test class, one of the tests or
-   the test assembly, providing a class name that implements the corresponding interface as an argument (
-   fx `[PrebuildSetup("MyTestSceneSetup")]`).
+2. Via applying the `PrebuildSetup` attribute and `PostBuildCleanup` attribute on your test class, one of the tests or the test assembly, providing a class name that implements the corresponding interface as an argument (fx `[PrebuildSetup("MyTestSceneSetup")]`). 
 
 ## Execution order
 
-All setups run in a deterministic order one after another. The first to run are the setups defined with attributes. Then
-any test class implementing the interface runs, in alphabetical order inside their namespace, which is the same order as
-the tests run.
+All setups run in a deterministic order one after another. The first to run are the setups defined with attributes. Then any test class implementing the interface runs, in alphabetical order inside their namespace, which is the same order as the tests run.
 
 > **Note**: Cleanup runs right away for a standalone test run, but only after related tests run in the Unity Editor.
 
 ## PrebuildSetup and PostBuildCleanup
 
-Both `PrebuildSetup` and `PostBuildCleanup` attributes run if the respective test or test class is in the current test
-run. The test is included either by running all tests or setting a [filter](./workflow-create-test.md#filters) that
-includes the test. If multiple tests reference the same pre-built setup or post-build cleanup, then it only runs once.
+Both `PrebuildSetup` and `PostBuildCleanup` attributes run if the respective test or test class is in the current test run. The test is included either by running all tests or setting a [filter](./workflow-create-test.md#filters) that includes the test. If multiple tests reference the same pre-built setup or post-build cleanup, then it only runs once.
 
 ## IPrebuildSetup
 
@@ -35,8 +27,7 @@ Implement this interface if you want to define a set of actions to run as a pre-
 
 ## IPostBuildCleanup
 
-Implement this interface if you want to define a set of actions to execute as a post-build step. Cleanup runs right away
-for a standalone test run, but only after all the tests run within the Editor.
+Implement this interface if you want to define a set of actions to execute as a post-build step. Cleanup runs right away for a standalone test run, but only after all the tests run within the Editor.
 
 ### Public methods
 
