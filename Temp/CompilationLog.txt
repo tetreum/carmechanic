@@ -1,0 +1,6 @@
+# Starting compiling Unity.Timeline.Editor.dll
+C:\Program Files\Unity\Hub\Editor\2020.3.16f1\Editor\Data\Tools\RoslynScripts\unity_csc.bat /noconfig @Temp/UnityTempFile-3b2e0b78060d3204fba869ccaf4404a6
+# Starting compiling Unity.CollabProxy.Editor.dll
+C:\Program Files\Unity\Hub\Editor\2020.3.16f1\Editor\Data\Tools\RoslynScripts\unity_csc.bat /noconfig @Temp/UnityTempFile-0190ec8863fa6c74e874c7aff328dd3c
+# Starting compiling Assembly-CSharp.dll
+C:\Program Files\Unity\Hub\Editor\2020.3.16f1\Editor\Data\Tools\RoslynScripts\unity_csc.bat /noconfig @Temp/UnityTempFile-f98fc3fe20758d6469f96aad46bf1ceb
