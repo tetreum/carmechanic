@@ -7,11 +7,10 @@ public class Lift : MonoBehaviour
 {
     public Transform arms;
     public float speed = 0.01f;
-    public float maxHeight = 3.01f;
-    public float minHeight = 0.240625f;
+    public float maxHeight = 1.22f;
+    public float minHeight;
     private new AudioSource audio;
     private bool isElevated;
-
     private bool isMoving;
     private Material mat;
     private Shader originalShader;
@@ -23,19 +22,12 @@ public class Lift : MonoBehaviour
         originalShader = mat.shader;
     }
 
-    public void OnMouseDown()
+    private void OnMouseDown()
     {
         if (isMoving) return;
-
         audio.Play();
         isMoving = true;
-        StartCoroutine("startAscension");
-    }
-
-    public void OnMouseEnter()
-    {
-        Cursor.SetCursor(Cursors.handle, new Vector2(6, 0), CursorMode.Auto);
-        mat.shader = Shaders.standardOutlined;
+        StartCoroutine(nameof(StartAscension));
     }
 
     public void OnMouseExit()
@@ -44,7 +36,13 @@ public class Lift : MonoBehaviour
         mat.shader = originalShader;
     }
 
-    private IEnumerator startAscension()
+    public void OnMouseOver()
+    {
+        Cursor.SetCursor(Cursors.handle, new Vector2(6, 0), CursorMode.Auto);
+        mat.shader = Shaders.outline;
+    }
+
+    private IEnumerator StartAscension()
     {
         var expectedPos = arms.position;
 
