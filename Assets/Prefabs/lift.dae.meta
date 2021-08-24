@@ -3270,11 +3270,66 @@ ModelImporter:
   - first:
       95: 9500000
     second: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _0005_LightPink
+    second: {fileID: 2100000, guid: 6bf5c44c9fab40543aa6db4e55d0da05, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _0019_Crimson
+    second: {fileID: 2100000, guid: 8953b071edcf13a44a0d0fc24b7a6673, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _0046_Gold
+    second: {fileID: 2100000, guid: fd325767ffe10ad479f57d337934e4cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _0056_Yellow
+    second: {fileID: 2100000, guid: 1aacd62dfa76c204093f2b1fb7e18c64, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _0128_White
+    second: {fileID: 2100000, guid: dd4e8f8940b2b7f49a9ed79bf59a18fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _0131_Silver
+    second: {fileID: 2100000, guid: a521e102ca3ba8047884e78866ed8a32, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _0133_Gray
+    second: {fileID: 2100000, guid: 35d8aa6521e088c4bbcfaa62afcd5228, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _0136_Charcoal
+    second: {fileID: 2100000, guid: 88ade00c8bec4f84eb62e765b3eda99f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: __0056_Yellow_1
+    second: {fileID: 2100000, guid: 83ae7236464c70548bd4d30c99e82032, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material
+    second: {fileID: 2100000, guid: c4852741081b2e54b9dece72e09e2e6d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_0
+    second: {fileID: 2100000, guid: 24e81e8fd24785645916c73cf1695c98, type: 2}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
-    materialSearch: 1
+    materialSearch: 2
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4

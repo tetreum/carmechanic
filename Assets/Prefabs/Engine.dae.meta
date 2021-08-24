@@ -15706,10 +15706,10 @@ ModelImporter:
       name: material
     second: {fileID: 2100000, guid: d75c0c8500cef8042bd5c7d3b8f9a1a6, type: 2}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
-    materialSearch: 1
-    materialLocation: 1
+    materialSearch: 2
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
