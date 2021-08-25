@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class Lift : MonoBehaviour
 {
-    public Transform arms;
+    [SerializeField] public Transform arms;
     public float speed = 0.01f;
     public float maxHeight = 1.22f;
     public float minHeight;

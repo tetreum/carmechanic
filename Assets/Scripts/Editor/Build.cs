@@ -9,7 +9,7 @@ public class Build : MonoBehaviour
     {
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
-            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Settings.unity", "Assets/Scenes/Game.unity"};
+            {"Scenes/MainMenu.unity", "Scenes/Settings.unity", "Scenes/Game.unity"};
         buildPlayerOptions.locationPathName = "Build/win64";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
 
@@ -61,9 +61,6 @@ public class Build : MonoBehaviour
     private static void BuildDevWindows64()
     {
         var buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[]
-            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Settings.unity", "Assets/Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/win64/dev";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.Development;
         buildPlayerOptions.options = BuildOptions.AllowDebugging;
@@ -97,7 +94,7 @@ public class Build : MonoBehaviour
         if (summary.result == BuildResult.Failed) Debug.Log("Build failed");
     }
 
-    [MenuItem("Build/profiling/windows")]
+    [MenuItem("Build/profiling/windows64")]
     private static void BuildProfilingWindows64()
     {
         var buildPlayerOptions = new BuildPlayerOptions();
