@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CreateAssetBundles : MonoBehaviour
 {
-    [MenuItem("AssetBundles/build/assetbundles/windows")]
+    [MenuItem("build/assetbundles/windows")]
     private static void BuildAllAssetBundlesWindows()
     {
         var assetBundleDirectory = Application.streamingAssetsPath;
@@ -14,7 +14,7 @@ public class CreateAssetBundles : MonoBehaviour
             BuildTarget.StandaloneWindows);
     }
 
-    [MenuItem("AssetBundles/build/assetbundles/windows64")]
+    [MenuItem("build/assetbundles/windows64")]
     private static void BuildAllAssetBundlesWindows64()
     {
         var assetBundleDirectory = Application.streamingAssetsPath;
