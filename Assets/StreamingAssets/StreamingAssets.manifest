@@ -1,10 +1,10 @@
 ManifestFileVersion: 0
-CRC: 3500424158
+CRC: 3455063899
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: cars
       Dependencies: {}
     Info_1:
-      Name: garage
+      Name: objects
       Dependencies: {}
