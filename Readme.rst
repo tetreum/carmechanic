@@ -72,17 +72,23 @@ credits
 creator: jdillon
 
 2. Outline shaders: http://wiki.unity3d.com/index.php/Outlined_Diffuse_3
+3. Orbit camera code base: http://www.lucedigitale.com/blog/unity-3d-game-engine-camera-mouse-orbit/
+4. Catch hand cursor: Source: http://findicons.com/icon/267861/cursor_drag_hand
 
 creator: http://Gentleface.com
 
-3. Orbit camera code base: http://www.lucedigitale.com/blog/unity-3d-game-engine-camera-mouse-orbit/
-4. Catch hand cursor: Source: http://findicons.com/icon/267861/cursor_drag_hand
 5. Mitsubishi Lancer Evolution X: URL: http://tf3dm.com/3d-model/mitsubishi-lancer-evolution-x-98027.html
+
+creator: silviuq12
+
 6. Car lift model: URL: https://3dwarehouse.sketchup.com/model.html?id=b30edc79010f1ea178fe949fc1419876
+
+creator: pixelmonkey 3.
+
 7. Car lift sound effect: URL: https://www.youtube.com/watch?v=cXqDc6I1NP8
+
+creator: SoundEffectsFactory
+
 8. Car lift button model: URL: https://3dwarehouse.sketchup.com/model.html?id=bcd36619f9dfae1b853bf916f291fa0f 
 
-9.  silviuq12
-10. pixelmonkey 3.
-11. SoundEffectsFactory
-12. Joe T.
+creator: Joe T.
