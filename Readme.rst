@@ -49,15 +49,13 @@ day/night cycle
 ===============
 
 day
-
------
+---
 
 .. image:: Assets/GFX/day.PNG
   :width: 1366
   :height: 768
 
 night
-
 -----
   
 .. image:: Assets/GFX/night.PNG
