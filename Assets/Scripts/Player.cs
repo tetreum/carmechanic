@@ -1,7 +1,7 @@
-using System;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
         }
         if(Input.GetKeyUp(KeyCode.W)||Input.GetKeyUp(KeyCode.S)||Input.GetKeyUp(KeyCode.A)||Input.GetKeyUp(KeyCode.D))
         {
-            footsteps.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            footsteps.stop(STOP_MODE.ALLOWFADEOUT);
         }
     }
 
