@@ -12,6 +12,7 @@ Adding a new vehicle
 --------------------
 
 Notice:
+
 - You will need Unity.
 - Valid model formats: fbx or collada (.dae).
 - Car parts can't have childs, so each part must be a single solid.
