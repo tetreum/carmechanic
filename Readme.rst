@@ -35,7 +35,7 @@ If your car part is not listed in "Type" selector. Open /Scripts/Engine/CarEngin
 You're done! Your car will appear in vehicles list.
 If you want to share your vehicle, send the /StreamingAssets/YOU_MODEL/ folder and the vehicles.json entry data.
 
-=============================================================================================================================================================================================================================================================================================================================================
+------------------------------
 
 simplified compile workflow
 ---------------------------
@@ -49,6 +49,7 @@ day/night cycle
 ===============
 
 day
+
 ---
 
 .. image:: Assets/GFX/day.PNG
@@ -56,6 +57,7 @@ day
   :height: 768
 
 night
+
 -----
   
   .. image:: Assets/GFX/night.PNG
