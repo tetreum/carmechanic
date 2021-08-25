@@ -8,18 +8,15 @@ public class Lift : MonoBehaviour
     [SerializeField] public Transform arms;
     public float speed = 0.01f;
     public float maxHeight = 1.22f;
-    public float minHeight;
+    public float minHeight = 0;
     private new AudioSource audio;
     private bool isElevated;
     private bool isMoving;
     private Material mat;
-    private Shader originalShader;
 
     public void Start()
     {
         audio = gameObject.GetComponent<AudioSource>();
-        mat = gameObject.GetComponent<MeshRenderer>().material;
-        originalShader = mat.shader;
     }
 
     private void OnMouseDown()
@@ -28,18 +25,6 @@ public class Lift : MonoBehaviour
         audio.Play();
         isMoving = true;
         StartCoroutine(nameof(StartAscension));
-    }
-
-    public void OnMouseExit()
-    {
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        mat.shader = originalShader;
-    }
-
-    public void OnMouseOver()
-    {
-        Cursor.SetCursor(Cursors.handle, new Vector2(6, 0), CursorMode.Auto);
-        mat.shader = Shaders.outline;
     }
 
     private IEnumerator StartAscension()
