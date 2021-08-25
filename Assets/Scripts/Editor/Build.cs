@@ -88,6 +88,7 @@ public class Build : MonoBehaviour
         buildPlayerOptions.options = BuildOptions.AllowDebugging;
         buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
         buildPlayerOptions.options = BuildOptions.EnableDeepProfilingSupport;
+        buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
 
         var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
         var summary = report.summary;
@@ -109,6 +110,7 @@ public class Build : MonoBehaviour
         buildPlayerOptions.options = BuildOptions.AllowDebugging;
         buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
         buildPlayerOptions.options = BuildOptions.EnableDeepProfilingSupport;
+        buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
 
         var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
         var summary = report.summary;
