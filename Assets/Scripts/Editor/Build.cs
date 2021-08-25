@@ -9,7 +9,7 @@ public class Build : MonoBehaviour
     {
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
-            {"Scenes/MainMenu.unity", "Scenes/Game.unity"};
+            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
         buildPlayerOptions.locationPathName = "Build/win/carmechanicx86.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
 
