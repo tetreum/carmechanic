@@ -68,17 +68,18 @@ credits
 =======
 
 1. Engine Model: Source: http://www.3dvia.com/models/4B9A204153657749/engine-room-3d 
+
 creator: jdillon
 2. Outline shaders: http://wiki.unity3d.com/index.php/Outlined_Diffuse_3
-3. Orbit camera code base: http://www.lucedigitale.com/blog/unity-3d-game-engine-camera-mouse-orbit/
-4. Catch hand cursor: Source: http://findicons.com/icon/267861/cursor_drag_hand
-5. Mitsubishi Lancer Evolution X: URL: http://tf3dm.com/3d-model/mitsubishi-lancer-evolution-x-98027.html
-6. Car lift model: URL: https://3dwarehouse.sketchup.com/model.html?id=b30edc79010f1ea178fe949fc1419876
-7. Car lift sound effect: URL: https://www.youtube.com/watch?v=cXqDc6I1NP8
-8. Car lift button model: URL: https://3dwarehouse.sketchup.com/model.html?id=bcd36619f9dfae1b853bf916f291fa0f 
+2. Orbit camera code base: http://www.lucedigitale.com/blog/unity-3d-game-engine-camera-mouse-orbit/
+3. Catch hand cursor: Source: http://findicons.com/icon/267861/cursor_drag_hand
+4. Mitsubishi Lancer Evolution X: URL: http://tf3dm.com/3d-model/mitsubishi-lancer-evolution-x-98027.html
+5. Car lift model: URL: https://3dwarehouse.sketchup.com/model.html?id=b30edc79010f1ea178fe949fc1419876
+6. Car lift sound effect: URL: https://www.youtube.com/watch?v=cXqDc6I1NP8
+7. Car lift button model: URL: https://3dwarehouse.sketchup.com/model.html?id=bcd36619f9dfae1b853bf916f291fa0f 
 
-9. http://Gentleface.com
-10. silviuq12
-11. pixelmonkey 3.
-12. SoundEffectsFactory
-13. Joe T.
+8. http://Gentleface.com
+9.  silviuq12
+10. pixelmonkey 3.
+11. SoundEffectsFactory
+12. Joe T.
