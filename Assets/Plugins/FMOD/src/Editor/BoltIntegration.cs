@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 #if (UNITY_VISUALSCRIPTING_EXIST)
 using Unity.VisualScripting;
@@ -49,14 +46,12 @@ namespace FMODUnity
 
         private static void TriggerBuild()
         {
-            BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
-            BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
+            var target = EditorUserBuildSettings.activeBuildTarget;
+            var group = BuildPipeline.GetBuildTargetGroup(target);
 
-            string previousSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+            var previousSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
             if (!previousSymbols.Contains("UNITY_BOLT_EXIST"))
-            {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(group, previousSymbols + ";UNITY_BOLT_EXIST");
-            }
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(@group, previousSymbols + ";UNITY_BOLT_EXIST");
             Settings.Instance.BoltUnitOptionsBuildPending = true;
             AssetDatabase.Refresh();
         }
@@ -80,8 +75,10 @@ namespace FMODUnity
         private static void BuildBoltUnitOptions()
         {
 #if (UNITY_BOLT_EXIST)
-            DictionaryAsset projectSettings = AssetDatabase.LoadAssetAtPath(PathUtility.FromProject(LudiqCore.Paths.projectSettings), typeof(DictionaryAsset)) as DictionaryAsset;
-            List<LooseAssemblyName> assemblyOptions = projectSettings.dictionary["assemblyOptions"] as List<LooseAssemblyName>;
+            DictionaryAsset projectSettings =
+ AssetDatabase.LoadAssetAtPath(PathUtility.FromProject(LudiqCore.Paths.projectSettings), typeof(DictionaryAsset)) as DictionaryAsset;
+            List<LooseAssemblyName> assemblyOptions =
+ projectSettings.dictionary["assemblyOptions"] as List<LooseAssemblyName>;
 #else
             List<LooseAssemblyName> assemblyOptions = BoltCore.Configuration.assemblyOptions;
 #endif

@@ -1,62 +1,28 @@
 ﻿using System;
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 namespace FMODUnity
 {
-    class FindAndReplace : EditorWindow
+    internal class FindAndReplace : EditorWindow
     {
-        [MenuItem("FMOD/Find and Replace", priority = 2)]
-        static void ShowFindAndReplace()
+        private List<StudioEventEmitter> emitters;
+        private string findText;
+
+        private bool first = true;
+        private int lastMatch = -1;
+
+        private bool levelScope = true;
+        private string message = "";
+        private MessageType messageType = MessageType.None;
+        private bool prefabScope;
+        private string replaceText;
+
+        private void OnGUI()
         {
-            var window = CreateInstance<FindAndReplace>();
-            window.titleContent = new GUIContent("FMOD Find and Replace");
-            window.OnHierarchyChange();
-            var position = window.position;
-            window.maxSize = window.minSize = position.size = new Vector2(400, 170);
-            window.position = position;
-            window.ShowUtility();
-        }
-
-        bool levelScope = true;
-        bool prefabScope;
-        string findText;
-        string replaceText;
-        string message = "";
-        MessageType messageType = MessageType.None;
-        int lastMatch = -1;
-        List<StudioEventEmitter> emitters;
-
-        void OnHierarchyChange()
-        {
-            emitters = new List<StudioEventEmitter>(Resources.FindObjectsOfTypeAll<StudioEventEmitter>());
-
-            if (!levelScope)
-            {
-                #if UNITY_2018_3_OR_NEWER
-                emitters.RemoveAll(x => PrefabUtility.GetPrefabAssetType(x) == PrefabAssetType.NotAPrefab);
-                #else
-                emitters.RemoveAll(x => PrefabUtility.GetPrefabType(x) != PrefabType.Prefab);
-                #endif
-            }
-
-            if (!prefabScope)
-            {
-                #if UNITY_2018_3_OR_NEWER
-                emitters.RemoveAll(x => PrefabUtility.GetPrefabAssetType(x) == PrefabAssetType.NotAPrefab);
-                #else
-                emitters.RemoveAll(x => PrefabUtility.GetPrefabType(x) != PrefabType.Prefab);
-                #endif
-            }
-        }
-
-        bool first = true;
-
-        void OnGUI()
-        {
-            bool doFind = false;
-            if ((Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return))
+            var doFind = false;
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
             {
                 Event.current.Use();
                 doFind = true;
@@ -71,6 +37,7 @@ namespace FMODUnity
                 lastMatch = -1;
                 message = null;
             }
+
             EditorGUILayout.PrefixLabel("Replace:");
             replaceText = EditorGUILayout.TextField(replaceText);
 
@@ -78,10 +45,7 @@ namespace FMODUnity
             EditorGUI.BeginChangeCheck();
             levelScope = EditorGUILayout.ToggleLeft("Current Level", levelScope, GUILayout.ExpandWidth(false));
             prefabScope = EditorGUILayout.ToggleLeft("Prefabs", prefabScope, GUILayout.ExpandWidth(false));
-            if (EditorGUI.EndChangeCheck())
-            {
-                OnHierarchyChange();
-            }
+            if (EditorGUI.EndChangeCheck()) OnHierarchyChange();
             EditorGUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -97,39 +61,30 @@ namespace FMODUnity
                     messageType = MessageType.Warning;
                 }
             }
+
             if (GUILayout.Button("Replace"))
             {
                 message = "";
                 if (lastMatch == -1)
-                {
                     FindNext();
-                }
                 else
-                {
                     Replace();
-                }
                 if (lastMatch == -1)
                 {
                     message = "Finished Search";
                     messageType = MessageType.Warning;
                 }
             }
+
             if (GUILayout.Button("Replace All"))
-            {
-                if (EditorUtility.DisplayDialog("Replace All", "Are you sure you wish to replace all in the current hierachy?", "yes", "no"))
-                {
+                if (EditorUtility.DisplayDialog("Replace All",
+                    "Are you sure you wish to replace all in the current hierachy?", "yes", "no"))
                     ReplaceAll();
-                }
-            }
             GUILayout.EndHorizontal();
             if (!string.IsNullOrEmpty(message))
-            {
                 EditorGUILayout.HelpBox(message, messageType);
-            }
             else
-            {
                 EditorGUILayout.HelpBox("\n\n", MessageType.None);
-            }
 
             if (first)
             {
@@ -138,10 +93,44 @@ namespace FMODUnity
             }
         }
 
-        void FindNext()
+        private void OnHierarchyChange()
         {
-            for (int i = lastMatch + 1; i < emitters.Count; i++)
+            emitters = new List<StudioEventEmitter>(Resources.FindObjectsOfTypeAll<StudioEventEmitter>());
+
+            if (!levelScope)
             {
+#if UNITY_2018_3_OR_NEWER
+                emitters.RemoveAll(x => PrefabUtility.GetPrefabAssetType(x) == PrefabAssetType.NotAPrefab);
+#else
+                emitters.RemoveAll(x => PrefabUtility.GetPrefabType(x) != PrefabType.Prefab);
+#endif
+            }
+
+            if (!prefabScope)
+            {
+#if UNITY_2018_3_OR_NEWER
+                emitters.RemoveAll(x => PrefabUtility.GetPrefabAssetType(x) == PrefabAssetType.NotAPrefab);
+#else
+                emitters.RemoveAll(x => PrefabUtility.GetPrefabType(x) != PrefabType.Prefab);
+#endif
+            }
+        }
+
+        [MenuItem("FMOD/Find and Replace", priority = 2)]
+        private static void ShowFindAndReplace()
+        {
+            var window = CreateInstance<FindAndReplace>();
+            window.titleContent = new GUIContent("FMOD Find and Replace");
+            window.OnHierarchyChange();
+            var position = window.position;
+            window.maxSize = window.minSize = position.size = new Vector2(400, 170);
+            window.position = position;
+            window.ShowUtility();
+        }
+
+        private void FindNext()
+        {
+            for (var i = lastMatch + 1; i < emitters.Count; i++)
                 if (emitters[i].Event.IndexOf(findText, 0, StringComparison.CurrentCultureIgnoreCase) >= 0)
                 {
                     lastMatch = i;
@@ -151,33 +140,29 @@ namespace FMODUnity
                     messageType = MessageType.Info;
                     return;
                 }
-            }
+
             lastMatch = -1;
         }
 
-        void ReplaceAll()
+        private void ReplaceAll()
         {
-            int replaced = 0;
-            for (int i = 0; i < emitters.Count; i++)
-            {
+            var replaced = 0;
+            for (var i = 0; i < emitters.Count; i++)
                 if (ReplaceText(emitters[i]))
-                {
                     replaced++;
-                }
-            }
 
             message = string.Format("{0} replaced", replaced);
             messageType = MessageType.Info;
         }
 
-        bool ReplaceText(StudioEventEmitter emitter)
+        private bool ReplaceText(StudioEventEmitter emitter)
         {
-            int findLength = findText.Length;
-            int replaceLength = replaceText.Length;
-            int position = 0;
+            var findLength = findText.Length;
+            var replaceLength = replaceText.Length;
+            var position = 0;
             var serializedObject = new SerializedObject(emitter);
             var pathProperty = serializedObject.FindProperty("Event");
-            string path = pathProperty.stringValue;
+            var path = pathProperty.stringValue;
             position = path.IndexOf(findText, position, StringComparison.CurrentCultureIgnoreCase);
             while (position >= 0)
             {
@@ -185,15 +170,15 @@ namespace FMODUnity
                 position += replaceLength;
                 position = path.IndexOf(findText, position, StringComparison.CurrentCultureIgnoreCase);
             }
+
             pathProperty.stringValue = path;
             return serializedObject.ApplyModifiedProperties();
         }
 
-        void Replace()
+        private void Replace()
         {
             ReplaceText(emitters[lastMatch]);
             FindNext();
         }
-        
     }
 }
