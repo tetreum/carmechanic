@@ -4,3 +4,11 @@
 /.vscode
 /.idea
 /build
+/obj
+\Temp
+\Library
+\Logs
+\.vscode
+\.idea
+\build
+\obj

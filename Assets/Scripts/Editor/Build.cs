@@ -9,8 +9,8 @@ public class Build : MonoBehaviour
     {
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
-            {"Scenes/MainMenu.unity", "Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/win";
+            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
+        buildPlayerOptions.locationPathName = "Build/win/carmechanicx86.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
 
         var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
@@ -27,7 +27,7 @@ public class Build : MonoBehaviour
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
             {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/win64";
+        buildPlayerOptions.locationPathName = "Build/win64/carmechanicx64.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
 
         var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
@@ -44,7 +44,7 @@ public class Build : MonoBehaviour
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
             {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/dev/win";
+        buildPlayerOptions.locationPathName = "Build/dev/win/carmechanic-devx86.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
         buildPlayerOptions.options = BuildOptions.Development;
         buildPlayerOptions.options = BuildOptions.AllowDebugging;
@@ -63,7 +63,7 @@ public class Build : MonoBehaviour
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
             {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/dev/win64";
+        buildPlayerOptions.locationPathName = "Build/dev/win64/carmechanic-devx64.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.Development;
         buildPlayerOptions.options = BuildOptions.AllowDebugging;
@@ -82,12 +82,13 @@ public class Build : MonoBehaviour
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
             {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/profiling/win";
+        buildPlayerOptions.locationPathName = "Build/profiling/win/carmechanic-profilingx86.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
         buildPlayerOptions.options = BuildOptions.Development;
         buildPlayerOptions.options = BuildOptions.AllowDebugging;
         buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
         buildPlayerOptions.options = BuildOptions.EnableDeepProfilingSupport;
+        buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
 
         var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
         var summary = report.summary;
@@ -103,12 +104,13 @@ public class Build : MonoBehaviour
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
             {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/profiling/win64";
+        buildPlayerOptions.locationPathName = "Build/profiling/win64/carmechanic-profilingx64.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.Development;
         buildPlayerOptions.options = BuildOptions.AllowDebugging;
         buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
         buildPlayerOptions.options = BuildOptions.EnableDeepProfilingSupport;
+        buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
 
         var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
         var summary = report.summary;
