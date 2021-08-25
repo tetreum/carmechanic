@@ -1,14 +1,4 @@
 ![carmechanic](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/1.png)
-![carmechanic2](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/2.png)
-![carmechanic3](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/3.png)
-![carmechanic4](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/4.png)
-![carmechanic5](https://raw.githubusercontent.com/tetreum/carmechanic/master/Screenshots/5.png)
-
-[![Analytics](https://ga-beacon.appspot.com/UA-17476024-7/carmechanic/readme?pixel)](https://github.com/tetreum/carmechanic)
-
-[![CarMechanic demo](http://img.youtube.com/vi/oKU090rna9A/0.jpg)](https://www.youtube.com/watch?v=oKU090rna9A "CarMechanic demo")
-
-(Click to see the video)
 
 ## About the game
 
