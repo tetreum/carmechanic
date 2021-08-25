@@ -816,7 +816,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.013826511, y: 0.013826498, z: 0.0062500057}
+  m_Size: {x: 0.5, y: 0.5, z: 0.1}
   m_Center: {x: -0.18572044, y: 0.17166519, z: 0.021876879}
 --- !u!114 &1039029564
 MonoBehaviour:
@@ -1035,7 +1035,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh136156
+  m_Name: pb_Mesh79806
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -20620,7 +20620,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093104660}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 17.3, y: 1.77, z: 24.4}
+  m_LocalPosition: {x: 17.3, y: 0.77, z: 24.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1636772244}
@@ -20731,7 +20731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff81bac238414849b4666af9fce8efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  liftarms: {fileID: 1252129777}
 --- !u!4 &1282145222
 Transform:
   m_ObjectHideFlags: 0
@@ -31025,7 +31024,7 @@ MonoBehaviour:
   isGlobal: 1
   blendDistance: 0
   weight: 1
-  priority: 0
+  priority: 1
 --- !u!4 &1443329335
 Transform:
   m_ObjectHideFlags: 0
@@ -31225,7 +31224,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636772243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.64, z: 0}
+  m_LocalPosition: {x: 0, y: 1.338, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1093104663}
