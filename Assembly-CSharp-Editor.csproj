@@ -52,6 +52,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Editor\Build.cs" />
      <Compile Include="Assets\Scripts\Editor\CarMechanic.cs" />
      <Compile Include="Assets\Scripts\Editor\CreateAssetBundles.cs" />
  <Reference Include="UnityEngine">
