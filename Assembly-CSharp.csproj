@@ -100,6 +100,7 @@
      <Compile Include="Assets\UserReporting\Scripts\FramerateMonitor.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Plugin\UnityUserReportParser.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\MainPanel.cs" />
+     <Compile Include="Assets\Scripts\Utils\GameManager.cs" />
      <Compile Include="Assets\Scripts\Engine\CarPart.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Client\PngHelper.cs" />
      <Compile Include="Assets\UserReporting\Scripts\UserReportingXRExtensions.cs" />
@@ -121,7 +122,6 @@
      <Compile Include="Assets\UserReporting\Scripts\Client\SerializableException.cs" />
      <Compile Include="Assets\Scripts\Utils\MouseOrbit.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Plugin\UnityUserReporting.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameManager.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
