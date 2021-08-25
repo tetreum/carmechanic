@@ -8,7 +8,7 @@ public class AssetBundlesManager : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Garage")
+        if (SceneManager.GetActiveScene().name == "Game")
         {
             var carsbundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "cars"));
             var car1 = carsbundle.LoadAsset<GameObject>("car1");
