@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FMOD;
+﻿using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -42,8 +40,7 @@ namespace FMODUnity
             Settings.AddPlatformTemplate<PlatformWindows>("2c5177b11d81d824dbb064f9ac8527da");
         }
 
-        public override string DisplayName => "Windows";
-
+        public override string DisplayName { get { return "Windows"; } }
         public override void DeclareUnityMappings(Settings settings)
         {
             settings.DeclareRuntimePlatform(RuntimePlatform.WindowsPlayer, this);
@@ -59,7 +56,7 @@ namespace FMODUnity
         }
 
 #if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier => Legacy.Platform.Windows;
+        public override Legacy.Platform LegacyIdentifier { get { return Legacy.Platform.Windows; } }
 #endif
 
 #if UNITY_WINRT_8_1 || UNITY_WSA_10_0
@@ -70,10 +67,9 @@ namespace FMODUnity
 #endif
 
 #if UNITY_EDITOR
-        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
-            string suffix)
+        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix)
         {
-            var dllSuffix = suffix + ".dll";
+            string dllSuffix = suffix + ".dll";
 
             switch (buildTarget)
             {
@@ -84,15 +80,14 @@ namespace FMODUnity
                     yield return "win/x86_64/fmodstudio" + dllSuffix;
                     break;
                 case BuildTarget.WSAPlayer:
-                    foreach (var architecture in new[] {"arm", "x64", "x86"})
+                    foreach (string architecture in new[] { "arm", "x64", "x86" })
                     {
                         yield return string.Format("uwp/{0}/fmod{1}", architecture, dllSuffix);
                         yield return string.Format("uwp/{0}/fmodstudio{1}", architecture, dllSuffix);
                     }
-
                     break;
                 default:
-                    throw new NotSupportedException("Unrecognised Build Target");
+                    throw new System.NotSupportedException("Unrecognised Build Target");
             }
         }
 
@@ -105,29 +100,34 @@ namespace FMODUnity
         public override string GetPluginPath(string pluginName)
         {
 #if UNITY_STANDALONE_WIN
-#if UNITY_2019_1_OR_NEWER
-#if UNITY_64
+    #if UNITY_2019_1_OR_NEWER
+        #if UNITY_64
             return string.Format("{0}/X86_64/{1}.dll", GetPluginBasePath(), pluginName);
-#else
+        #else
             return string.Format("{0}/X86/{1}.dll", GetPluginBasePath(), pluginName);
-#endif
-#else
+        #endif
+    #else
             return string.Format("{0}/{1}.dll", GetPluginBasePath(), pluginName);
-#endif
+    #endif
 #else // UNITY_WSA
             return string.Format("{0}.dll", pluginName);
 #endif
         }
 #if UNITY_EDITOR
-        public override OutputType[] ValidOutputTypes => sValidOutputTypes;
-
-        private static readonly OutputType[] sValidOutputTypes =
+        public override OutputType[] ValidOutputTypes
         {
-            new OutputType {displayName = "Windows Audio Session API", outputType = OUTPUTTYPE.WASAPI},
-            new OutputType {displayName = "Windows Sonic", outputType = OUTPUTTYPE.WINSONIC}
+            get
+            {
+                return sValidOutputTypes;
+            }
+        }
+
+        private static OutputType[] sValidOutputTypes = {
+           new OutputType() { displayName = "Windows Audio Session API", outputType = FMOD.OUTPUTTYPE.WASAPI },
+           new OutputType() { displayName = "Windows Sonic", outputType = FMOD.OUTPUTTYPE.WINSONIC },
         };
 
-        public override int CoreCount => MaximumCoreCount;
+        public override int CoreCount { get { return MaximumCoreCount; } }
 #endif
     }
 }
