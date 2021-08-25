@@ -9,7 +9,7 @@ public class Build : MonoBehaviour
     {
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
-            {"Scenes/MainMenu.unity", "Scenes/Settings.unity", "Scenes/Game.unity"};
+            {"Scenes/MainMenu.unity", "Scenes/Game.unity"};
         buildPlayerOptions.locationPathName = "Build/win64";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
 
@@ -26,7 +26,7 @@ public class Build : MonoBehaviour
     {
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
-            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Settings.unity", "Assets/Scenes/Game.unity"};
+            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
         buildPlayerOptions.locationPathName = "Build/win64";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
 
@@ -43,7 +43,7 @@ public class Build : MonoBehaviour
     {
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
-            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Settings.unity", "Assets/Scenes/Game.unity"};
+            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
         buildPlayerOptions.locationPathName = "Build/win64/dev";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
         buildPlayerOptions.options = BuildOptions.Development;
@@ -61,6 +61,8 @@ public class Build : MonoBehaviour
     private static void BuildDevWindows64()
     {
         var buildPlayerOptions = new BuildPlayerOptions();
+        buildPlayerOptions.scenes = new[]
+            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.Development;
         buildPlayerOptions.options = BuildOptions.AllowDebugging;
@@ -78,7 +80,7 @@ public class Build : MonoBehaviour
     {
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
-            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Settings.unity", "Assets/Scenes/Game.unity"};
+            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
         buildPlayerOptions.locationPathName = "Build/win64/profiling";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
         buildPlayerOptions.options = BuildOptions.Development;
@@ -99,7 +101,7 @@ public class Build : MonoBehaviour
     {
         var buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[]
-            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Settings.unity", "Assets/Scenes/Game.unity"};
+            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
         buildPlayerOptions.locationPathName = "Build/win64/profiling";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.Development;
