@@ -4,30 +4,23 @@ using UnityEngine;
 
 namespace FMODUnity
 {
-    class EventCache : ScriptableObject
+    internal class EventCache : ScriptableObject
     {
         public static int CurrentCacheVersion = 8;
 
-        [SerializeField]
-        public List<EditorBankRef> EditorBanks;
-        [SerializeField]
-        public List<EditorEventRef> EditorEvents;
-        [SerializeField]
-        public List<EditorParamRef> EditorParameters;
-        [SerializeField]
-        public List<EditorBankRef> MasterBanks;
-        [SerializeField]
-        public List<EditorBankRef> StringsBanks;
-        [SerializeField]
-        Int64 stringsBankWriteTime;
-        [SerializeField]
-        public int cacheVersion;
+        [SerializeField] public List<EditorBankRef> EditorBanks;
 
-        public DateTime StringsBankWriteTime
-        {
-            get { return new DateTime(stringsBankWriteTime); }
-            set { stringsBankWriteTime = value.Ticks; }
-        }
+        [SerializeField] public List<EditorEventRef> EditorEvents;
+
+        [SerializeField] public List<EditorParamRef> EditorParameters;
+
+        [SerializeField] public List<EditorBankRef> MasterBanks;
+
+        [SerializeField] public List<EditorBankRef> StringsBanks;
+
+        [SerializeField] private long stringsBankWriteTime;
+
+        [SerializeField] public int cacheVersion;
 
         public EventCache()
         {
@@ -37,6 +30,12 @@ namespace FMODUnity
             MasterBanks = new List<EditorBankRef>();
             StringsBanks = new List<EditorBankRef>();
             stringsBankWriteTime = 0;
+        }
+
+        public DateTime StringsBankWriteTime
+        {
+            get => new DateTime(stringsBankWriteTime);
+            set => stringsBankWriteTime = value.Ticks;
         }
     }
 }

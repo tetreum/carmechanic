@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,12 +6,12 @@ public class AssetBundlesManager : MonoBehaviour
 {
     private GameObject car1;
     private GameObject lift;
-    
+
     public void Awake()
     {
         var carsbundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "cars"));
         var objectsbundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "objects"));
-        
+
         car1 = carsbundle.LoadAsset<GameObject>("car1");
         lift = objectsbundle.LoadAsset<GameObject>("lift");
     }

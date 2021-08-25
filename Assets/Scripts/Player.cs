@@ -17,9 +17,9 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool canMove = true;
 
     private CharacterController characterController;
+    private EventInstance footsteps;
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX;
-    private EventInstance footsteps;
 
     private void Awake()
     {
@@ -61,15 +61,15 @@ public class Player : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) ||
+            Input.GetKeyDown(KeyCode.D))
         {
             footsteps.start();
             RuntimeManager.AttachInstanceToGameObject(footsteps, transform);
         }
-        if(Input.GetKeyUp(KeyCode.W)||Input.GetKeyUp(KeyCode.S)||Input.GetKeyUp(KeyCode.A)||Input.GetKeyUp(KeyCode.D))
-        {
-            footsteps.stop(STOP_MODE.ALLOWFADEOUT);
-        }
+
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) ||
+            Input.GetKeyUp(KeyCode.D)) footsteps.stop(STOP_MODE.ALLOWFADEOUT);
     }
 
     private void OnDestroy()

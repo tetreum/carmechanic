@@ -36,6 +36,20 @@ namespace FMODUnity
 fmod_editor.log";
 
         private static SetupWizardWindow instance;
+
+        private readonly List<bool> pageComplete = new List<bool>(new bool[(int) PAGES.Max]);
+
+        private readonly List<string> pageNames = new List<string>
+        {
+            "Welcome",
+            "Linking",
+            "Listener",
+            "Unity Audio",
+            "Unity Sources",
+            "Source Control",
+            "End"
+        };
+
         private bool bFoundFmodListener;
         private bool bFoundUnityListener;
         private GUIStyle bodyStyle;
@@ -56,19 +70,6 @@ fmod_editor.log";
         private SimpleTreeView m_SimpleTreeView;
         private TreeViewState m_TreeViewState;
         private GUIStyle navButtonStyle;
-
-        private readonly List<bool> pageComplete = new List<bool>(new bool[(int) PAGES.Max]);
-
-        private readonly List<string> pageNames = new List<string>
-        {
-            "Welcome",
-            "Linking",
-            "Listener",
-            "Unity Audio",
-            "Unity Sources",
-            "Source Control",
-            "End"
-        };
 
         private Vector2 scroll1, scroll2;
         private GUIStyle sourceButtonStyle;

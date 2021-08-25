@@ -9,16 +9,21 @@ public class Lift : MonoBehaviour
     [SerializeField] public Transform arms;
     public float speed = 0.01f;
     public float maxHeight = 1.22f;
-    public float minHeight = 0;
+    public float minHeight;
+    private GameObject carobj;
     private bool isElevated;
     private bool isMoving;
-    private Material mat;
-    private GameObject carobj;
     private EventInstance liftInstance;
+    private Material mat;
 
     public void Start()
     {
         liftInstance = RuntimeManager.CreateInstance("event:/HydraulicLift");
+    }
+
+    private void OnDestroy()
+    {
+        liftInstance.release();
     }
 
     private void OnMouseDown()
@@ -29,20 +34,14 @@ public class Lift : MonoBehaviour
         StartCoroutine(nameof(StartAscension));
     }
 
-    private void OnDestroy()
-    {
-        liftInstance.release();
-    }
-    
     private IEnumerator StartAscension()
     {
         var armsPos = arms.position;
 
-        if (isElevated){
+        if (isElevated)
             armsPos.y = minHeight;
-        }else{
+        else
             armsPos.y = maxHeight;
-        }
         while (AudioUtils.IsPlaying(liftInstance))
         {
             arms.position = Vector3.Lerp(arms.position, armsPos, speed);

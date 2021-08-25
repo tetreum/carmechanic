@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +8,7 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+#if UNITY_EDITOR
 #if UNITY_2018_1_OR_NEWER
 using UnityEditor.Build.Reporting;
 #endif

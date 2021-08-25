@@ -9,5 +9,4 @@ public class AudioUtils : MonoBehaviour
         instance.getPlaybackState(out state);
         return state != PLAYBACK_STATE.STOPPED;
     }
-
 }

@@ -77,6 +77,20 @@ namespace FMODUnity
             Settings.BankRefreshManual
         };
 
+        private readonly string[] FrequencyDisplay =
+        {
+            "Platform Default",
+            "22.05 kHz",
+            "24 kHz",
+            "32 kHz",
+            "44.1 kHz",
+            "48 kHz"
+        };
+
+        private readonly int[] FrequencyValues = {0, 22050, 24000, 32000, 44100, 48000};
+        private readonly TreeViewState platformTreeViewState = new TreeViewState();
+        private readonly string[] ToggleDisplay = {"Disabled", "Enabled", "Development Build Only"};
+
         private SerializedProperty automaticEventLoading;
         private SerializedProperty automaticSampleLoading;
         private SerializedProperty bankLoadType;
@@ -93,18 +107,6 @@ namespace FMODUnity
         private bool expandStaticPlugins;
 
         private bool expandThreadAffinity;
-
-        private readonly string[] FrequencyDisplay =
-        {
-            "Platform Default",
-            "22.05 kHz",
-            "24 kHz",
-            "32 kHz",
-            "44.1 kHz",
-            "48 kHz"
-        };
-
-        private readonly int[] FrequencyValues = {0, 22050, 24000, 32000, 44100, 48000};
 
         private bool hasBankSourceChanged;
         private bool hasBankTargetChanged;
@@ -126,7 +128,6 @@ namespace FMODUnity
         private GUIStyle platformHeaderStyle;
 
         private PlatformsView platformsView;
-        private readonly TreeViewState platformTreeViewState = new TreeViewState();
 
         private Texture2D propertyOverrideIndicator;
 
@@ -141,7 +142,6 @@ namespace FMODUnity
         private SerializedProperty stopEventsOutsideMaxDistance;
         private SerializedProperty targetAssetPath;
         private SerializedProperty targetBankFolder;
-        private readonly string[] ToggleDisplay = {"Disabled", "Enabled", "Development Build Only"};
 
         private void OnEnable()
         {
@@ -1839,9 +1839,8 @@ namespace FMODUnity
 
         private class SimpleHelp : HelpContent
         {
-            private GUIStyle style;
-
             private readonly GUIContent text;
+            private GUIStyle style;
 
             public SimpleHelp(string text)
             {

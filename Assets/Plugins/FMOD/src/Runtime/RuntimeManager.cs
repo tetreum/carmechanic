@@ -327,10 +327,10 @@ namespace FMODUnity
         private static void SetThreadAffinities(Platform platform)
         {
             foreach (var group in platform.ThreadAffinities)
-            foreach (var thread in @group.threads)
+            foreach (var thread in group.threads)
             {
                 var fmodThread = RuntimeUtils.ToFMODThreadType(thread);
-                var fmodAffinity = RuntimeUtils.ToFMODThreadAffinity(@group.affinity);
+                var fmodAffinity = RuntimeUtils.ToFMODThreadAffinity(group.affinity);
 
                 Thread.SetAttributes(fmodThread, fmodAffinity);
             }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using FMOD;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -34,7 +36,8 @@ namespace FMODUnity
             Settings.AddPlatformTemplate<PlatformLinux>("b7716510a1f36934c87976f3a81dbf3d");
         }
 
-        public override string DisplayName { get { return "Linux"; } }
+        public override string DisplayName => "Linux";
+
         public override void DeclareUnityMappings(Settings settings)
         {
             settings.DeclareRuntimePlatform(RuntimePlatform.LinuxPlayer, this);
@@ -47,32 +50,6 @@ namespace FMODUnity
 #endif
 #endif
         }
-
-#if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier { get { return Legacy.Platform.Linux; } }
-
-        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix)
-        {
-            switch (buildTarget)
-            {
-                case BuildTarget.StandaloneLinux64:
-                    yield return string.Format("linux/x86_64/libfmodstudio{0}.so", suffix);
-                    break;
-#if !UNITY_2019_2_OR_NEWER
-                case BuildTarget.StandaloneLinux:
-                    yield return string.Format("linux/x86/libfmodstudio{0}.so", suffix);
-                    break;
-                case BuildTarget.StandaloneLinuxUniversal:
-                    yield return string.Format("linux/x86/libfmodstudio{0}.so", suffix);
-                    yield return string.Format("linux/x86_64/libfmodstudio{0}.so", suffix);
-                    break;
-#endif
-                default:
-                    throw new System.NotSupportedException("Unrecognised Build Target");
-
-            }
-        }
-#endif
 
         public override string GetPluginPath(string pluginName)
         {
@@ -89,18 +66,39 @@ namespace FMODUnity
             }
 #endif
         }
+
 #if UNITY_EDITOR
-        public override OutputType[] ValidOutputTypes
+        public override Legacy.Platform LegacyIdentifier => Legacy.Platform.Linux;
+
+        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
+            string suffix)
         {
-            get
+            switch (buildTarget)
             {
-                return sValidOutputTypes;
+                case BuildTarget.StandaloneLinux64:
+                    yield return string.Format("linux/x86_64/libfmodstudio{0}.so", suffix);
+                    break;
+#if !UNITY_2019_2_OR_NEWER
+                case BuildTarget.StandaloneLinux:
+                    yield return string.Format("linux/x86/libfmodstudio{0}.so", suffix);
+                    break;
+                case BuildTarget.StandaloneLinuxUniversal:
+                    yield return string.Format("linux/x86/libfmodstudio{0}.so", suffix);
+                    yield return string.Format("linux/x86_64/libfmodstudio{0}.so", suffix);
+                    break;
+#endif
+                default:
+                    throw new NotSupportedException("Unrecognised Build Target");
             }
         }
+#endif
+#if UNITY_EDITOR
+        public override OutputType[] ValidOutputTypes => sValidOutputTypes;
 
-        private static OutputType[] sValidOutputTypes = {
-           new OutputType() { displayName = "Pulse Audio", outputType = FMOD.OUTPUTTYPE.PULSEAUDIO },
-           new OutputType() { displayName = "Advanced Linux Sound Architecture", outputType = FMOD.OUTPUTTYPE.ALSA },
+        private static readonly OutputType[] sValidOutputTypes =
+        {
+            new OutputType {displayName = "Pulse Audio", outputType = OUTPUTTYPE.PULSEAUDIO},
+            new OutputType {displayName = "Advanced Linux Sound Architecture", outputType = OUTPUTTYPE.ALSA}
         };
 #endif
     }
