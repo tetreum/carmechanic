@@ -1,20 +1,101 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using FMOD;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
-using UnityEditorInternal;
-using System.IO;
-using System;
-using System.Linq;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace FMODUnity
 {
     [CustomEditor(typeof(Settings))]
     public class SettingsEditor : Editor
     {
-        string[] ToggleDisplay = new string[] { "Disabled", "Enabled", "Development Build Only",  };
+        private const int THREAD_AFFINITY_CORES_PER_ROW = 8;
 
-        string[] FrequencyDisplay = new string[] {
+        private const string EditPlatformUndoMessage = "Edit FMOD Platform Properties";
+
+        private static readonly string[] SpeakerModeDisplay =
+        {
+            "Stereo",
+            "Surround 5.1",
+            "Surround 7.1",
+            "Surround 7.1.4"
+        };
+
+        private static readonly SPEAKERMODE[] SpeakerModeValues =
+        {
+            SPEAKERMODE.STEREO,
+            SPEAKERMODE._5POINT1,
+            SPEAKERMODE._7POINT1,
+            SPEAKERMODE._7POINT1POINT4
+        };
+
+        private static Section sExpandedSections;
+
+        private static readonly int[] LoggingValues =
+        {
+            (int) DEBUG_FLAGS.NONE,
+            (int) DEBUG_FLAGS.ERROR,
+            (int) DEBUG_FLAGS.WARNING,
+            (int) DEBUG_FLAGS.LOG
+        };
+
+        private static readonly string[] LoggingDisplay =
+        {
+            "None",
+            "Error",
+            "Warning",
+            "Log"
+        };
+
+        private static readonly GUIContent BankRefreshLabel = new GUIContent("Refresh Banks");
+
+        private static readonly GUIContent[] BankRefreshCooldownLabels =
+        {
+            new GUIContent("After 1 second"),
+            new GUIContent("After 5 seconds"),
+            new GUIContent("After 10 seconds"),
+            new GUIContent("After 20 seconds"),
+            new GUIContent("After 30 seconds"),
+            new GUIContent("After 1 minute"),
+            new GUIContent("Prompt Me"),
+            new GUIContent("Manually")
+        };
+
+        private static readonly int[] BankRefreshCooldownValues =
+        {
+            1,
+            5,
+            10,
+            20,
+            30,
+            60,
+            Settings.BankRefreshPrompt,
+            Settings.BankRefreshManual
+        };
+
+        private SerializedProperty automaticEventLoading;
+        private SerializedProperty automaticSampleLoading;
+        private SerializedProperty bankLoadType;
+        private SerializedProperty bankRefreshCooldown;
+        private SerializedProperty banksToLoad;
+
+        private ReorderableList banksToLoadView;
+        private GUIStyle dropdownStyle;
+        private PlatformPropertyStringListView dynamicPluginsView;
+        private SerializedProperty enableErrorCallback;
+        private SerializedProperty enableMemoryTracking;
+        private SerializedProperty encryptionKey;
+        private bool expandDynamicPlugins;
+        private bool expandStaticPlugins;
+
+        private bool expandThreadAffinity;
+
+        private readonly string[] FrequencyDisplay =
+        {
             "Platform Default",
             "22.05 kHz",
             "24 kHz",
@@ -23,69 +104,46 @@ namespace FMODUnity
             "48 kHz"
         };
 
-        int[] FrequencyValues = new int[] { 0, 22050, 24000, 32000, 44100, 48000 };
+        private readonly int[] FrequencyValues = {0, 22050, 24000, 32000, 44100, 48000};
 
-        static readonly string[] SpeakerModeDisplay = new string[] {
-            "Stereo",
-            "Surround 5.1",
-            "Surround 7.1",
-            "Surround 7.1.4"
-        };
+        private bool hasBankSourceChanged;
+        private bool hasBankTargetChanged;
+        private SerializedProperty hasPlatforms;
+        private SerializedProperty hasSourceProject;
+        private SerializedProperty importType;
+        private GUIStyle inheritedPropertyFoldoutStyle;
+        private GUIStyle inheritedPropertyLabelStyle;
 
-        static readonly FMOD.SPEAKERMODE[] SpeakerModeValues = new FMOD.SPEAKERMODE[] {
-            FMOD.SPEAKERMODE.STEREO,
-            FMOD.SPEAKERMODE._5POINT1,
-            FMOD.SPEAKERMODE._7POINT1,
-            FMOD.SPEAKERMODE._7POINT1POINT4
-        };
+        private string lastSourceBankPath;
+        private SerializedProperty loggingLevel;
 
-        bool hasBankSourceChanged = false;
-        bool hasBankTargetChanged = false;
+        private GUIContent mainHeaderIcon;
 
-        internal enum SourceType : uint
-        {
-            FMODStudioProject = 0,
-            SinglePlatformBuild,
-            MultiplePlatformBuild
-        }
+        private GUIStyle mainHeaderStyle;
+        private SerializedProperty meterChannelOrdering;
+        private GUIStyle overriddenPropertyFoldoutStyle;
+        private GUIStyle overriddenPropertyLabelStyle;
+        private GUIStyle platformHeaderStyle;
 
-        bool expandThreadAffinity;
-        bool expandDynamicPlugins;
-        bool expandStaticPlugins;
+        private PlatformsView platformsView;
+        private readonly TreeViewState platformTreeViewState = new TreeViewState();
 
-        [Flags]
-        enum Section
-        {
-            BankImport = 1 << 0,
-            Initialization = 1 << 1,
-            Behavior = 1 << 2,
-            UserInterface = 1 << 3,
-            PlatformSpecific = 1 << 4,
-        }
+        private Texture2D propertyOverrideIndicator;
 
-        static Section sExpandedSections;
+        [NonSerialized] private bool resourcesLoaded;
 
-        SerializedProperty automaticEventLoading;
-        SerializedProperty automaticSampleLoading;
-        SerializedProperty bankLoadType;
-        SerializedProperty banksToLoad;
-        SerializedProperty enableMemoryTracking;
-        SerializedProperty encryptionKey;
-        SerializedProperty hasSourceProject;
-        SerializedProperty hasPlatforms;
-        SerializedProperty importType;
-        SerializedProperty loggingLevel;
-        SerializedProperty meterChannelOrdering;
-        SerializedProperty sourceBankPath;
-        SerializedProperty sourceProjectPath;
-        SerializedProperty stopEventsOutsideMaxDistance;
-        SerializedProperty enableErrorCallback;
-        SerializedProperty targetAssetPath;
-        SerializedProperty targetBankFolder;
-        SerializedProperty bankRefreshCooldown;
-        SerializedProperty showBankRefreshWindow;
+        private GUIStyle sectionHeaderStyle;
+        private SerializedProperty showBankRefreshWindow;
+        private SerializedProperty sourceBankPath;
+        private SerializedProperty sourceProjectPath;
 
-        void OnEnable()
+        private PlatformPropertyStringListView staticPluginsView;
+        private SerializedProperty stopEventsOutsideMaxDistance;
+        private SerializedProperty targetAssetPath;
+        private SerializedProperty targetBankFolder;
+        private readonly string[] ToggleDisplay = {"Disabled", "Enabled", "Development Build Only"};
+
+        private void OnEnable()
         {
             automaticEventLoading = serializedObject.FindProperty("AutomaticEventLoading");
             automaticSampleLoading = serializedObject.FindProperty("AutomaticSampleLoading");
@@ -110,8 +168,9 @@ namespace FMODUnity
             platformsView = new PlatformsView(target as Settings, platformTreeViewState);
 
             banksToLoadView = new ReorderableList(banksToLoad);
-            banksToLoadView.onAddDropdownCallback = (rect, list) => {
-                GenericMenu menu = new GenericMenu();
+            banksToLoadView.onAddDropdownCallback = (rect, list) =>
+            {
+                var menu = new GenericMenu();
 
                 menu.AddItem(new GUIContent("Browse..."), false, BrowseForBankToLoad);
                 menu.AddItem(new GUIContent("Add All"), false, AddAllBanksToLoad);
@@ -125,12 +184,12 @@ namespace FMODUnity
             Undo.undoRedoPerformed += OnUndoRedo;
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             Undo.undoRedoPerformed -= OnUndoRedo;
         }
 
-        void OnUndoRedo()
+        private void OnUndoRedo()
         {
             platformsView.ForceReload();
 
@@ -139,40 +198,27 @@ namespace FMODUnity
             Repaint();
         }
 
-        [NonSerialized]
-        bool resourcesLoaded = false;
-
-        GUIStyle mainHeaderStyle;
-        GUIStyle sectionHeaderStyle;
-        GUIStyle platformHeaderStyle;
-        GUIStyle dropdownStyle;
-        GUIStyle inheritedPropertyLabelStyle;
-        GUIStyle overriddenPropertyLabelStyle;
-        GUIStyle inheritedPropertyFoldoutStyle;
-        GUIStyle overriddenPropertyFoldoutStyle;
-
-        GUIContent mainHeaderIcon;
-
-        Texture2D propertyOverrideIndicator;
-
-        void AffirmResources()
+        private void AffirmResources()
         {
             if (!resourcesLoaded)
             {
                 resourcesLoaded = true;
 
-                mainHeaderStyle = new GUIStyle(EditorStyles.label) {
+                mainHeaderStyle = new GUIStyle(EditorStyles.label)
+                {
                     fontStyle = FontStyle.Bold,
-                    fontSize = 18,
+                    fontSize = 18
                 };
                 mainHeaderStyle.normal.textColor = EditorGUIUtility.isProSkin ? Color.white : Color.black;
 
-                sectionHeaderStyle = new GUIStyle(GUI.skin.FindStyle("Foldout")) {
-                    fontStyle = FontStyle.Bold,
+                sectionHeaderStyle = new GUIStyle(GUI.skin.FindStyle("Foldout"))
+                {
+                    fontStyle = FontStyle.Bold
                 };
 
-                platformHeaderStyle = new GUIStyle(GUI.skin.label) {
-                    richText = true,
+                platformHeaderStyle = new GUIStyle(GUI.skin.label)
+                {
+                    richText = true
                 };
 
                 dropdownStyle = new GUIStyle(GUI.skin.FindStyle("dropdownButton"));
@@ -180,14 +226,16 @@ namespace FMODUnity
 
                 inheritedPropertyLabelStyle = GUI.skin.label;
 
-                overriddenPropertyLabelStyle = new GUIStyle(inheritedPropertyLabelStyle) {
-                    fontStyle = FontStyle.Bold,
+                overriddenPropertyLabelStyle = new GUIStyle(inheritedPropertyLabelStyle)
+                {
+                    fontStyle = FontStyle.Bold
                 };
 
                 inheritedPropertyFoldoutStyle = EditorStyles.foldout;
 
-                overriddenPropertyFoldoutStyle = new GUIStyle(inheritedPropertyFoldoutStyle) {
-                    fontStyle = FontStyle.Bold,
+                overriddenPropertyFoldoutStyle = new GUIStyle(inheritedPropertyFoldoutStyle)
+                {
+                    fontStyle = FontStyle.Bold
                 };
 
                 mainHeaderIcon = new GUIContent(EditorGUIUtility.Load("FMOD/StudioIcon.png") as Texture2D);
@@ -207,20 +255,21 @@ namespace FMODUnity
             }
         }
 
-        Rect DrawPlatformPropertyLabel(string label, Platform platform,
+        private Rect DrawPlatformPropertyLabel(string label, Platform platform,
             params Platform.PropertyOverrideControl[] properties)
         {
             PlatformPropertyLabelData data;
             PreparePlatformPropertyLabel(platform, properties, out data);
 
-            GUI.Label(data.labelRect, label, data.overridden ? overriddenPropertyLabelStyle : inheritedPropertyLabelStyle);
+            GUI.Label(data.labelRect, label,
+                data.overridden ? overriddenPropertyLabelStyle : inheritedPropertyLabelStyle);
 
             DecoratePlatformPropertyLabel(data, platform, properties);
 
             return data.remainderRect;
         }
 
-        Rect DrawPlatformPropertyFoldout(string label, ref bool expand, Platform platform,
+        private Rect DrawPlatformPropertyFoldout(string label, ref bool expand, Platform platform,
             params Platform.PropertyOverrideControl[] properties)
         {
             PlatformPropertyLabelData data;
@@ -237,35 +286,27 @@ namespace FMODUnity
             return data.remainderRect;
         }
 
-        struct PlatformPropertyLabelData
-        {
-            public bool hasParent;
-            public bool overridden;
-            public Rect labelRect;
-            public Rect remainderRect;
-        }
-
-        void PreparePlatformPropertyLabel(Platform platform, Platform.PropertyOverrideControl[] properties,
+        private void PreparePlatformPropertyLabel(Platform platform, Platform.PropertyOverrideControl[] properties,
             out PlatformPropertyLabelData data)
         {
             AffirmResources();
 
-            Rect rect = EditorGUILayout.GetControlRect();
+            var rect = EditorGUILayout.GetControlRect();
 
-            data.hasParent = (platform.Parent != null || platform is PlatformPlayInEditor);
+            data.hasParent = platform.Parent != null || platform is PlatformPlayInEditor;
             data.overridden = data.hasParent && properties.Any(p => p.HasValue(platform));
             data.labelRect = LabelRect(rect);
-            data.remainderRect = new Rect(rect) { xMin = data.labelRect.xMax };
+            data.remainderRect = new Rect(rect) {xMin = data.labelRect.xMax};
         }
 
-        void DecoratePlatformPropertyLabel(PlatformPropertyLabelData data, Platform platform,
+        private void DecoratePlatformPropertyLabel(PlatformPropertyLabelData data, Platform platform,
             Platform.PropertyOverrideControl[] properties)
         {
             if (data.hasParent)
             {
                 if (data.overridden)
                 {
-                    Rect indicatorRect = new Rect(data.labelRect) { x = 1, width = 2 };
+                    var indicatorRect = new Rect(data.labelRect) {x = 1, width = 2};
                     GUI.DrawTexture(indicatorRect, propertyOverrideIndicator);
                 }
 
@@ -273,32 +314,26 @@ namespace FMODUnity
                     && Event.current.button == 1
                     && data.labelRect.Contains(Event.current.mousePosition))
                 {
-                    GenericMenu menu = new GenericMenu();
+                    var menu = new GenericMenu();
 
-                    GUIContent revertContent = new GUIContent("Revert");
+                    var revertContent = new GUIContent("Revert");
 
                     if (data.overridden)
-                    {
-                        menu.AddItem(revertContent, false, () => {
+                        menu.AddItem(revertContent, false, () =>
+                        {
                             Undo.RecordObject(platform, "Revert FMOD Platform Properties");
 
-                            foreach (Platform.PropertyOverrideControl property in properties)
-                            {
-                                property.Clear(platform);
-                            }
+                            foreach (var property in properties) property.Clear(platform);
                         });
-                    }
                     else
-                    {
                         menu.AddDisabledItem(revertContent);
-                    }
 
                     menu.ShowAsContext();
                 }
             }
         }
 
-        static int DrawPopup(Rect position, int selectedIndex, string[] displayedOptions)
+        private static int DrawPopup(Rect position, int selectedIndex, string[] displayedOptions)
         {
             using (new NoIndentScope())
             {
@@ -306,73 +341,71 @@ namespace FMODUnity
             }
         }
 
-        void DisplayTriStateBool(string label, Platform platform, Platform.PropertyAccessor<TriStateBool> property)
+        private void DisplayTriStateBool(string label, Platform platform,
+            Platform.PropertyAccessor<TriStateBool> property)
         {
-            Rect rect = DrawPlatformPropertyLabel(label, platform, property);
+            var rect = DrawPlatformPropertyLabel(label, platform, property);
 
             EditorGUI.BeginChangeCheck();
 
-            int next = DrawPopup(rect, (int)property.Get(platform), ToggleDisplay);
+            var next = DrawPopup(rect, (int) property.Get(platform), ToggleDisplay);
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                property.Set(platform, (TriStateBool)next);
-            }
+            if (EditorGUI.EndChangeCheck()) property.Set(platform, (TriStateBool) next);
         }
 
-        void DisplayOutputMode(string label, Platform platform)
+        private void DisplayOutputMode(string label, Platform platform)
         {
             if (platform.ValidOutputTypes != null)
             {
-                string[] valuesChild = new string[platform.ValidOutputTypes.Length + 3];
-                string[] valuesChildEnum = new string[platform.ValidOutputTypes.Length + 3];
-                valuesChild[0] = string.Format("Auto");
-                valuesChild[1] = string.Format("No Sound");
-                valuesChild[2] = string.Format("Wav Writer");
-                valuesChildEnum[0] = Enum.GetName(typeof(FMOD.OUTPUTTYPE), FMOD.OUTPUTTYPE.AUTODETECT);
-                valuesChildEnum[1] = Enum.GetName(typeof(FMOD.OUTPUTTYPE), FMOD.OUTPUTTYPE.NOSOUND);
-                valuesChildEnum[2] = Enum.GetName(typeof(FMOD.OUTPUTTYPE), FMOD.OUTPUTTYPE.WAVWRITER);
-                for (int i = 0; i < platform.ValidOutputTypes.Length; i++)
+                var valuesChild = new string[platform.ValidOutputTypes.Length + 3];
+                var valuesChildEnum = new string[platform.ValidOutputTypes.Length + 3];
+                valuesChild[0] = "Auto";
+                valuesChild[1] = "No Sound";
+                valuesChild[2] = "Wav Writer";
+                valuesChildEnum[0] = Enum.GetName(typeof(OUTPUTTYPE), OUTPUTTYPE.AUTODETECT);
+                valuesChildEnum[1] = Enum.GetName(typeof(OUTPUTTYPE), OUTPUTTYPE.NOSOUND);
+                valuesChildEnum[2] = Enum.GetName(typeof(OUTPUTTYPE), OUTPUTTYPE.WAVWRITER);
+                for (var i = 0; i < platform.ValidOutputTypes.Length; i++)
                 {
                     valuesChild[i + 3] = platform.ValidOutputTypes[i].displayName;
-                    valuesChildEnum[i + 3] = Enum.GetName(typeof(FMOD.OUTPUTTYPE), platform.ValidOutputTypes[i].outputType);
+                    valuesChildEnum[i + 3] = Enum.GetName(typeof(OUTPUTTYPE), platform.ValidOutputTypes[i].outputType);
                 }
-                int currentIndex = Array.IndexOf(valuesChildEnum, platform.outputType);
+
+                var currentIndex = Array.IndexOf(valuesChildEnum, platform.outputType);
                 if (currentIndex == -1)
                 {
                     currentIndex = 0;
-                    platform.outputType = Enum.GetName(typeof(FMOD.OUTPUTTYPE), FMOD.OUTPUTTYPE.AUTODETECT);
+                    platform.outputType = Enum.GetName(typeof(OUTPUTTYPE), OUTPUTTYPE.AUTODETECT);
                 }
-                int next = EditorGUILayout.Popup(label, currentIndex, valuesChild);
+
+                var next = EditorGUILayout.Popup(label, currentIndex, valuesChild);
                 platform.outputType = valuesChildEnum[next];
             }
         }
 
-        void DisplayThreadAffinity(string label, Platform platform)
+        private void DisplayThreadAffinity(string label, Platform platform)
         {
             if (platform.CoreCount > 0 && DisplayThreadAffinityFoldout(label, platform))
-            {
                 using (new EditorGUI.IndentLevelScope())
                 {
                     DisplayThreadAffinityGroups(platform);
                 }
-            }
         }
 
-        bool DisplayThreadAffinityFoldout(string label, Platform platform)
+        private bool DisplayThreadAffinityFoldout(string label, Platform platform)
         {
-            Rect headerRect = EditorGUILayout.GetControlRect();
+            var headerRect = EditorGUILayout.GetControlRect();
 
-            Rect labelRect = headerRect;
+            var labelRect = headerRect;
             labelRect.width = EditorGUIUtility.labelWidth;
 
             expandThreadAffinity = EditorGUI.Foldout(labelRect, expandThreadAffinity, label, true);
 
-            bool useDefaults = !platform.ThreadAffinitiesProperty.HasValue;
+            var useDefaults = !platform.ThreadAffinitiesProperty.HasValue;
 
             EditorGUI.BeginChangeCheck();
 
-            Rect toggleRect = headerRect;
+            var toggleRect = headerRect;
             toggleRect.xMin = labelRect.xMax;
 
             useDefaults = GUI.Toggle(toggleRect, useDefaults, "Use Defaults");
@@ -389,30 +422,26 @@ namespace FMODUnity
                     platform.ThreadAffinitiesProperty.Value = new List<ThreadAffinityGroup>();
                     platform.ThreadAffinitiesProperty.HasValue = true;
 
-                    foreach (ThreadAffinityGroup group in platform.DefaultThreadAffinities)
-                    {
+                    foreach (var group in platform.DefaultThreadAffinities)
                         platform.ThreadAffinitiesProperty.Value.Add(new ThreadAffinityGroup(group));
-                    }
                 }
             }
 
             return expandThreadAffinity;
         }
 
-        const int THREAD_AFFINITY_CORES_PER_ROW = 8;
-
-        void DisplayThreadAffinityGroups(Platform platform)
+        private void DisplayThreadAffinityGroups(Platform platform)
         {
-            GUIStyle affinityStyle = EditorStyles.miniButton;
-            float affinityWidth = affinityStyle.CalcSize(new GUIContent("00")).x;
+            var affinityStyle = EditorStyles.miniButton;
+            var affinityWidth = affinityStyle.CalcSize(new GUIContent("00")).x;
 
-            GUIContent anyButtonContent = new GUIContent("Any");
-            float anyButtonWidth = affinityStyle.CalcSize(anyButtonContent).x;
+            var anyButtonContent = new GUIContent("Any");
+            var anyButtonWidth = affinityStyle.CalcSize(anyButtonContent).x;
 
-            float threadsWidth = EditorGUIUtility.labelWidth;
-            float affinitiesWidth = affinityWidth * THREAD_AFFINITY_CORES_PER_ROW + anyButtonWidth;
+            var threadsWidth = EditorGUIUtility.labelWidth;
+            var affinitiesWidth = affinityWidth * THREAD_AFFINITY_CORES_PER_ROW + anyButtonWidth;
 
-            bool editable = platform.ThreadAffinitiesProperty.HasValue;
+            var editable = platform.ThreadAffinitiesProperty.HasValue;
 
             if (platform.ThreadAffinities.Any())
             {
@@ -422,27 +451,21 @@ namespace FMODUnity
                 {
                     ThreadAffinityGroup groupToDelete = null;
 
-                    foreach (ThreadAffinityGroup group in platform.ThreadAffinities)
+                    foreach (var group in platform.ThreadAffinities)
                     {
                         bool delete;
                         DisplayThreadAffinityGroup(group, platform, threadsWidth, affinitiesWidth,
                             anyButtonWidth, anyButtonContent, affinityStyle, affinityWidth, out delete);
 
-                        if (delete)
-                        {
-                            groupToDelete = group;
-                        }
+                        if (delete) groupToDelete = group;
                     }
 
-                    if (groupToDelete != null)
-                    {
-                        platform.ThreadAffinitiesProperty.Value.Remove(groupToDelete);
-                    }
+                    if (groupToDelete != null) platform.ThreadAffinitiesProperty.Value.Remove(groupToDelete);
                 }
             }
             else
             {
-                Rect messageRect = EditorGUILayout.GetControlRect();
+                var messageRect = EditorGUILayout.GetControlRect();
                 messageRect.width = threadsWidth + affinitiesWidth;
                 messageRect = EditorGUI.IndentedRect(messageRect);
 
@@ -451,73 +474,69 @@ namespace FMODUnity
 
             if (editable)
             {
-                Rect addButtonRect = EditorGUILayout.GetControlRect();
+                var addButtonRect = EditorGUILayout.GetControlRect();
                 addButtonRect.width = threadsWidth + affinitiesWidth;
                 addButtonRect = EditorGUI.IndentedRect(addButtonRect);
 
                 if (GUI.Button(addButtonRect, "Add"))
-                {
                     platform.ThreadAffinitiesProperty.Value.Add(new ThreadAffinityGroup());
-                }
             }
         }
 
-        void DisplayThreadAffinitiesHeader(float threadsWidth, float affinitiesWidth)
+        private void DisplayThreadAffinitiesHeader(float threadsWidth, float affinitiesWidth)
         {
-            Rect controlRect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+            var controlRect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
 
-            Rect threadsRect = controlRect;
+            var threadsRect = controlRect;
             threadsRect.width = threadsWidth;
 
             threadsRect = EditorGUI.IndentedRect(threadsRect);
 
             GUI.Label(threadsRect, "Threads");
 
-            Rect coresRect = controlRect;
+            var coresRect = controlRect;
             coresRect.x = threadsRect.xMax;
             coresRect.width = affinitiesWidth;
 
             GUI.Label(coresRect, "Cores");
         }
 
-        void DisplayThreadAffinityGroup(ThreadAffinityGroup group, Platform platform,
+        private void DisplayThreadAffinityGroup(ThreadAffinityGroup group, Platform platform,
             float threadsWidth, float affinitiesWidth, float anyButtonWidth, GUIContent anyButtonContent,
             GUIStyle affinityStyle, float affinityWidth, out bool delete)
         {
             delete = false;
 
-            GUIStyle editButtonStyle = EditorStyles.popup;
+            var editButtonStyle = EditorStyles.popup;
 
-            GUIContent editButtonContent = new GUIContent("Edit");
-            Rect editButtonRect = new Rect(Vector2.zero, editButtonStyle.CalcSize(editButtonContent));
+            var editButtonContent = new GUIContent("Edit");
+            var editButtonRect = new Rect(Vector2.zero, editButtonStyle.CalcSize(editButtonContent));
 
-            float threadsHeight = group.threads.Count * EditorGUIUtility.singleLineHeight;
+            var threadsHeight = group.threads.Count * EditorGUIUtility.singleLineHeight;
 
-            bool editable = platform.ThreadAffinitiesProperty.HasValue;
+            var editable = platform.ThreadAffinitiesProperty.HasValue;
 
-            if (editable)
-            {
-                 threadsHeight += EditorGUIUtility.standardVerticalSpacing + editButtonRect.height;
-            }
+            if (editable) threadsHeight += EditorGUIUtility.standardVerticalSpacing + editButtonRect.height;
 
-            float affinitiesHeight =
-                Mathf.Ceil(platform.CoreCount / (float)THREAD_AFFINITY_CORES_PER_ROW) * EditorGUIUtility.singleLineHeight;
+            var affinitiesHeight =
+                Mathf.Ceil(platform.CoreCount / (float) THREAD_AFFINITY_CORES_PER_ROW) *
+                EditorGUIUtility.singleLineHeight;
 
-            Rect controlRect = EditorGUILayout.GetControlRect(false, Math.Max(threadsHeight, affinitiesHeight));
+            var controlRect = EditorGUILayout.GetControlRect(false, Math.Max(threadsHeight, affinitiesHeight));
 
-            Rect threadsRect = controlRect;
+            var threadsRect = controlRect;
             threadsRect.width = threadsWidth;
 
             threadsRect = EditorGUI.IndentedRect(threadsRect);
 
-            GUIStyle boxStyle = EditorStyles.textArea;
+            var boxStyle = EditorStyles.textArea;
 
             GUI.Box(threadsRect, string.Empty, boxStyle);
 
-            Rect threadRect = threadsRect;
+            var threadRect = threadsRect;
             threadRect.height = EditorGUIUtility.singleLineHeight;
 
-            foreach (ThreadType thread in group.threads)
+            foreach (var thread in group.threads)
             {
                 GUI.Label(threadRect, thread.DisplayName());
                 threadRect.y += threadRect.height;
@@ -529,43 +548,35 @@ namespace FMODUnity
                 editButtonRect.center = new Vector2(threadsRect.center.x, editButtonRect.center.y);
 
                 if (EditorGUI.DropdownButton(editButtonRect, editButtonContent, FocusType.Passive, editButtonStyle))
-                {
                     ThreadListEditor.Show(editButtonRect, group, platform, this);
-                }
             }
 
-            Rect affinitiesRect = controlRect;
+            var affinitiesRect = controlRect;
             affinitiesRect.xMin = threadsRect.xMax;
             affinitiesRect.width = affinitiesWidth;
 
             GUI.Box(affinitiesRect, string.Empty, boxStyle);
 
-            Rect anyButtonRect = affinitiesRect;
+            var anyButtonRect = affinitiesRect;
             anyButtonRect.height = affinitiesHeight;
             anyButtonRect.width = anyButtonWidth;
 
             if (GUI.Toggle(anyButtonRect, group.affinity == ThreadAffinity.Any, anyButtonContent, affinityStyle))
-            {
                 group.affinity = ThreadAffinity.Any;
-            }
 
-            Rect affinityRect = affinitiesRect;
+            var affinityRect = affinitiesRect;
             affinityRect.x = anyButtonRect.xMax;
             affinityRect.height = EditorGUIUtility.singleLineHeight;
             affinityRect.width = affinityWidth;
 
-            for (int i = 0; i < platform.CoreCount; ++i)
+            for (var i = 0; i < platform.CoreCount; ++i)
             {
-                ThreadAffinity mask = (ThreadAffinity)(1U << i);
+                var mask = (ThreadAffinity) (1U << i);
 
                 if (GUI.Toggle(affinityRect, (group.affinity & mask) == mask, i.ToString(), affinityStyle))
-                {
                     group.affinity |= mask;
-                }
                 else
-                {
                     group.affinity &= ~mask;
-                }
 
                 if (i % THREAD_AFFINITY_CORES_PER_ROW == THREAD_AFFINITY_CORES_PER_ROW - 1)
                 {
@@ -580,428 +591,164 @@ namespace FMODUnity
 
             if (editable)
             {
-                GUIStyle deleteButtonStyle = GUI.skin.button;
-                GUIContent deleteButtonContent = new GUIContent("Delete");
+                var deleteButtonStyle = GUI.skin.button;
+                var deleteButtonContent = new GUIContent("Delete");
 
-                Rect deleteButtonRect = controlRect;
+                var deleteButtonRect = controlRect;
                 deleteButtonRect.x = affinitiesRect.xMax;
                 deleteButtonRect.width = deleteButtonStyle.CalcSize(deleteButtonContent).x;
 
-                if (GUI.Button(deleteButtonRect, deleteButtonContent, deleteButtonStyle))
-                {
-                    delete = true;
-                }
+                if (GUI.Button(deleteButtonRect, deleteButtonContent, deleteButtonStyle)) delete = true;
             }
         }
 
-        class ThreadListEditor : EditorWindow
+        private void DisplaySampleRate(string label, Platform platform)
         {
-            ThreadAffinityGroup group;
-            Platform platform;
-            Editor parent;
+            var property = Platform.PropertyAccessors.SampleRate;
 
-            public static void Show(Rect buttonRect, ThreadAffinityGroup group, Platform platform, Editor parent)
-            {
-                ThreadListEditor editor = CreateInstance<ThreadListEditor>();
-                editor.group = group;
-                editor.platform = platform;
-                editor.parent = parent;
-
-                Rect rect = new Rect(GUIUtility.GUIToScreenPoint(buttonRect.position), buttonRect.size);
-
-                editor.ShowAsDropDown(rect, CalculateSize());
-            }
-
-            private static GUIStyle FrameStyle { get { return GUI.skin.box; } }
-            private static GUIStyle ThreadStyle { get { return EditorStyles.toggle; } }
-
-            private static Vector2 CalculateSize()
-            {
-                Vector2 result = Vector2.zero;
-
-                Array enumValues = Enum.GetValues(typeof(ThreadType));
-
-                foreach (ThreadType thread in enumValues)
-                {
-                    Vector2 size = ThreadStyle.CalcSize(new GUIContent(thread.DisplayName()));
-                    result.x = Mathf.Max(result.x, size.x);
-                }
-
-                result.y = enumValues.Length * EditorGUIUtility.singleLineHeight
-                    + (enumValues.Length - 1) * EditorGUIUtility.standardVerticalSpacing;
-
-                result.x += FrameStyle.padding.horizontal;
-                result.y += FrameStyle.padding.vertical;
-
-                return result;
-            }
-
-            private void OnGUI()
-            {
-                Rect frameRect = new Rect(0, 0, position.width, position.height);
-
-                GUI.Box(frameRect, string.Empty, FrameStyle);
-
-                Rect threadRect = FrameStyle.padding.Remove(frameRect);
-                threadRect.height = EditorGUIUtility.singleLineHeight;
-
-                foreach (ThreadType thread in Enum.GetValues(typeof(ThreadType)))
-                {
-                    EditorGUI.BeginChangeCheck();
-
-                    bool include = EditorGUI.ToggleLeft(threadRect, thread.DisplayName(), group.threads.Contains(thread));
-
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        Undo.RecordObject(platform, EditPlatformUndoMessage);
-
-                        if (include)
-                        {
-                            // Make sure each thread is only in one group
-                            foreach (ThreadAffinityGroup other in platform.ThreadAffinities)
-                            {
-                                other.threads.Remove(thread);
-                            }
-
-                            group.threads.Add(thread);
-                            group.threads.Sort();
-                        }
-                        else
-                        {
-                            group.threads.Remove(thread);
-                        }
-
-                        parent.Repaint();
-                    }
-
-                    threadRect.y = threadRect.yMax + EditorGUIUtility.standardVerticalSpacing;
-                }
-            }
-        }
-
-        void DisplaySampleRate(string label, Platform platform)
-        {
-            Platform.PropertyAccessor<int> property = Platform.PropertyAccessors.SampleRate;
-
-            Rect rect = DrawPlatformPropertyLabel(label, platform, property);
+            var rect = DrawPlatformPropertyLabel(label, platform, property);
 
             EditorGUI.BeginChangeCheck();
 
-            int currentIndex = Math.Max(0, Array.IndexOf(FrequencyValues, platform.SampleRate));
-            int nextIndex = DrawPopup(rect, currentIndex, FrequencyDisplay);
+            var currentIndex = Math.Max(0, Array.IndexOf(FrequencyValues, platform.SampleRate));
+            var nextIndex = DrawPopup(rect, currentIndex, FrequencyDisplay);
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                property.Set(platform, FrequencyValues[nextIndex]);
-            }
+            if (EditorGUI.EndChangeCheck()) property.Set(platform, FrequencyValues[nextIndex]);
         }
 
-        void DisplayProjectPlatform(string label, Platform platform)
+        private void DisplayProjectPlatform(string label, Platform platform)
         {
-            Rect rect = DrawPlatformPropertyLabel(label, platform,
+            var rect = DrawPlatformPropertyLabel(label, platform,
                 Platform.PropertyAccessors.BuildDirectory, Platform.PropertyAccessors.SpeakerMode);
 
-            int speakerModeIndex = Math.Max(0, Array.IndexOf(SpeakerModeValues, platform.SpeakerMode));
-            string speakerModeName = SpeakerModeDisplay[speakerModeIndex];
+            var speakerModeIndex = Math.Max(0, Array.IndexOf(SpeakerModeValues, platform.SpeakerMode));
+            var speakerModeName = SpeakerModeDisplay[speakerModeIndex];
 
             if (GUI.Button(rect, string.Format("{0} ({1})", platform.BuildDirectory, speakerModeName)))
-            {
                 PopupWindow.Show(rect, new ProjectPlatformSelector(platform, this));
-            }
         }
 
-        class ProjectPlatformSelector : PopupWindowContent
-        {
-            public ProjectPlatformSelector(Platform platform, SettingsEditor settingsEditor)
-            {
-                this.platform = platform;
-                this.settingsEditor = settingsEditor;
-
-                headerStyle = GUI.skin.label;
-
-                toggleStyle = new GUIStyle(EditorStyles.radioButton);
-                toggleStyle.margin.left = headerStyle.margin.left + 10;
-
-                outputSubdirectories = EditorUtils.GetBankPlatforms();
-
-                Vector2 subdirectoryHeaderSize = headerStyle.CalcSize(subdirectoryHeader);
-
-                subdirectorySize = ToggleGroupSize(outputSubdirectories);
-                subdirectorySize.x = Math.Max(subdirectoryHeaderSize.x, subdirectorySize.x);
-                subdirectorySize.y += subdirectoryHeaderSize.y + headerStyle.margin.bottom;
-
-                Vector2 speakerModeHeaderSize = headerStyle.CalcSize(speakerModeHeader);
-
-                speakerModeSize = ToggleGroupSize(SpeakerModeDisplay);
-                speakerModeSize.x = Math.Max(speakerModeHeaderSize.x, speakerModeSize.x);
-                speakerModeSize.y += speakerModeHeaderSize.y + headerStyle.margin.bottom;
-
-                helpButtonSize = GetHelpButtonSize();
-
-                float width = headerStyle.margin.left + subdirectorySize.x + InterColumnSpace + speakerModeSize.x
-                    + helpButtonSize.x;
-                float height = Math.Max(subdirectorySize.y, speakerModeSize.y);
-
-                windowSize = new Vector2(width, height);
-            }
-
-            private Vector2 ToggleGroupSize(IEnumerable<string> labels)
-            {
-                Vector2 totalSize = Vector2.zero;
-
-                foreach (string label in labels)
-                {
-                    Vector2 size = toggleStyle.CalcSize(new GUIContent(label));
-
-                    totalSize.x = Math.Max(totalSize.x, size.x);
-                    totalSize.y += size.y + toggleStyle.margin.top;
-                }
-
-                totalSize.y += toggleStyle.margin.bottom;
-
-                return totalSize;
-            }
-
-            private Platform platform;
-            private SettingsEditor settingsEditor;
-            private string[] outputSubdirectories;
-
-            private GUIStyle headerStyle;
-            private GUIStyle toggleStyle;
-
-            private GUIContent subdirectoryHeader = new GUIContent("Output sub-directory:");
-            private GUIContent speakerModeHeader = new GUIContent("Surround speaker mode:");
-
-            const string HelpText = "Select the output sub-directory and speaker mode that match the project " +
-                "platform settings in the FMOD Studio build preferences.";
-            const string UndoText = "Edit FMOD Platform Settings";
-
-            const float InterColumnSpace = 25;
-
-            Vector2 subdirectorySize;
-            Vector2 speakerModeSize;
-            Vector2 helpButtonSize;
-
-            Vector2 windowSize;
-
-            public override Vector2 GetWindowSize()
-            {
-                return windowSize;
-            }
-
-            public override void OnGUI(Rect rect)
-            {
-                float y = rect.y + headerStyle.margin.top;
-
-                Rect subdirectoryRect = new Rect(rect.x + headerStyle.margin.left, y, subdirectorySize.x, rect.height);
-
-                using (new GUILayout.AreaScope(subdirectoryRect))
-                {
-                    GUILayout.Label(subdirectoryHeader, headerStyle);
-
-                    foreach (string buildDirectory in outputSubdirectories)
-                    {
-                        bool selected = (platform.BuildDirectory == buildDirectory);
-
-                        EditorGUI.BeginChangeCheck();
-
-                        selected = GUILayout.Toggle(selected, buildDirectory, toggleStyle);
-
-                        if (EditorGUI.EndChangeCheck() && selected)
-                        {
-                            Undo.RecordObject(platform, UndoText);
-
-                            Platform.PropertyAccessors.BuildDirectory.Set(platform, buildDirectory);
-
-                            // Ensure SpeakerMode is also overridden
-                            Platform.PropertyAccessors.SpeakerMode.Set(platform, platform.SpeakerMode);
-
-                            settingsEditor.Repaint();
-                        }
-                    }
-                }
-
-                Rect speakerModeRect = new Rect(subdirectoryRect.xMax + InterColumnSpace, y, speakerModeSize.x, rect.height);
-
-                using (new GUILayout.AreaScope(speakerModeRect))
-                {
-                    GUILayout.Label(speakerModeHeader, headerStyle);
-
-                    for (int i = 0; i < SpeakerModeValues.Length; ++i)
-                    {
-                        bool selected = (platform.SpeakerMode == SpeakerModeValues[i]);
-
-                        EditorGUI.BeginChangeCheck();
-
-                        selected = GUILayout.Toggle(selected, SpeakerModeDisplay[i], toggleStyle);
-
-                        if (EditorGUI.EndChangeCheck() && selected)
-                        {
-                            Undo.RecordObject(platform, UndoText);
-
-                            Platform.PropertyAccessors.SpeakerMode.Set(platform, SpeakerModeValues[i]);
-
-                            // Ensure BuildDirectory is also overridden
-                            Platform.PropertyAccessors.BuildDirectory.Set(platform, platform.BuildDirectory);
-
-                            settingsEditor.Repaint();
-                        }
-                    }
-                }
-
-                Rect helpButtonRect = new Rect(speakerModeRect.xMax, y, helpButtonSize.x, helpButtonSize.y);
-                DrawHelpButton(helpButtonRect, () => new SimpleHelp(HelpText));
-            }
-        }
-
-        void DisplaySpeakerMode(string label, Platform platform)
+        private void DisplaySpeakerMode(string label, Platform platform)
         {
             const string HelpText = "Select the speaker mode that matches the project " +
-                "platform settings in the FMOD Studio build preferences.";
+                                    "platform settings in the FMOD Studio build preferences.";
 
-            Rect rect = DrawHelpButtonLayout(() => new SimpleHelp(HelpText));
+            var rect = DrawHelpButtonLayout(() => new SimpleHelp(HelpText));
 
-            Rect labelRect = LabelRect(rect);
+            var labelRect = LabelRect(rect);
 
             GUI.Label(labelRect, label);
 
-            Rect speakerModeRect = rect;
+            var speakerModeRect = rect;
             speakerModeRect.xMin = labelRect.xMax;
 
-            int currentIndex = Math.Max(0, Array.IndexOf(SpeakerModeValues, platform.SpeakerMode));
+            var currentIndex = Math.Max(0, Array.IndexOf(SpeakerModeValues, platform.SpeakerMode));
 
-            int next = DrawPopup(speakerModeRect, currentIndex, SpeakerModeDisplay);
+            var next = DrawPopup(speakerModeRect, currentIndex, SpeakerModeDisplay);
 
             Platform.PropertyAccessors.SpeakerMode.Set(platform, SpeakerModeValues[next]);
         }
 
-        void DisplayCallbackHandler(string label, Platform platform)
+        private void DisplayCallbackHandler(string label, Platform platform)
         {
-            Platform.PropertyAccessor<PlatformCallbackHandler> property = Platform.PropertyAccessors.CallbackHandler;
+            var property = Platform.PropertyAccessors.CallbackHandler;
 
-            Rect rect = DrawPlatformPropertyLabel(label, platform, property);
+            var rect = DrawPlatformPropertyLabel(label, platform, property);
 
             using (new NoIndentScope())
             {
                 EditorGUI.BeginChangeCheck();
 
-                PlatformCallbackHandler next = EditorGUI.ObjectField(rect, property.Get(platform),
+                var next = EditorGUI.ObjectField(rect, property.Get(platform),
                     typeof(PlatformCallbackHandler), false) as PlatformCallbackHandler;
 
-                if (EditorGUI.EndChangeCheck())
-                {
-                    property.Set(platform, next);
-                }
+                if (EditorGUI.EndChangeCheck()) property.Set(platform, next);
             }
         }
 
-        void DisplayInt(string label, Platform platform, Platform.PropertyAccessor<int> property, int min, int max)
+        private void DisplayInt(string label, Platform platform, Platform.PropertyAccessor<int> property, int min,
+            int max)
         {
-            int currentValue = property.Get(platform);
+            var currentValue = property.Get(platform);
 
-            Rect rect = DrawPlatformPropertyLabel(label, platform, property);
+            var rect = DrawPlatformPropertyLabel(label, platform, property);
 
             using (new NoIndentScope())
             {
                 EditorGUI.BeginChangeCheck();
 
-                int next = EditorGUI.IntSlider(rect, currentValue, min, max);
+                var next = EditorGUI.IntSlider(rect, currentValue, min, max);
 
-                if (EditorGUI.EndChangeCheck())
-                {
-                    property.Set(platform, next);
-                }
+                if (EditorGUI.EndChangeCheck()) property.Set(platform, next);
             }
         }
 
-        void DisplayLiveUpdatePort(string label, Platform platform, Platform.PropertyAccessor<int> property)
+        private void DisplayLiveUpdatePort(string label, Platform platform, Platform.PropertyAccessor<int> property)
         {
-            Rect rect = DrawPlatformPropertyLabel(label, platform, property);
+            var rect = DrawPlatformPropertyLabel(label, platform, property);
 
-            GUIContent resetContent = new GUIContent("Reset");
+            var resetContent = new GUIContent("Reset");
 
-            Rect resetRect = rect;
+            var resetRect = rect;
             resetRect.xMin = resetRect.xMax - GUI.skin.button.CalcSize(resetContent).x;
 
-            Rect textRect = rect;
+            var textRect = rect;
             textRect.xMax = resetRect.xMin;
 
             using (new NoIndentScope())
             {
                 EditorGUI.BeginChangeCheck();
 
-                int next = EditorGUI.IntField(textRect, property.Get(platform));
+                var next = EditorGUI.IntField(textRect, property.Get(platform));
 
-                if (GUI.Button(resetRect, resetContent))
-                {
-                    next = 9264;
-                }
+                if (GUI.Button(resetRect, resetContent)) next = 9264;
 
-                if (EditorGUI.EndChangeCheck())
-                {
-                    property.Set(platform, next);
-                }
+                if (EditorGUI.EndChangeCheck()) property.Set(platform, next);
             }
         }
 
-        const string EditPlatformUndoMessage = "Edit FMOD Platform Properties";
-
-        private PlatformPropertyStringListView staticPluginsView;
-        private PlatformPropertyStringListView dynamicPluginsView;
-
         private void DisplayPlatform(Platform platform)
         {
-            if (!platform.Active)
-            {
-                return;
-            }
+            if (!platform.Active) return;
 
             DisplayPlatformHeader(platform);
 
             Undo.RecordObject(platform, EditPlatformUndoMessage);
 
-            Settings settings = target as Settings;
+            var settings = target as Settings;
 
             using (new EditorGUI.IndentLevelScope())
             {
                 DisplayTriStateBool("Live Update", platform, Platform.PropertyAccessors.LiveUpdate);
 
                 if (platform.IsLiveUpdateEnabled)
-                {
                     DisplayLiveUpdatePort("Live Update Port", platform, Platform.PropertyAccessors.LiveUpdatePort);
-                }
 
                 DisplayTriStateBool("Debug Overlay", platform, Platform.PropertyAccessors.Overlay);
                 DisplayOutputMode("Output Mode", platform);
                 DisplaySampleRate("Sample Rate", platform);
 
                 if (settings.HasPlatforms)
-                {
                     DisplayProjectPlatform("Project Platform", platform);
-                }
-                else if (platform is PlatformDefault)
-                {
-                    DisplaySpeakerMode("Speaker Mode", platform);
-                }
+                else if (platform is PlatformDefault) DisplaySpeakerMode("Speaker Mode", platform);
 
                 DisplayCallbackHandler("Callback Handler", platform);
 
                 if (!(platform is PlatformPlayInEditor))
                 {
-                    DisplayInt("Virtual Channel Count", platform, Platform.PropertyAccessors.VirtualChannelCount, 1, 2048);
+                    DisplayInt("Virtual Channel Count", platform, Platform.PropertyAccessors.VirtualChannelCount, 1,
+                        2048);
                     DisplayInt("Real Channel Count", platform, Platform.PropertyAccessors.RealChannelCount, 1, 256);
                     DisplayDSPBufferSettings(platform);
 
                     string warning = null;
 
-                    BuildTargetGroup buildTargetGroup =
+                    var buildTargetGroup =
                         BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget);
-                    ScriptingImplementation scriptingBackend = PlayerSettings.GetScriptingBackend(buildTargetGroup);
+                    var scriptingBackend = PlayerSettings.GetScriptingBackend(buildTargetGroup);
 
                     if (scriptingBackend != ScriptingImplementation.IL2CPP)
-                    {
                         warning = "Only supported on the IL2CPP scripting backend";
-                    }
 
                     DisplayPlugins("Static Plugins", staticPluginsView, platform, ref expandStaticPlugins, warning);
                 }
@@ -1017,17 +764,11 @@ namespace FMODUnity
             string type;
 
             if (platform is PlatformGroup)
-            {
                 type = "platform group";
-            }
             else if (platform.IsIntrinsic)
-            {
                 type = "built-in platform";
-            }
             else
-            {
                 type = "platform";
-            }
 
             if (platform.Parent != null || platform is PlatformPlayInEditor)
             {
@@ -1040,30 +781,28 @@ namespace FMODUnity
                         platform.DisplayName, type));
                     parent = (target as Settings).CurrentEditorPlatform;
 
-                    while (!parent.Active)
-                    {
-                        parent = parent.Parent;
-                    }
+                    while (!parent.Active) parent = parent.Parent;
                 }
                 else
                 {
-                    labelContent = new GUIContent(string.Format("<b>{0}</b>: {1} inheriting from", platform.DisplayName, type));
+                    labelContent =
+                        new GUIContent(string.Format("<b>{0}</b>: {1} inheriting from", platform.DisplayName, type));
                     parent = platform.Parent;
                 }
 
-                Rect rect = EditorGUILayout.GetControlRect();
+                var rect = EditorGUILayout.GetControlRect();
 
-                GUIContent buttonContent = new GUIContent(string.Format("<b>{0}</b>", parent.DisplayName));
-                GUIContent iconContent = EditorGUIUtility.IconContent("UnityEditor.FindDependencies");
+                var buttonContent = new GUIContent(string.Format("<b>{0}</b>", parent.DisplayName));
+                var iconContent = EditorGUIUtility.IconContent("UnityEditor.FindDependencies");
 
-                Rect labelRect = LabelRect(rect);
+                var labelRect = LabelRect(rect);
                 labelRect.width = platformHeaderStyle.CalcSize(labelContent).x;
 
-                Rect buttonRect = rect;
+                var buttonRect = rect;
                 buttonRect.x = labelRect.xMax;
                 buttonRect.width = platformHeaderStyle.CalcSize(buttonContent).x;
 
-                Rect iconRect = rect;
+                var iconRect = rect;
                 iconRect.x = buttonRect.xMax;
                 iconRect.width = iconContent.image.width;
                 iconRect.height = iconContent.image.height;
@@ -1074,48 +813,40 @@ namespace FMODUnity
                 GUI.Label(labelRect, labelContent, platformHeaderStyle);
 
                 if (GUI.Button(buttonRect, buttonContent, platformHeaderStyle))
-                {
                     platformsView.SelectAndFramePlatform(parent);
-                }
 
-                if (Event.current.type == EventType.Repaint)
-                {
-                    GUI.DrawTexture(iconRect, iconContent.image);
-                }
+                if (Event.current.type == EventType.Repaint) GUI.DrawTexture(iconRect, iconContent.image);
 
                 EditorGUIUtility.AddCursorRect(buttonRect, MouseCursor.Link);
             }
             else
             {
-                string text = string.Format("<b>{0}</b>: {1}", platform.DisplayName, type);
+                var text = string.Format("<b>{0}</b>: {1}", platform.DisplayName, type);
                 EditorGUILayout.LabelField(text, platformHeaderStyle);
             }
         }
 
         private void DisplayDSPBufferSettings(Platform platform)
         {
-            Rect rect = DrawPlatformPropertyLabel("DSP Buffer Settings", platform,
+            var rect = DrawPlatformPropertyLabel("DSP Buffer Settings", platform,
                 Platform.PropertyAccessors.DSPBufferLength, Platform.PropertyAccessors.DSPBufferCount);
 
-            bool useAutoDSPBufferSettings = DisplayAutoDSPBufferSettings(rect, platform);
+            var useAutoDSPBufferSettings = DisplayAutoDSPBufferSettings(rect, platform);
 
-            if (!useAutoDSPBufferSettings)
-            {
-                DisplayDSPBufferFields(platform);
-            }
+            if (!useAutoDSPBufferSettings) DisplayDSPBufferFields(platform);
         }
 
         private bool DisplayAutoDSPBufferSettings(Rect rect, Platform platform)
         {
-            Platform.PropertyAccessor<int> lengthProperty = Platform.PropertyAccessors.DSPBufferLength;
-            Platform.PropertyAccessor<int> countProperty = Platform.PropertyAccessors.DSPBufferCount;
+            var lengthProperty = Platform.PropertyAccessors.DSPBufferLength;
+            var countProperty = Platform.PropertyAccessors.DSPBufferCount;
 
-            GUIStyle style = GUI.skin.toggle;
+            var style = GUI.skin.toggle;
 
-            GUIContent content = new GUIContent("Auto");
+            var content = new GUIContent("Auto");
             rect.width = style.CalcSize(content).x;
 
-            bool useAutoDSPBufferSettings = lengthProperty.Get(platform) == 0 && countProperty.Get(platform) == 0;
+            var useAutoDSPBufferSettings = lengthProperty.Get(platform) == 0 && countProperty.Get(platform) == 0;
 
             EditorGUI.BeginChangeCheck();
 
@@ -1127,7 +858,6 @@ namespace FMODUnity
                 {
                     lengthProperty.Set(platform, 0);
                     countProperty.Set(platform, 0);
-
                 }
                 else
                 {
@@ -1142,15 +872,16 @@ namespace FMODUnity
 
         private void DisplayDSPBufferFields(Platform platform)
         {
-            Platform.PropertyAccessor<int> lengthProperty = Platform.PropertyAccessors.DSPBufferLength;
-            Platform.PropertyAccessor<int> countProperty = Platform.PropertyAccessors.DSPBufferCount;
+            var lengthProperty = Platform.PropertyAccessors.DSPBufferLength;
+            var countProperty = Platform.PropertyAccessors.DSPBufferCount;
 
             using (new EditorGUI.IndentLevelScope())
             {
                 EditorGUI.BeginChangeCheck();
 
-                int nextLength = Mathf.Max(EditorGUILayout.IntField("DSP Buffer Length", lengthProperty.Get(platform)), 8);
-                int nextCount = Mathf.Max(EditorGUILayout.IntField("DSP Buffer Count", countProperty.Get(platform)), 2);
+                var nextLength = Mathf.Max(EditorGUILayout.IntField("DSP Buffer Length", lengthProperty.Get(platform)),
+                    8);
+                var nextCount = Mathf.Max(EditorGUILayout.IntField("DSP Buffer Count", countProperty.Get(platform)), 2);
 
                 if (EditorGUI.EndChangeCheck())
                 {
@@ -1163,44 +894,39 @@ namespace FMODUnity
         private void DisplayPlugins(string title, PlatformPropertyStringListView view, Platform platform,
             ref bool expand, string warning = null)
         {
-            List<string> plugins = view.property.Get(platform);
+            var plugins = view.property.Get(platform);
 
-            string fullTitle = string.Format("{0}: {1}", title, plugins.Count);
+            var fullTitle = string.Format("{0}: {1}", title, plugins.Count);
 
             DrawPlatformPropertyFoldout(fullTitle, ref expand, platform, view.property);
 
             if (expand)
-            {
                 using (new EditorGUI.IndentLevelScope())
                 {
-                    if (warning != null)
-                    {
-                        EditorGUILayout.HelpBox(warning, MessageType.Warning);
-                    }
+                    if (warning != null) EditorGUILayout.HelpBox(warning, MessageType.Warning);
 
                     view.platform = platform;
                     view.DrawLayout();
                 }
-            }
         }
 
         protected override void OnHeaderGUI()
         {
             AffirmResources();
 
-            GUIContent text = new GUIContent("FMOD Settings");
+            var text = new GUIContent("FMOD Settings");
 
-            Vector2 textSize = mainHeaderStyle.CalcSize(text);
-            Vector2 iconSize = GUI.skin.label.CalcSize(mainHeaderIcon);
+            var textSize = mainHeaderStyle.CalcSize(text);
+            var iconSize = GUI.skin.label.CalcSize(mainHeaderIcon);
 
-            Rect rect = EditorGUILayout.GetControlRect(false, Math.Max(textSize.y, iconSize.y));
+            var rect = EditorGUILayout.GetControlRect(false, Math.Max(textSize.y, iconSize.y));
 
-            Rect iconRect = rect;
+            var iconRect = rect;
             iconRect.width = iconSize.x;
             iconRect.height = iconSize.y;
             iconRect.y += (rect.height - iconRect.height) / 2;
 
-            Rect textRect = rect;
+            var textRect = rect;
             textRect.xMin = iconRect.xMax;
             textRect.height = textSize.y;
             textRect.y += (rect.height - textRect.height) / 2;
@@ -1213,7 +939,7 @@ namespace FMODUnity
         {
             serializedObject.Update();
 
-            string invalidSourceMessage = CheckValidSource();
+            var invalidSourceMessage = CheckValidSource();
 
             DrawImportSection(invalidSourceMessage);
 
@@ -1246,7 +972,7 @@ namespace FMODUnity
 
         private bool DrawSectionHeaderLayout(Section section, string title)
         {
-            Rect rect = EditorGUILayout.GetControlRect();
+            var rect = EditorGUILayout.GetControlRect();
 
             return DrawSectionHeader(rect, section, title);
         }
@@ -1255,11 +981,11 @@ namespace FMODUnity
         {
             AffirmResources();
 
-            bool expanded = (section & sExpandedSections) == section;
+            var expanded = (section & sExpandedSections) == section;
 
             expanded = EditorGUI.Foldout(rect, expanded, title, true, sectionHeaderStyle);
 
-            sExpandedSections = expanded ? (sExpandedSections | section) : (sExpandedSections & ~section);
+            sExpandedSections = expanded ? sExpandedSections | section : sExpandedSections & ~section;
 
             return expanded;
         }
@@ -1267,35 +993,30 @@ namespace FMODUnity
         private void DrawImportSection(string invalidSourceMessage)
         {
             if (DrawSectionHeaderLayout(Section.BankImport, "Bank Import"))
-            {
                 using (new EditorGUI.IndentLevelScope())
                 {
                     DrawSourceSelection(invalidSourceMessage);
 
-                    if (invalidSourceMessage != null)
-                    {
-                        return;
-                    }
+                    if (invalidSourceMessage != null) return;
 
                     DrawTargetSelection();
                 }
-            }
         }
 
         // Gets a control rect, draws a help button at the end of the line,
         // and returns a rect describing the remaining space.
         private static Rect DrawHelpButtonLayout(Func<PopupWindowContent> createContent)
         {
-            Vector2 helpSize = GetHelpButtonSize();
+            var helpSize = GetHelpButtonSize();
 
-            Rect rect = EditorGUILayout.GetControlRect(true, helpSize.y);
+            var rect = EditorGUILayout.GetControlRect(true, helpSize.y);
 
-            Rect helpRect = rect;
+            var helpRect = rect;
             helpRect.xMin = helpRect.xMax - helpSize.x;
 
             DrawHelpButton(helpRect, createContent);
 
-            Rect remainderRect = rect;
+            var remainderRect = rect;
             remainderRect.xMax = helpRect.xMin;
 
             return remainderRect;
@@ -1307,10 +1028,7 @@ namespace FMODUnity
             GUIStyle style;
             GetHelpButtonData(out content, out style);
 
-            if (GUI.Button(rect, content, style))
-            {
-                PopupWindow.Show(rect, createContent());
-            }
+            if (GUI.Button(rect, content, style)) PopupWindow.Show(rect, createContent());
         }
 
         private static Vector2 GetHelpButtonSize()
@@ -1330,31 +1048,29 @@ namespace FMODUnity
 
         private void DrawSourceSelection(string invalidSourceMessage)
         {
-            Rect popupRect = DrawHelpButtonLayout(() => new SourceSelectionHelp());
+            var popupRect = DrawHelpButtonLayout(() => new SourceSelectionHelp());
 
             hasBankSourceChanged = false;
 
-            SourceType sourceType = hasSourceProject.boolValue
+            var sourceType = hasSourceProject.boolValue
                 ? SourceType.FMODStudioProject
-                : (hasPlatforms.boolValue ? SourceType.MultiplePlatformBuild : SourceType.SinglePlatformBuild);
+                : hasPlatforms.boolValue
+                    ? SourceType.MultiplePlatformBuild
+                    : SourceType.SinglePlatformBuild;
 
-            sourceType = (SourceType)EditorGUI.EnumPopup(popupRect, "Source Type", sourceType);
+            sourceType = (SourceType) EditorGUI.EnumPopup(popupRect, "Source Type", sourceType);
 
             if (sourceType == SourceType.FMODStudioProject)
             {
-                string oldPath = sourceProjectPath.stringValue;
+                var oldPath = sourceProjectPath.stringValue;
 
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     EditorGUI.BeginChangeCheck();
-                    string newPath = EditorGUILayout.TextField("Studio Project Path", sourceProjectPath.stringValue);
+                    var newPath = EditorGUILayout.TextField("Studio Project Path", sourceProjectPath.stringValue);
                     if (EditorGUI.EndChangeCheck())
-                    {
                         if (newPath.EndsWith(".fspro"))
-                        {
                             sourceProjectPath.stringValue = newPath;
-                        }
-                    }
 
                     if (GUILayout.Button("Browse", GUILayout.ExpandWidth(false)))
                     {
@@ -1369,14 +1085,11 @@ namespace FMODUnity
                 hasSourceProject.boolValue = true;
 
                 // First time project path is set or changes, copy to streaming assets
-                if (sourceProjectPath.stringValue != oldPath)
-                {
-                    hasBankSourceChanged = true;
-                }
+                if (sourceProjectPath.stringValue != oldPath) hasBankSourceChanged = true;
             }
             else if (sourceType == SourceType.SinglePlatformBuild || sourceType == SourceType.MultiplePlatformBuild)
             {
-                string oldPath = sourceBankPath.stringValue;
+                var oldPath = sourceBankPath.stringValue;
 
                 using (new EditorGUILayout.HorizontalScope())
                 {
@@ -1389,36 +1102,24 @@ namespace FMODUnity
                     }
                 }
 
-                hasPlatforms.boolValue = (sourceType == SourceType.MultiplePlatformBuild);
+                hasPlatforms.boolValue = sourceType == SourceType.MultiplePlatformBuild;
                 hasSourceProject.boolValue = false;
 
                 // First time project path is set or changes, copy to streaming assets
-                if (sourceBankPath.stringValue != oldPath)
-                {
-                    hasBankSourceChanged = true;
-                }
+                if (sourceBankPath.stringValue != oldPath) hasBankSourceChanged = true;
             }
 
-            if (invalidSourceMessage != null)
-            {
-                EditorGUILayout.HelpBox(invalidSourceMessage, MessageType.Error, true);
-            }
+            if (invalidSourceMessage != null) EditorGUILayout.HelpBox(invalidSourceMessage, MessageType.Error, true);
         }
 
         private void BrowseForSourceProjectPathAndRefresh()
         {
-            if (BrowseForSourceProjectPath(serializedObject))
-            {
-                Repaint();
-            }
+            if (BrowseForSourceProjectPath(serializedObject)) Repaint();
         }
 
         private void BrowseForSourceBankPathAndRefresh()
         {
-            if (BrowseForSourceBankPath(serializedObject))
-            {
-                Repaint();
-            }
+            if (BrowseForSourceBankPath(serializedObject)) Repaint();
         }
 
         private string CheckValidSource()
@@ -1427,25 +1128,680 @@ namespace FMODUnity
             string invalidMessage;
             EditorUtils.ValidateSource(out validSource, out invalidMessage);
 
-            if (validSource)
+            if (validSource) return null;
+
+            sExpandedSections |= Section.BankImport;
+
+            return invalidMessage +
+                   "\n\nFor detailed setup instructions, please see the FMOD/Help/Getting Started menu item.";
+        }
+
+        private static string GetBankDirectory(SerializedObject serializedObject)
+        {
+            var sourceProjectPath = serializedObject.FindProperty("sourceProjectPath");
+            var sourceBankPath = serializedObject.FindProperty("sourceBankPath");
+            var hasSourceProject = serializedObject.FindProperty("HasSourceProject");
+
+            if (hasSourceProject.boolValue && !string.IsNullOrEmpty(sourceProjectPath.stringValue))
             {
-                return null;
+                var projectFolder = Path.GetDirectoryName(sourceProjectPath.stringValue);
+                return RuntimeUtils.GetCommonPlatformPath(Path.Combine(projectFolder, EditorUtils.BuildFolder));
+            }
+
+            if (!string.IsNullOrEmpty(sourceBankPath.stringValue))
+                return RuntimeUtils.GetCommonPlatformPath(Path.GetFullPath(sourceBankPath.stringValue));
+            return null;
+        }
+
+        private void DrawTargetSelection()
+        {
+            var settings = target as Settings;
+
+            hasBankTargetChanged = false;
+
+            var importTypeNames = importType.enumDisplayNames;
+            var importTypeIndex = importType.enumValueIndex;
+
+            var newImportTypeIndex = EditorGUILayout.Popup("Import Type", importTypeIndex, importTypeNames);
+
+            if (newImportTypeIndex != importType.enumValueIndex)
+            {
+                var deleteBanks = EditorUtility.DisplayDialog(
+                    "FMOD Bank Import Type Changed",
+                    "Do you want to delete the " + importTypeNames[importTypeIndex] + " banks in " +
+                    settings.TargetPath,
+                    "Yes", "No");
+
+                if (deleteBanks)
+                    // Delete the old banks
+                    EventManager.RemoveBanks(settings.TargetPath);
+
+                hasBankTargetChanged = true;
+                importType.enumValueIndex = newImportTypeIndex;
+            }
+
+            // ----- Asset Sub Directory -------------
+            SerializedProperty targetSubFolder;
+            string label;
+
+            if (importType.intValue == (int) ImportType.AssetBundle)
+            {
+                targetSubFolder = targetAssetPath;
+                label = "FMOD Asset Sub Folder";
             }
             else
             {
-                sExpandedSections |= Section.BankImport;
+                targetSubFolder = targetBankFolder;
+                label = "FMOD Bank Sub Folder";
+            }
 
-                return invalidMessage + "\n\nFor detailed setup instructions, please see the FMOD/Help/Getting Started menu item.";
+            var newSubFolder = EditorGUILayout.DelayedTextField(label, targetSubFolder.stringValue);
+
+            if (newSubFolder != targetSubFolder.stringValue)
+            {
+                EventManager.RemoveBanks(settings.TargetPath);
+                targetSubFolder.stringValue = newSubFolder;
+                hasBankTargetChanged = true;
+            }
+
+            DisplayBankRefreshSettings(bankRefreshCooldown, showBankRefreshWindow, true);
+        }
+
+        private void DrawBehaviorSection()
+        {
+            if (DrawSectionHeaderLayout(Section.Behavior, "Behavior"))
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    EditorGUILayout.PropertyField(stopEventsOutsideMaxDistance,
+                        new GUIContent("Stop Events Outside Max Distance"));
+                }
+        }
+
+        private void DrawUserInterfaceSection()
+        {
+            if (DrawSectionHeaderLayout(Section.UserInterface, "User Interface"))
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    EditorGUI.BeginChangeCheck();
+
+                    EditorGUILayout.PropertyField(meterChannelOrdering, new GUIContent("Meter Channel Ordering"));
+
+                    if (EditorGUI.EndChangeCheck() && EventBrowser.IsOpen)
+                        EditorWindow.GetWindow<EventBrowser>("FMOD Events", false).Repaint();
+                }
+        }
+
+        private void DrawInitializationSection()
+        {
+            if (DrawSectionHeaderLayout(Section.Initialization, "Initialization"))
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    loggingLevel.intValue = EditorGUILayout.IntPopup("Logging Level",
+                        loggingLevel.intValue, LoggingDisplay, LoggingValues);
+
+                    EditorGUILayout.PropertyField(enableErrorCallback,
+                        new GUIContent("Enable API Error Logging"));
+
+                    EditorGUILayout.PropertyField(enableMemoryTracking, new GUIContent("Enable Memory Tracking"));
+
+                    using (new EditorGUI.DisabledScope(importType.intValue == (int) ImportType.AssetBundle))
+                    {
+                        EditorGUILayout.PropertyField(bankLoadType, new GUIContent("Load Banks"));
+
+                        switch ((BankLoadType) bankLoadType.intValue)
+                        {
+                            case BankLoadType.All:
+                                break;
+                            case BankLoadType.Specified:
+                                automaticEventLoading.boolValue = false;
+                                DisplayBanksToLoad();
+                                break;
+                            case BankLoadType.None:
+                                automaticEventLoading.boolValue = false;
+                                break;
+                        }
+
+                        using (new EditorGUI.DisabledScope(bankLoadType.intValue == (int) BankLoadType.None))
+                        {
+                            EditorGUILayout.PropertyField(automaticSampleLoading,
+                                new GUIContent("Load Bank Sample Data"));
+                        }
+
+                        EditorGUILayout.DelayedTextField(encryptionKey, new GUIContent("Bank Encryption Key"));
+                    }
+                }
+        }
+
+        private void DisplayBanksToLoad()
+        {
+            banksToLoad.isExpanded = EditorGUILayout.Foldout(banksToLoad.isExpanded, "Specified Banks", true);
+
+            if (banksToLoad.isExpanded)
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    banksToLoadView.DrawLayout();
+                }
+        }
+
+        private void BrowseForBankToLoad()
+        {
+            var bankDirectory = CurrentBankDirectory();
+            var path = EditorUtility.OpenFilePanel("Locate Bank", bankDirectory, "bank");
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                serializedObject.Update();
+
+                path = RuntimeUtils.GetCommonPlatformPath(path);
+                path = path.Replace(bankDirectory, "");
+
+                banksToLoad.ArrayAdd(p => p.stringValue = path);
+
+                serializedObject.ApplyModifiedProperties();
+
+                Repaint();
             }
         }
 
-        abstract class HelpContent : PopupWindowContent
+        private void AddAllBanksToLoad()
         {
+            var sourceDir = CurrentBankDirectory();
+            var banksFound = Directory.GetFiles(sourceDir, "*.bank", SearchOption.AllDirectories);
+
+            serializedObject.Update();
+
+            for (var i = 0; i < banksFound.Length; i++)
+            {
+                var bankLongName = RuntimeUtils.GetCommonPlatformPath(Path.GetFullPath(banksFound[i]));
+                var bankShortName = bankLongName.Replace(sourceDir, "");
+
+                if (!banksToLoad.ArrayContains(p => p.stringValue == bankShortName))
+                    banksToLoad.ArrayAdd(p => p.stringValue = bankShortName);
+            }
+
+            serializedObject.ApplyModifiedProperties();
+
+            Repaint();
+        }
+
+        private string CurrentBankDirectory()
+        {
+            var settings = target as Settings;
+
+            string bankDirectory;
+
+            if (settings.HasPlatforms)
+                bankDirectory = string.Format("{0}/{1}/",
+                    settings.SourceBankPath, settings.CurrentEditorPlatform.BuildDirectory);
+            else
+                bankDirectory = settings.SourceBankPath + "/";
+
+            return RuntimeUtils.GetCommonPlatformPath(Path.GetFullPath(bankDirectory));
+        }
+
+        private void DrawPlatforms()
+        {
+            platformsView.ReloadIfNecessary();
+
+            if (DrawSectionHeaderLayout(Section.PlatformSpecific, "Platform Specific"))
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    platformsView.DrawLayout();
+
+                    var selectedPlatform = platformsView.SelectedPlatform;
+
+                    if (selectedPlatform != null) DisplayPlatform(selectedPlatform);
+                }
+        }
+
+        // If insertAtIndex == -1, insert at the end
+        private static void SetPlatformParent(string undoMessage, Settings settings, Platform child, Platform parent,
+            int insertAtIndex = -1)
+        {
+            if (parent == child.Parent)
+            {
+                if (insertAtIndex > child.DisplaySortOrder) --insertAtIndex;
+
+                if (insertAtIndex == child.DisplaySortOrder) return;
+            }
+
+            Undo.RecordObjects(new[] {child, child.Parent, parent}, undoMessage);
+
+            var index = 0;
+
+            for (var i = 0; i < parent.ChildIdentifiers.Count; ++i)
+            {
+                var sibling = settings.FindPlatform(parent.ChildIdentifiers[i]);
+
+                if (sibling.Active && sibling != child)
+                {
+                    if (index == insertAtIndex) ++index;
+
+                    Undo.RecordObject(sibling, undoMessage);
+
+                    sibling.DisplaySortOrder = index;
+                    ++index;
+                }
+            }
+
+            if (insertAtIndex == -1) insertAtIndex = index;
+
+            child.DisplaySortOrder = insertAtIndex;
+
+            settings.SetPlatformParent(child, parent);
+        }
+
+        private void ApplyPendingActions()
+        {
+            if (hasBankSourceChanged || hasBankTargetChanged) RefreshBanks();
+        }
+
+        private void RefreshBanks()
+        {
+            var settings = target as Settings;
+
+            if (lastSourceBankPath != settings.SourceBankPath)
+            {
+                lastSourceBankPath = settings.SourceBankPath;
+                EventManager.RefreshBanks();
+            }
+        }
+
+        public static void DisplayBankRefreshSettings(SerializedProperty cooldown, SerializedProperty showWindow,
+            bool inInspector)
+        {
+            var controlRect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+
+            Rect labelRect;
+
+            if (inInspector)
+            {
+                labelRect = LabelRect(controlRect);
+            }
+            else
+            {
+                labelRect = EditorGUI.IndentedRect(controlRect);
+                labelRect.width = GUI.skin.label.CalcSize(BankRefreshLabel).x;
+            }
+
+
+            var popupRect = controlRect;
+            popupRect.x = labelRect.xMax;
+            popupRect.width = BankRefreshCooldownLabels.Max(l => EditorStyles.popup.CalcSize(l).x);
+
+            using (new NoIndentScope())
+            {
+                GUI.Label(labelRect, BankRefreshLabel);
+
+                cooldown.intValue = EditorGUI.IntPopup(popupRect, cooldown.intValue,
+                    BankRefreshCooldownLabels, BankRefreshCooldownValues);
+
+                if (cooldown.intValue >= 0)
+                {
+                    var toggleRect = controlRect;
+                    toggleRect.xMin = popupRect.xMax + GUI.skin.toggle.margin.left;
+
+                    showWindow.boolValue = EditorGUI.ToggleLeft(toggleRect, "Show Status Window", showWindow.boolValue);
+                }
+            }
+        }
+
+        private static Rect LabelRect(Rect controlRect)
+        {
+            var result = controlRect;
+            result.width = EditorGUIUtility.labelWidth;
+            result = EditorGUI.IndentedRect(result);
+
+            return result;
+        }
+
+        public static bool BrowseForSourceProjectPath(SerializedObject serializedObject)
+        {
+            serializedObject.Update();
+            var sourceProjectPath = serializedObject.FindProperty("sourceProjectPath");
+            var sourceBankPath = serializedObject.FindProperty("sourceBankPath");
+            var hasSourceProject = serializedObject.FindProperty("HasSourceProject");
+            var hasPlatforms = serializedObject.FindProperty("HasPlatforms");
+
+            var newPath = EditorUtility.OpenFilePanel("Locate Studio Project", sourceProjectPath.stringValue, "fspro");
+
+            if (string.IsNullOrEmpty(newPath)) return false;
+
+            hasSourceProject.boolValue = true;
+            hasPlatforms.boolValue = true;
+            newPath = MakePathRelative(newPath);
+            sourceProjectPath.stringValue = newPath;
+            sourceBankPath.stringValue = GetBankDirectory(serializedObject);
+            serializedObject.ApplyModifiedProperties();
+            EventManager.RefreshBanks();
+            return true;
+        }
+
+        public static bool BrowseForSourceBankPath(SerializedObject serializedObject, bool multiPlatform = false)
+        {
+            serializedObject.Update();
+            var sourceBankPath = serializedObject.FindProperty("sourceBankPath");
+            var hasSourceProject = serializedObject.FindProperty("HasSourceProject");
+            var hasPlatforms = serializedObject.FindProperty("HasPlatforms");
+
+            var newPath = EditorUtility.OpenFolderPanel("Locate Build Folder", sourceBankPath.stringValue, null);
+
+            if (string.IsNullOrEmpty(newPath)) return false;
+
+            hasSourceProject.boolValue = false;
+            hasPlatforms.boolValue = multiPlatform;
+            newPath = MakePathRelative(newPath);
+            sourceBankPath.stringValue = newPath;
+            serializedObject.ApplyModifiedProperties();
+            EventManager.RefreshBanks();
+            return true;
+        }
+
+        private static string MakePathRelative(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return "";
+            var fullPath = Path.GetFullPath(path);
+            var fullProjectPath = Path.GetFullPath(Environment.CurrentDirectory + Path.DirectorySeparatorChar);
+
+            // If the path contains the Unity project path remove it and return the result
+            if (fullPath.Contains(fullProjectPath))
+            {
+                fullPath = fullPath.Replace(fullProjectPath, "");
+            }
+            // If not, attempt to find a relative path on the same drive
+            else if (Path.GetPathRoot(fullPath) == Path.GetPathRoot(fullProjectPath))
+            {
+                // Remove trailing slash from project path for split count simplicity
+                if (fullProjectPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.CurrentCulture))
+                    fullProjectPath = fullProjectPath.Substring(0, fullProjectPath.Length - 1);
+
+                var fullPathSplit = fullPath.Split(Path.DirectorySeparatorChar);
+                var projectPathSplit = fullProjectPath.Split(Path.DirectorySeparatorChar);
+                var minNumSplits = Mathf.Min(fullPathSplit.Length, projectPathSplit.Length);
+                var numCommonElements = 0;
+                for (var i = 0; i < minNumSplits; i++)
+                    if (fullPathSplit[i] == projectPathSplit[i])
+                        numCommonElements++;
+                    else
+                        break;
+                var result = "";
+                var fullPathSplitLength = fullPathSplit.Length;
+                for (var i = numCommonElements; i < fullPathSplitLength; i++)
+                {
+                    result += fullPathSplit[i];
+                    if (i < fullPathSplitLength - 1) result += '/';
+                }
+
+                var numAdditionalElementsInProjectPath = projectPathSplit.Length - numCommonElements;
+                for (var i = 0; i < numAdditionalElementsInProjectPath; i++) result = "../" + result;
+
+                fullPath = result;
+            }
+
+            return fullPath.Replace(Path.DirectorySeparatorChar, '/');
+        }
+
+        internal enum SourceType : uint
+        {
+            FMODStudioProject = 0,
+            SinglePlatformBuild,
+            MultiplePlatformBuild
+        }
+
+        [Flags]
+        private enum Section
+        {
+            BankImport = 1 << 0,
+            Initialization = 1 << 1,
+            Behavior = 1 << 2,
+            UserInterface = 1 << 3,
+            PlatformSpecific = 1 << 4
+        }
+
+        private struct PlatformPropertyLabelData
+        {
+            public bool hasParent;
+            public bool overridden;
+            public Rect labelRect;
+            public Rect remainderRect;
+        }
+
+        private class ThreadListEditor : EditorWindow
+        {
+            private ThreadAffinityGroup group;
+            private Editor parent;
+            private Platform platform;
+
+            private static GUIStyle FrameStyle => GUI.skin.box;
+            private static GUIStyle ThreadStyle => EditorStyles.toggle;
+
+            private void OnGUI()
+            {
+                var frameRect = new Rect(0, 0, position.width, position.height);
+
+                GUI.Box(frameRect, string.Empty, FrameStyle);
+
+                var threadRect = FrameStyle.padding.Remove(frameRect);
+                threadRect.height = EditorGUIUtility.singleLineHeight;
+
+                foreach (ThreadType thread in Enum.GetValues(typeof(ThreadType)))
+                {
+                    EditorGUI.BeginChangeCheck();
+
+                    var include =
+                        EditorGUI.ToggleLeft(threadRect, thread.DisplayName(), group.threads.Contains(thread));
+
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Undo.RecordObject(platform, EditPlatformUndoMessage);
+
+                        if (include)
+                        {
+                            // Make sure each thread is only in one group
+                            foreach (var other in platform.ThreadAffinities) other.threads.Remove(thread);
+
+                            group.threads.Add(thread);
+                            group.threads.Sort();
+                        }
+                        else
+                        {
+                            group.threads.Remove(thread);
+                        }
+
+                        parent.Repaint();
+                    }
+
+                    threadRect.y = threadRect.yMax + EditorGUIUtility.standardVerticalSpacing;
+                }
+            }
+
+            public static void Show(Rect buttonRect, ThreadAffinityGroup group, Platform platform, Editor parent)
+            {
+                var editor = CreateInstance<ThreadListEditor>();
+                editor.group = group;
+                editor.platform = platform;
+                editor.parent = parent;
+
+                var rect = new Rect(GUIUtility.GUIToScreenPoint(buttonRect.position), buttonRect.size);
+
+                editor.ShowAsDropDown(rect, CalculateSize());
+            }
+
+            private static Vector2 CalculateSize()
+            {
+                var result = Vector2.zero;
+
+                var enumValues = Enum.GetValues(typeof(ThreadType));
+
+                foreach (ThreadType thread in enumValues)
+                {
+                    var size = ThreadStyle.CalcSize(new GUIContent(thread.DisplayName()));
+                    result.x = Mathf.Max(result.x, size.x);
+                }
+
+                result.y = enumValues.Length * EditorGUIUtility.singleLineHeight
+                           + (enumValues.Length - 1) * EditorGUIUtility.standardVerticalSpacing;
+
+                result.x += FrameStyle.padding.horizontal;
+                result.y += FrameStyle.padding.vertical;
+
+                return result;
+            }
+        }
+
+        private class ProjectPlatformSelector : PopupWindowContent
+        {
+            private const string HelpText = "Select the output sub-directory and speaker mode that match the project " +
+                                            "platform settings in the FMOD Studio build preferences.";
+
+            private const string UndoText = "Edit FMOD Platform Settings";
+
+            private const float InterColumnSpace = 25;
+
+            private readonly GUIStyle headerStyle;
+            private readonly Vector2 helpButtonSize;
+            private readonly string[] outputSubdirectories;
+
+            private readonly Platform platform;
+            private readonly SettingsEditor settingsEditor;
+            private readonly GUIContent speakerModeHeader = new GUIContent("Surround speaker mode:");
+            private readonly Vector2 speakerModeSize;
+
+            private readonly GUIContent subdirectoryHeader = new GUIContent("Output sub-directory:");
+
+            private readonly Vector2 subdirectorySize;
+            private readonly GUIStyle toggleStyle;
+
+            private readonly Vector2 windowSize;
+
+            public ProjectPlatformSelector(Platform platform, SettingsEditor settingsEditor)
+            {
+                this.platform = platform;
+                this.settingsEditor = settingsEditor;
+
+                headerStyle = GUI.skin.label;
+
+                toggleStyle = new GUIStyle(EditorStyles.radioButton);
+                toggleStyle.margin.left = headerStyle.margin.left + 10;
+
+                outputSubdirectories = EditorUtils.GetBankPlatforms();
+
+                var subdirectoryHeaderSize = headerStyle.CalcSize(subdirectoryHeader);
+
+                subdirectorySize = ToggleGroupSize(outputSubdirectories);
+                subdirectorySize.x = Math.Max(subdirectoryHeaderSize.x, subdirectorySize.x);
+                subdirectorySize.y += subdirectoryHeaderSize.y + headerStyle.margin.bottom;
+
+                var speakerModeHeaderSize = headerStyle.CalcSize(speakerModeHeader);
+
+                speakerModeSize = ToggleGroupSize(SpeakerModeDisplay);
+                speakerModeSize.x = Math.Max(speakerModeHeaderSize.x, speakerModeSize.x);
+                speakerModeSize.y += speakerModeHeaderSize.y + headerStyle.margin.bottom;
+
+                helpButtonSize = GetHelpButtonSize();
+
+                var width = headerStyle.margin.left + subdirectorySize.x + InterColumnSpace + speakerModeSize.x
+                            + helpButtonSize.x;
+                var height = Math.Max(subdirectorySize.y, speakerModeSize.y);
+
+                windowSize = new Vector2(width, height);
+            }
+
+            private Vector2 ToggleGroupSize(IEnumerable<string> labels)
+            {
+                var totalSize = Vector2.zero;
+
+                foreach (var label in labels)
+                {
+                    var size = toggleStyle.CalcSize(new GUIContent(label));
+
+                    totalSize.x = Math.Max(totalSize.x, size.x);
+                    totalSize.y += size.y + toggleStyle.margin.top;
+                }
+
+                totalSize.y += toggleStyle.margin.bottom;
+
+                return totalSize;
+            }
+
+            public override Vector2 GetWindowSize()
+            {
+                return windowSize;
+            }
+
+            public override void OnGUI(Rect rect)
+            {
+                var y = rect.y + headerStyle.margin.top;
+
+                var subdirectoryRect = new Rect(rect.x + headerStyle.margin.left, y, subdirectorySize.x, rect.height);
+
+                using (new GUILayout.AreaScope(subdirectoryRect))
+                {
+                    GUILayout.Label(subdirectoryHeader, headerStyle);
+
+                    foreach (var buildDirectory in outputSubdirectories)
+                    {
+                        var selected = platform.BuildDirectory == buildDirectory;
+
+                        EditorGUI.BeginChangeCheck();
+
+                        selected = GUILayout.Toggle(selected, buildDirectory, toggleStyle);
+
+                        if (EditorGUI.EndChangeCheck() && selected)
+                        {
+                            Undo.RecordObject(platform, UndoText);
+
+                            Platform.PropertyAccessors.BuildDirectory.Set(platform, buildDirectory);
+
+                            // Ensure SpeakerMode is also overridden
+                            Platform.PropertyAccessors.SpeakerMode.Set(platform, platform.SpeakerMode);
+
+                            settingsEditor.Repaint();
+                        }
+                    }
+                }
+
+                var speakerModeRect = new Rect(subdirectoryRect.xMax + InterColumnSpace, y, speakerModeSize.x,
+                    rect.height);
+
+                using (new GUILayout.AreaScope(speakerModeRect))
+                {
+                    GUILayout.Label(speakerModeHeader, headerStyle);
+
+                    for (var i = 0; i < SpeakerModeValues.Length; ++i)
+                    {
+                        var selected = platform.SpeakerMode == SpeakerModeValues[i];
+
+                        EditorGUI.BeginChangeCheck();
+
+                        selected = GUILayout.Toggle(selected, SpeakerModeDisplay[i], toggleStyle);
+
+                        if (EditorGUI.EndChangeCheck() && selected)
+                        {
+                            Undo.RecordObject(platform, UndoText);
+
+                            Platform.PropertyAccessors.SpeakerMode.Set(platform, SpeakerModeValues[i]);
+
+                            // Ensure BuildDirectory is also overridden
+                            Platform.PropertyAccessors.BuildDirectory.Set(platform, platform.BuildDirectory);
+
+                            settingsEditor.Repaint();
+                        }
+                    }
+                }
+
+                var helpButtonRect = new Rect(speakerModeRect.xMax, y, helpButtonSize.x, helpButtonSize.y);
+                DrawHelpButton(helpButtonRect, () => new SimpleHelp(HelpText));
+            }
+        }
+
+        private abstract class HelpContent : PopupWindowContent
+        {
+            private GUIContent icon;
             protected abstract void Prepare();
             protected abstract Vector2 GetContentSize();
             protected abstract void DrawContent();
-
-            private GUIContent icon;
 
             public override void OnOpen()
             {
@@ -1456,9 +1812,9 @@ namespace FMODUnity
 
             public override Vector2 GetWindowSize()
             {
-                Vector2 contentSize = GetContentSize();
+                var contentSize = GetContentSize();
 
-                Vector2 iconSize = GUI.skin.label.CalcSize(icon);
+                var iconSize = GUI.skin.label.CalcSize(icon);
 
                 return new Vector2(contentSize.x + iconSize.x,
                     Math.Max(contentSize.y, iconSize.y) + EditorGUIUtility.standardVerticalSpacing);
@@ -1481,29 +1837,31 @@ namespace FMODUnity
             }
         }
 
-        class SimpleHelp : HelpContent
+        private class SimpleHelp : HelpContent
         {
+            private GUIStyle style;
+
+            private readonly GUIContent text;
+
             public SimpleHelp(string text)
             {
                 this.text = new GUIContent(text);
             }
 
-            private GUIContent text;
-            private GUIStyle style;
-
             protected override void Prepare()
             {
-                style = new GUIStyle(GUI.skin.label) {
+                style = new GUIStyle(GUI.skin.label)
+                {
                     richText = true,
                     wordWrap = true,
-                    alignment = TextAnchor.MiddleLeft,
+                    alignment = TextAnchor.MiddleLeft
                 };
             }
 
             protected override Vector2 GetContentSize()
             {
                 float textWidth = 300;
-                float textHeight = style.CalcHeight(text, textWidth) + style.margin.bottom;
+                var textHeight = style.CalcHeight(text, textWidth) + style.margin.bottom;
 
                 return new Vector2(textWidth, textHeight);
             }
@@ -1514,33 +1872,12 @@ namespace FMODUnity
             }
         }
 
-        class SourceSelectionHelp : HelpContent
+        private class SourceSelectionHelp : HelpContent
         {
-            private GUIStyle style;
+            private readonly GUIContent introduction = new GUIContent("Choose how to access your FMOD Studio content:");
 
-            protected override void Prepare()
+            private readonly ListEntry[] listEntries =
             {
-                style = new GUIStyle(GUI.skin.label) {
-                    richText = true,
-                    wordWrap = true,
-                };
-            }
-
-            readonly GUIContent introduction = new GUIContent("Choose how to access your FMOD Studio content:");
-
-            struct ListEntry
-            {
-                public ListEntry(string label, string description)
-                {
-                    this.label = new GUIContent(label);
-                    this.description = new GUIContent(description);
-                }
-
-                public GUIContent label;
-                public GUIContent description;
-            }
-
-            private readonly ListEntry[] listEntries = {
                 new ListEntry("FMOD Studio Project",
                     "If you have the complete FMOD Studio project."
                 ),
@@ -1550,17 +1887,28 @@ namespace FMODUnity
                 new ListEntry("Multiple Platform Build",
                     "If you have the contents of the <b>Build</b> folder for multiple platforms, " +
                     "with each platform in its own subdirectory."
-                ),
+                )
             };
+
+            private GUIStyle style;
+
+            protected override void Prepare()
+            {
+                style = new GUIStyle(GUI.skin.label)
+                {
+                    richText = true,
+                    wordWrap = true
+                };
+            }
 
             protected override Vector2 GetContentSize()
             {
-                Vector2 size = new Vector2(440, 0);
+                var size = new Vector2(440, 0);
 
                 size.y += style.margin.top;
                 size.y += style.CalcHeight(introduction, size.x);
 
-                foreach (ListEntry entry in listEntries)
+                foreach (var entry in listEntries)
                 {
                     size.y += style.margin.top;
                     size.y += style.CalcHeight(entry.description, size.x - EditorGUIUtility.labelWidth);
@@ -1577,281 +1925,27 @@ namespace FMODUnity
 
                 using (new EditorGUI.IndentLevelScope())
                 {
-                    foreach (ListEntry entry in listEntries)
-                    {
+                    foreach (var entry in listEntries)
                         EditorGUILayout.LabelField(entry.label, entry.description, style);
-                    }
                 }
             }
-        }
 
-        private static string GetBankDirectory(SerializedObject serializedObject)
-        {
-            var sourceProjectPath = serializedObject.FindProperty("sourceProjectPath");
-            var sourceBankPath = serializedObject.FindProperty("sourceBankPath");
-            var hasSourceProject = serializedObject.FindProperty("HasSourceProject");
-
-            if (hasSourceProject.boolValue && !string.IsNullOrEmpty(sourceProjectPath.stringValue))
+            private struct ListEntry
             {
-                string projectFolder = Path.GetDirectoryName(sourceProjectPath.stringValue);
-                return RuntimeUtils.GetCommonPlatformPath(Path.Combine(projectFolder, EditorUtils.BuildFolder));
-            }
-            else if (!string.IsNullOrEmpty(sourceBankPath.stringValue))
-            {
-                return RuntimeUtils.GetCommonPlatformPath(Path.GetFullPath(sourceBankPath.stringValue));
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private void DrawTargetSelection()
-        {
-            Settings settings = target as Settings;
-
-            hasBankTargetChanged = false;
-
-            string[] importTypeNames = importType.enumDisplayNames;
-            int importTypeIndex = importType.enumValueIndex;
-
-            int newImportTypeIndex = EditorGUILayout.Popup("Import Type", importTypeIndex, importTypeNames);
-
-            if (newImportTypeIndex != importType.enumValueIndex)
-            {
-                bool deleteBanks = EditorUtility.DisplayDialog(
-                    "FMOD Bank Import Type Changed",
-                    "Do you want to delete the " + importTypeNames[importTypeIndex] + " banks in " + settings.TargetPath,
-                    "Yes", "No");
-
-                if (deleteBanks)
+                public ListEntry(string label, string description)
                 {
-                    // Delete the old banks
-                    EventManager.RemoveBanks(settings.TargetPath);
+                    this.label = new GUIContent(label);
+                    this.description = new GUIContent(description);
                 }
 
-                hasBankTargetChanged = true;
-                importType.enumValueIndex = newImportTypeIndex;
-            }
-
-            // ----- Asset Sub Directory -------------
-            SerializedProperty targetSubFolder;
-            string label;
-
-            if (importType.intValue == (int)ImportType.AssetBundle)
-            {
-                targetSubFolder = targetAssetPath;
-                label = "FMOD Asset Sub Folder";
-            }
-            else
-            {
-                targetSubFolder = targetBankFolder;
-                label = "FMOD Bank Sub Folder";
-            }
-
-            string newSubFolder = EditorGUILayout.DelayedTextField(label, targetSubFolder.stringValue);
-
-            if (newSubFolder != targetSubFolder.stringValue)
-            {
-                EventManager.RemoveBanks(settings.TargetPath);
-                targetSubFolder.stringValue = newSubFolder;
-                hasBankTargetChanged = true;
-            }
-
-            DisplayBankRefreshSettings(bankRefreshCooldown, showBankRefreshWindow, true);
-        }
-
-        static readonly int[] LoggingValues = new int[] {
-            (int)FMOD.DEBUG_FLAGS.NONE,
-            (int)FMOD.DEBUG_FLAGS.ERROR,
-            (int)FMOD.DEBUG_FLAGS.WARNING,
-            (int)FMOD.DEBUG_FLAGS.LOG,
-        };
-
-        static readonly string[] LoggingDisplay = new string[] {
-            "None",
-            "Error",
-            "Warning",
-            "Log",
-        };
-
-        private void DrawBehaviorSection()
-        {
-            if (DrawSectionHeaderLayout(Section.Behavior, "Behavior"))
-            {
-                using (new EditorGUI.IndentLevelScope())
-                {
-                    EditorGUILayout.PropertyField(stopEventsOutsideMaxDistance,
-                        new GUIContent("Stop Events Outside Max Distance"));
-                }
+                public readonly GUIContent label;
+                public readonly GUIContent description;
             }
         }
-
-        private void DrawUserInterfaceSection()
-        {
-            if (DrawSectionHeaderLayout(Section.UserInterface, "User Interface"))
-            {
-                using (new EditorGUI.IndentLevelScope())
-                {
-                    EditorGUI.BeginChangeCheck();
-
-                    EditorGUILayout.PropertyField(meterChannelOrdering, new GUIContent("Meter Channel Ordering"));
-
-                    if (EditorGUI.EndChangeCheck() && EventBrowser.IsOpen)
-                    {
-                        EditorWindow.GetWindow<EventBrowser>("FMOD Events", false).Repaint();
-                    }
-                }
-            }
-        }
-
-        private void DrawInitializationSection()
-        {
-            if (DrawSectionHeaderLayout(Section.Initialization, "Initialization"))
-            {
-                using (new EditorGUI.IndentLevelScope())
-                {
-                    loggingLevel.intValue = EditorGUILayout.IntPopup("Logging Level",
-                        loggingLevel.intValue, LoggingDisplay, LoggingValues);
-
-                    EditorGUILayout.PropertyField(enableErrorCallback,
-                        new GUIContent("Enable API Error Logging"));
-
-                    EditorGUILayout.PropertyField(enableMemoryTracking, new GUIContent("Enable Memory Tracking"));
-
-                    using (new EditorGUI.DisabledScope(importType.intValue == (int)ImportType.AssetBundle))
-                    {
-                        EditorGUILayout.PropertyField(bankLoadType, new GUIContent("Load Banks"));
-
-                        switch ((BankLoadType)bankLoadType.intValue)
-                        {
-                            case BankLoadType.All:
-                                break;
-                            case BankLoadType.Specified:
-                                automaticEventLoading.boolValue = false;
-                                DisplayBanksToLoad();
-                                break;
-                            case BankLoadType.None:
-                                automaticEventLoading.boolValue = false;
-                                break;
-                            default:
-                                break;
-                        }
-
-                        using (new EditorGUI.DisabledScope(bankLoadType.intValue == (int)BankLoadType.None))
-                        {
-                            EditorGUILayout.PropertyField(automaticSampleLoading, new GUIContent("Load Bank Sample Data"));
-                        }
-
-                        EditorGUILayout.DelayedTextField(encryptionKey, new GUIContent("Bank Encryption Key"));
-                    }
-                }
-            }
-        }
-
-        private ReorderableList banksToLoadView;
-
-        private void DisplayBanksToLoad()
-        {
-            banksToLoad.isExpanded = EditorGUILayout.Foldout(banksToLoad.isExpanded, "Specified Banks", true);
-
-            if (banksToLoad.isExpanded)
-            {
-                using (new EditorGUI.IndentLevelScope())
-                {
-                    banksToLoadView.DrawLayout();
-                }
-            }
-        }
-
-        private void BrowseForBankToLoad()
-        {
-            string bankDirectory = CurrentBankDirectory();
-            string path = EditorUtility.OpenFilePanel("Locate Bank", bankDirectory, "bank");
-
-            if (!string.IsNullOrEmpty(path))
-            {
-                serializedObject.Update();
-
-                path = RuntimeUtils.GetCommonPlatformPath(path);
-                path = path.Replace(bankDirectory, "");
-
-                banksToLoad.ArrayAdd(p => p.stringValue = path);
-
-                serializedObject.ApplyModifiedProperties();
-
-                Repaint();
-            }
-        }
-
-        private void AddAllBanksToLoad()
-        {
-            string sourceDir = CurrentBankDirectory();
-            string[] banksFound = Directory.GetFiles(sourceDir, "*.bank", SearchOption.AllDirectories);
-
-            serializedObject.Update();
-
-            for (int i = 0; i < banksFound.Length; i++)
-            {
-                string bankLongName = RuntimeUtils.GetCommonPlatformPath(Path.GetFullPath(banksFound[i]));
-                string bankShortName = bankLongName.Replace(sourceDir, "");
-
-                if (!banksToLoad.ArrayContains(p => p.stringValue == bankShortName))
-                {
-                    banksToLoad.ArrayAdd(p => p.stringValue = bankShortName);
-                }
-            }
-
-            serializedObject.ApplyModifiedProperties();
-
-            Repaint();
-        }
-
-        private string CurrentBankDirectory()
-        {
-            Settings settings = target as Settings;
-
-            string bankDirectory;
-
-            if (settings.HasPlatforms)
-            {
-                bankDirectory = string.Format("{0}/{1}/",
-                    settings.SourceBankPath, settings.CurrentEditorPlatform.BuildDirectory);
-            }
-            else
-            {
-                bankDirectory = settings.SourceBankPath + "/";
-            }
-
-            return RuntimeUtils.GetCommonPlatformPath(Path.GetFullPath(bankDirectory));
-        }
-
-        private void DrawPlatforms()
-        {
-            platformsView.ReloadIfNecessary();
-
-            if (DrawSectionHeaderLayout(Section.PlatformSpecific, "Platform Specific"))
-            {
-                using (new EditorGUI.IndentLevelScope())
-                {
-                    platformsView.DrawLayout();
-
-                    Platform selectedPlatform = platformsView.SelectedPlatform;
-
-                    if (selectedPlatform != null)
-                    {
-                        DisplayPlatform(selectedPlatform);
-                    }
-                }
-            }
-        }
-
-        PlatformsView platformsView;
-        TreeViewState platformTreeViewState = new TreeViewState();
 
         private class PlatformsView : TreeView
         {
-            const float RowPadding = 2;
+            private const float RowPadding = 2;
 
             public PlatformsView(Settings settings, TreeViewState state) : base(state)
             {
@@ -1859,56 +1953,47 @@ namespace FMODUnity
                 rowHeight = EditorGUIUtility.singleLineHeight + RowPadding;
             }
 
-            private Settings settings;
+            private readonly Settings settings;
 
             public Platform SelectedPlatform
             {
                 get
                 {
-                    IList<int> selection = GetSelection();
+                    var selection = GetSelection();
 
-                    if (selection.Count != 1)
-                    {
-                        return null;
-                    }
+                    if (selection.Count != 1) return null;
 
-                    PlatformItem selectedItem = FindItem(selection[0], rootItem) as PlatformItem;
+                    var selectedItem = FindItem(selection[0], rootItem) as PlatformItem;
 
-                    if (selectedItem == null)
-                    {
-                        return null;
-                    }
+                    if (selectedItem == null) return null;
 
                     return selectedItem.platform;
                 }
             }
 
-            static UnityEditorInternal.ReorderableList.Defaults s_Defaults;
+            private static UnityEditorInternal.ReorderableList.Defaults s_Defaults;
 
-            static UnityEditorInternal.ReorderableList.Defaults defaultBehaviours
+            private static UnityEditorInternal.ReorderableList.Defaults defaultBehaviours
             {
                 get
                 {
-                    if (s_Defaults == null)
-                    {
-                        s_Defaults = new UnityEditorInternal.ReorderableList.Defaults();
-                    }
+                    if (s_Defaults == null) s_Defaults = new UnityEditorInternal.ReorderableList.Defaults();
 
                     return s_Defaults;
                 }
             }
 
-            const float HeaderHeight = 3;
-            const float BodyHeight = 150;
-            const float FooterHeight = 13;
-            const float TotalHeight = HeaderHeight + BodyHeight + FooterHeight;
+            private const float HeaderHeight = 3;
+            private const float BodyHeight = 150;
+            private const float FooterHeight = 13;
+            private const float TotalHeight = HeaderHeight + BodyHeight + FooterHeight;
 
 #if UNITY_2019_3_OR_NEWER
-            const float ButtonWidth = 25;
-            const float ButtonHeight = 16;
-            const float ButtonMarginTop = 0;
+            private const float ButtonWidth = 25;
+            private const float ButtonHeight = 16;
+            private const float ButtonMarginTop = 0;
 
-            const float FooterMarginRight = 10;
+            private const float FooterMarginRight = 10;
 #else
             const float ButtonWidth = 25;
             const float ButtonHeight = 13;
@@ -1917,36 +2002,36 @@ namespace FMODUnity
             const float FooterMarginRight = 0;
 #endif
 
-            static readonly RectOffset BodyPadding = new RectOffset(1, 2, 1, 4);
-            static readonly RectOffset FooterPadding = new RectOffset(4, 4, 0, 0);
+            private static readonly RectOffset BodyPadding = new RectOffset(1, 2, 1, 4);
+            private static readonly RectOffset FooterPadding = new RectOffset(4, 4, 0, 0);
 
-            static readonly Vector2 DragHandleSize = new Vector2(10, 7);
-            static readonly Vector2 DragHandlePadding = new Vector2(5, 6);
+            private static readonly Vector2 DragHandleSize = new Vector2(10, 7);
+            private static readonly Vector2 DragHandlePadding = new Vector2(5, 6);
 
             public void DrawLayout()
             {
-                Rect rect = EditorGUILayout.GetControlRect(false, TotalHeight);
+                var rect = EditorGUILayout.GetControlRect(false, TotalHeight);
                 rect = EditorGUI.IndentedRect(rect);
 
-                Rect headerRect = rect;
+                var headerRect = rect;
                 headerRect.height = HeaderHeight;
 
-                Rect bodyRect = rect;
+                var bodyRect = rect;
                 bodyRect.y = headerRect.yMax;
                 bodyRect.height = BodyHeight;
 
-                Rect footerRect = rect;
+                var footerRect = rect;
                 footerRect.xMax -= FooterMarginRight;
                 footerRect.y = bodyRect.yMax;
                 footerRect.height = FooterHeight;
 
-                Rect removeRect = footerRect;
+                var removeRect = footerRect;
                 removeRect.x = footerRect.xMax - FooterPadding.right - ButtonWidth;
                 removeRect.y += ButtonMarginTop;
                 removeRect.width = ButtonWidth;
                 removeRect.height = ButtonHeight;
 
-                Rect addRect = footerRect;
+                var addRect = footerRect;
                 addRect.x = removeRect.x - ButtonWidth;
                 addRect.y += ButtonMarginTop;
                 addRect.width = ButtonWidth;
@@ -1958,11 +2043,9 @@ namespace FMODUnity
                 defaultBehaviours.DrawHeaderBackground(headerRect);
 
                 if (Event.current.type == EventType.Repaint)
-                {
                     defaultBehaviours.boxBackground.Draw(bodyRect, false, false, false, false);
-                }
 
-                Rect contentRect = BodyPadding.Remove(bodyRect);
+                var contentRect = BodyPadding.Remove(bodyRect);
 
                 using (new NoIndentScope())
                 {
@@ -1970,27 +2053,21 @@ namespace FMODUnity
                 }
 
                 if (Event.current.type == EventType.Repaint)
-                {
                     defaultBehaviours.footerBackground.Draw(footerRect, false, false, false, false);
-                }
 
                 if (GUI.Button(addRect, defaultBehaviours.iconToolbarPlusMore, defaultBehaviours.preButton))
-                {
                     DoAddMenu(addRect);
-                }
 
                 using (new EditorGUI.DisabledScope(SelectedPlatform == null))
                 {
                     if (GUI.Button(removeRect, defaultBehaviours.iconToolbarMinus, defaultBehaviours.preButton))
-                    {
                         DeleteSelectedPlatform();
-                    }
                 }
             }
 
             private void DoAddMenu(Rect rect)
             {
-                GenericMenu menu = new GenericMenu();
+                var menu = new GenericMenu();
 
                 menu.AddItem(new GUIContent("New Group"), false, AddGroup);
 
@@ -2000,23 +2077,21 @@ namespace FMODUnity
                     .Where(p => !p.Active)
                     .OrderBy(p => p.DisplayName, new NaturalComparer());
 
-                foreach (Platform platform in missingPlatforms)
-                {
+                foreach (var platform in missingPlatforms)
                     menu.AddItem(new GUIContent(platform.DisplayName), false, AddPlatform, platform.Identifier);
-                }
 
                 menu.DropDown(rect);
             }
 
             private void AddPlatform(object data)
             {
-                string identifier = data as string;
+                var identifier = data as string;
 
-                Platform platform = settings.FindPlatform(identifier);
+                var platform = settings.FindPlatform(identifier);
 
                 const string UndoMessage = "Add FMOD Platform";
 
-                Undo.RecordObjects(new UnityEngine.Object[] { settings, platform, platform.Parent }, UndoMessage);
+                Undo.RecordObjects(new Object[] {settings, platform, platform.Parent}, UndoMessage);
 
                 platform.DisplaySortOrder = UpdateSortOrderForChildren(platform.Parent, platform, UndoMessage);
 
@@ -2031,11 +2106,11 @@ namespace FMODUnity
             {
                 const string UndoMessage = "Add FMOD Platform Group";
 
-                Undo.RecordObjects(new UnityEngine.Object[] { settings, settings.DefaultPlatform }, UndoMessage);
+                Undo.RecordObjects(new Object[] {settings, settings.DefaultPlatform}, UndoMessage);
 
-                int sortOrder = UpdateSortOrderForChildren(settings.DefaultPlatform, null, UndoMessage);
+                var sortOrder = UpdateSortOrderForChildren(settings.DefaultPlatform, null, UndoMessage);
 
-                PlatformGroup group = settings.AddPlatformGroup("New Group", sortOrder);
+                var group = settings.AddPlatformGroup("New Group", sortOrder);
 
                 Undo.RegisterCreatedObjectUndo(group, UndoMessage);
 
@@ -2049,11 +2124,11 @@ namespace FMODUnity
 
             private int UpdateSortOrderForChildren(Platform platform, Platform skipChild, string undoMessage)
             {
-                int sortOrder = 0;
+                var sortOrder = 0;
 
-                foreach (string childID in platform.ChildIdentifiers)
+                foreach (var childID in platform.ChildIdentifiers)
                 {
-                    Platform child = settings.FindPlatform(childID);
+                    var child = settings.FindPlatform(childID);
 
                     if (child.Active && child != skipChild)
                     {
@@ -2071,27 +2146,25 @@ namespace FMODUnity
             // it in the UI. Also destroys the platform if it is a group.
             private void DeleteSelectedPlatform()
             {
-                Platform platform = SelectedPlatform;
+                var platform = SelectedPlatform;
 
-                if (platform == null)
-                {
-                    return;
-                }
+                if (platform == null) return;
 
                 const string UndoMessage = "Delete FMOD Platform";
 
-                Undo.RecordObjects(new UnityEngine.Object[] { platform, platform.Parent, settings }, UndoMessage);
+                Undo.RecordObjects(new Object[] {platform, platform.Parent, settings}, UndoMessage);
 
                 while (platform.ChildIdentifiers.Count > 0)
                 {
-                    Platform child = settings.FindPlatform(platform.ChildIdentifiers[platform.ChildIdentifiers.Count - 1]);
+                    var child = settings.FindPlatform(platform.ChildIdentifiers[platform.ChildIdentifiers.Count - 1]);
 
-                    SetPlatformParent(UndoMessage, settings, child, platform.Parent, (int)platform.DisplaySortOrder + 1);
+                    SetPlatformParent(UndoMessage, settings, child, platform.Parent,
+                        (int) platform.DisplaySortOrder + 1);
                 }
 
                 if (platform is PlatformGroup)
                 {
-                    PlatformGroup group = platform as PlatformGroup;
+                    var group = platform as PlatformGroup;
 
                     settings.SetPlatformParent(group, null);
                     settings.RemovePlatform(group.Identifier);
@@ -2112,7 +2185,7 @@ namespace FMODUnity
 
             public void SelectAndFramePlatform(Platform platform)
             {
-                SetSelection(new List<int>() { platform.Identifier.GetHashCode() },
+                SetSelection(new List<int> {platform.Identifier.GetHashCode()},
                     TreeViewSelectionOptions.RevealAndFrame);
             }
 
@@ -2120,28 +2193,29 @@ namespace FMODUnity
             {
                 if (Event.current.type == EventType.Repaint)
                 {
-                    defaultBehaviours.elementBackground.Draw(args.rowRect, false, args.selected, args.selected, args.focused);
+                    defaultBehaviours.elementBackground.Draw(args.rowRect, false, args.selected, args.selected,
+                        args.focused);
 
                     if (IsItemDraggable(args.item))
                     {
-                        Rect dragRect = new Rect(args.rowRect.position + DragHandlePadding, DragHandleSize);
+                        var dragRect = new Rect(args.rowRect.position + DragHandlePadding, DragHandleSize);
 
                         defaultBehaviours.draggingHandle.Draw(dragRect, false, false, false, false);
                     }
 
-                    GUIContent labelContent = new GUIContent(args.label);
+                    var labelContent = new GUIContent(args.label);
 
-                    GUIStyle labelStyle = GUI.skin.label;
+                    var labelStyle = GUI.skin.label;
 
-                    Rect labelRect = args.rowRect;
+                    var labelRect = args.rowRect;
                     CenterRectUsingSingleLineHeight(ref labelRect);
 
                     labelRect.x = GetContentIndent(args.item);
                     labelRect.width = GUI.skin.label.CalcSize(labelContent).x;
 
-                    Texture renameIcon = EditorGUIUtility.IconContent("SettingsIcon").image;
+                    var renameIcon = EditorGUIUtility.IconContent("SettingsIcon").image;
 
-                    bool canRename = CanRename(args.item);
+                    var canRename = CanRename(args.item);
 
                     if (canRename)
                     {
@@ -2153,11 +2227,12 @@ namespace FMODUnity
 
                     if (canRename && Event.current.type == EventType.Repaint)
                     {
-                        Rect iconRect = new Rect() {
+                        var iconRect = new Rect
+                        {
                             x = labelRect.xMax - renameIcon.width,
                             y = labelRect.yMax - labelStyle.padding.bottom - renameIcon.height,
                             width = renameIcon.width,
-                            height = renameIcon.height,
+                            height = renameIcon.height
                         };
 
                         GUI.DrawTexture(iconRect, renameIcon, ScaleMode.ScaleToFit,
@@ -2174,10 +2249,7 @@ namespace FMODUnity
 
             public void ReloadIfNecessary()
             {
-                if (!isInitialized)
-                {
-                    ForceReload();
-                }
+                if (!isInitialized) ForceReload();
             }
 
             protected override bool CanMultiSelect(TreeViewItem item)
@@ -2192,11 +2264,11 @@ namespace FMODUnity
 
             protected override TreeViewItem BuildRoot()
             {
-                TreeViewItem root = new TreeViewItem(-1, -1);
+                var root = new TreeViewItem(-1, -1);
 
                 root.AddChild(CreateItem(settings.PlayInEditorPlatform));
 
-                TreeViewItem defaultItem = CreateItem(settings.DefaultPlatform);
+                var defaultItem = CreateItem(settings.DefaultPlatform);
                 root.AddChild(defaultItem);
 
                 CreateItems(defaultItem, settings.DefaultPlatform.ChildIdentifiers);
@@ -2208,7 +2280,7 @@ namespace FMODUnity
 
             private class PlatformItem : TreeViewItem
             {
-                public Platform platform;
+                public readonly Platform platform;
 
                 public PlatformItem(Platform platform)
                     : base(platform.Identifier.GetHashCode(), 0, platform.DisplayName)
@@ -2219,13 +2291,13 @@ namespace FMODUnity
 
             private void CreateItems(TreeViewItem parent, IEnumerable<string> platformIdentifiers)
             {
-                foreach (string identifier in platformIdentifiers)
+                foreach (var identifier in platformIdentifiers)
                 {
-                    Platform platform = settings.FindPlatform(identifier);
+                    var platform = settings.FindPlatform(identifier);
 
                     if (platform.Active)
                     {
-                        TreeViewItem item = CreateItem(platform);
+                        var item = CreateItem(platform);
                         parent.AddChild(item);
 
                         CreateItems(item, platform.ChildIdentifiers);
@@ -2240,45 +2312,33 @@ namespace FMODUnity
 
             protected override void DoubleClickedItem(int id)
             {
-                TreeViewItem item = FindItem(id, rootItem);
+                var item = FindItem(id, rootItem);
 
-                if (CanRename(item))
-                {
-                    BeginRename(item);
-                }
+                if (CanRename(item)) BeginRename(item);
             }
 
             protected override bool CanRename(TreeViewItem item)
             {
-                PlatformItem platformItem = item as PlatformItem;
-                return (platformItem != null) && (platformItem.platform is PlatformGroup);
+                var platformItem = item as PlatformItem;
+                return platformItem != null && platformItem.platform is PlatformGroup;
             }
 
             protected override void RenameEnded(RenameEndedArgs args)
             {
-                if (!args.acceptedRename || string.IsNullOrEmpty(args.newName))
-                {
-                    return;
-                }
+                if (!args.acceptedRename || string.IsNullOrEmpty(args.newName)) return;
 
-                PlatformItem item = FindItem(args.itemID, rootItem) as PlatformItem;
+                var item = FindItem(args.itemID, rootItem) as PlatformItem;
 
-                if (item == null)
-                {
-                    return;
-                }
+                if (item == null) return;
 
-                PlatformGroup group = item.platform as PlatformGroup;
+                var group = item.platform as PlatformGroup;
 
-                if (group == null)
-                {
-                    return;
-                }
+                if (group == null) return;
 
                 // Undo.RecordObject doesn't capture PlatformGroup.displayName, maybe due to inheritance?
                 // This means we need to use the SerializedObject interface instead.
-                SerializedObject serializedGroup = new SerializedObject(group);
-                SerializedProperty displayName = serializedGroup.FindProperty("displayName");
+                var serializedGroup = new SerializedObject(group);
+                var displayName = serializedGroup.FindProperty("displayName");
 
                 displayName.stringValue = args.newName;
 
@@ -2294,50 +2354,38 @@ namespace FMODUnity
 
             private bool IsItemDraggable(TreeViewItem draggedItem)
             {
-                PlatformItem item = draggedItem as PlatformItem;
+                var item = draggedItem as PlatformItem;
 
-                return (item != null) && !item.platform.IsIntrinsic;
+                return item != null && !item.platform.IsIntrinsic;
             }
 
             protected override void SetupDragAndDrop(SetupDragAndDropArgs args)
             {
-                PlatformItem item = FindItem(args.draggedItemIDs[0], rootItem) as PlatformItem;
+                var item = FindItem(args.draggedItemIDs[0], rootItem) as PlatformItem;
 
                 if (item != null)
                 {
                     DragAndDrop.PrepareStartDrag();
-                    DragAndDrop.objectReferences = new UnityEngine.Object[] { item.platform };
+                    DragAndDrop.objectReferences = new Object[] {item.platform};
                     DragAndDrop.StartDrag("Change FMOD Platform Inheritance");
                 }
             }
 
             protected override DragAndDropVisualMode HandleDragAndDrop(DragAndDropArgs args)
             {
-                if (DragAndDrop.objectReferences.Length != 1)
-                {
-                    return DragAndDropVisualMode.None;
-                }
+                if (DragAndDrop.objectReferences.Length != 1) return DragAndDropVisualMode.None;
 
-                Platform draggedPlatform = DragAndDrop.objectReferences[0] as Platform;
+                var draggedPlatform = DragAndDrop.objectReferences[0] as Platform;
 
-                if (draggedPlatform == null)
-                {
-                    return DragAndDropVisualMode.None;
-                }
+                if (draggedPlatform == null) return DragAndDropVisualMode.None;
 
-                PlatformItem parentItem = args.parentItem as PlatformItem;
+                var parentItem = args.parentItem as PlatformItem;
 
-                if (parentItem == null)
-                {
-                    return DragAndDropVisualMode.None;
-                }
+                if (parentItem == null) return DragAndDropVisualMode.None;
 
-                Platform parent = parentItem.platform;
+                var parent = parentItem.platform;
 
-                if (parent is PlatformPlayInEditor)
-                {
-                    return DragAndDropVisualMode.None;
-                }
+                if (parent is PlatformPlayInEditor) return DragAndDropVisualMode.None;
 
                 switch (args.dragAndDropPosition)
                 {
@@ -2352,17 +2400,12 @@ namespace FMODUnity
                 }
             }
 
-            private DragAndDropVisualMode HandleDragOverPlatform(Platform draggedPlatform, Platform parent, bool performDrop)
+            private DragAndDropVisualMode HandleDragOverPlatform(Platform draggedPlatform, Platform parent,
+                bool performDrop)
             {
-                if (parent == draggedPlatform)
-                {
-                    return DragAndDropVisualMode.Move;
-                }
+                if (parent == draggedPlatform) return DragAndDropVisualMode.Move;
 
-                if (parent.InheritsFrom(draggedPlatform))
-                {
-                    return DragAndDropVisualMode.None;
-                }
+                if (parent.InheritsFrom(draggedPlatform)) return DragAndDropVisualMode.None;
 
                 if (performDrop)
                 {
@@ -2376,14 +2419,12 @@ namespace FMODUnity
             private DragAndDropVisualMode HandleDragBetweenChildren(Platform draggedPlatform, Platform parent,
                 int insertAtIndex, bool performDrop)
             {
-                if (parent.InheritsFrom(draggedPlatform))
-                {
-                    return DragAndDropVisualMode.None;
-                }
+                if (parent.InheritsFrom(draggedPlatform)) return DragAndDropVisualMode.None;
 
                 if (performDrop)
                 {
-                    SetPlatformParent("Set FMOD Platform Inheritance", settings, draggedPlatform, parent, insertAtIndex);
+                    SetPlatformParent("Set FMOD Platform Inheritance", settings, draggedPlatform, parent,
+                        insertAtIndex);
                     ForceReload();
                 }
 
@@ -2393,7 +2434,7 @@ namespace FMODUnity
 
         private class ReorderableList : UnityEditorInternal.ReorderableList
         {
-            const float ElementPadding = 2;
+            private const float ElementPadding = 2;
 
             public ReorderableList(SerializedProperty property)
                 : base(property.serializedObject, property, true, false, true, true)
@@ -2405,13 +2446,13 @@ namespace FMODUnity
 
             public void DrawLayout()
             {
-                Rect rect = EditorGUILayout.GetControlRect(false, GetHeight());
+                var rect = EditorGUILayout.GetControlRect(false, GetHeight());
                 rect = EditorGUI.IndentedRect(rect);
 
                 DoList(rect);
             }
 
-            void DrawElement(Rect rect, int index, bool active, bool focused)
+            private void DrawElement(Rect rect, int index, bool active, bool focused)
             {
                 using (new NoIndentScope())
                 {
@@ -2424,7 +2465,14 @@ namespace FMODUnity
 
         private class PlatformPropertyStringListView : UnityEditorInternal.ReorderableList
         {
-            const float ElementPadding = 2;
+            private const float ElementPadding = 2;
+
+            // We need this because ReorderableList modifies the list before calling
+            // onReorderCallback, meaning we can't call AffirmOverriddenList
+            // soon enough.
+            private readonly List<string> displayList;
+
+            public Platform platform;
 
             public PlatformPropertyStringListView(Platform.PropertyAccessor<List<string>> property)
                 : base(null, typeof(string), true, false, true, true)
@@ -2443,13 +2491,7 @@ namespace FMODUnity
                 onReorderCallback = OnReorder;
             }
 
-            public Platform platform;
-            public Platform.PropertyAccessor<List<string>> property { get; private set; }
-
-            // We need this because ReorderableList modifies the list before calling
-            // onReorderCallback, meaning we can't call AffirmOverriddenList
-            // soon enough.
-            List<string> displayList;
+            public Platform.PropertyAccessor<List<string>> property { get; }
 
             public void DrawLayout()
             {
@@ -2459,7 +2501,7 @@ namespace FMODUnity
                     displayList.AddRange(property.Get(platform));
                 }
 
-                Rect rect = EditorGUILayout.GetControlRect(false, GetHeight());
+                var rect = EditorGUILayout.GetControlRect(false, GetHeight());
                 rect = EditorGUI.IndentedRect(rect);
 
                 DoList(rect);
@@ -2467,25 +2509,18 @@ namespace FMODUnity
 
             public bool IsReloadNeeded()
             {
-                List<string> propertyList = property.Get(platform);
+                var propertyList = property.Get(platform);
 
-                if (displayList.Count != propertyList.Count)
-                {
-                    return true;
-                }
+                if (displayList.Count != propertyList.Count) return true;
 
-                for (int i = 0; i < displayList.Count; ++i)
-                {
+                for (var i = 0; i < displayList.Count; ++i)
                     if (displayList[i] != propertyList[i])
-                    {
                         return true;
-                    }
-                }
 
                 return false;
             }
 
-            void DrawElement(Rect rect, int index, bool active, bool focused)
+            private void DrawElement(Rect rect, int index, bool active, bool focused)
             {
                 using (new NoIndentScope())
                 {
@@ -2493,7 +2528,7 @@ namespace FMODUnity
 
                     EditorGUI.BeginChangeCheck();
 
-                    string newValue = EditorGUI.TextField(rect, list[index] as string);
+                    var newValue = EditorGUI.TextField(rect, list[index] as string);
 
                     if (EditorGUI.EndChangeCheck())
                     {
@@ -2503,284 +2538,35 @@ namespace FMODUnity
                 }
             }
 
-            void AddElement(UnityEditorInternal.ReorderableList list)
+            private void AddElement(UnityEditorInternal.ReorderableList list)
             {
                 AffirmOverriddenList().Add(string.Empty);
             }
 
-            void RemoveElement(UnityEditorInternal.ReorderableList list)
+            private void RemoveElement(UnityEditorInternal.ReorderableList list)
             {
                 AffirmOverriddenList().RemoveAt(list.index);
             }
 
-            void OnReorder(UnityEditorInternal.ReorderableList list)
+            private void OnReorder(UnityEditorInternal.ReorderableList list)
             {
-                List<string> propertyList = AffirmOverriddenList();
+                var propertyList = AffirmOverriddenList();
 
                 propertyList.Clear();
                 propertyList.AddRange(displayList);
             }
 
-            List<string> AffirmOverriddenList()
+            private List<string> AffirmOverriddenList()
             {
                 if (!property.HasValue(platform))
                 {
-                    List<string> newList = new List<string>(property.Get(platform));
+                    var newList = new List<string>(property.Get(platform));
 
                     property.Set(platform, newList);
                 }
 
                 return property.Get(platform);
             }
-        }
-
-        // If insertAtIndex == -1, insert at the end
-        private static void SetPlatformParent(string undoMessage, Settings settings, Platform child, Platform parent, int insertAtIndex = -1)
-        {
-            if (parent == child.Parent)
-            {
-                if (insertAtIndex > child.DisplaySortOrder)
-                {
-                    --insertAtIndex;
-                }
-
-                if (insertAtIndex == child.DisplaySortOrder)
-                {
-                    return;
-                }
-            }
-
-            Undo.RecordObjects(new[] { child, child.Parent, parent }, undoMessage);
-
-            int index = 0;
-
-            for (int i = 0; i < parent.ChildIdentifiers.Count; ++i)
-            {
-                Platform sibling = settings.FindPlatform(parent.ChildIdentifiers[i]);
-
-                if (sibling.Active && sibling != child)
-                {
-                    if (index == insertAtIndex)
-                    {
-                        ++index;
-                    }
-
-                    Undo.RecordObject(sibling, undoMessage);
-
-                    sibling.DisplaySortOrder = index;
-                    ++index;
-                }
-            }
-
-            if (insertAtIndex == -1)
-            {
-                insertAtIndex = index;
-            }
-
-            child.DisplaySortOrder = insertAtIndex;
-
-            settings.SetPlatformParent(child, parent);
-        }
-
-        private void ApplyPendingActions()
-        {
-            if (hasBankSourceChanged || hasBankTargetChanged)
-            {
-                RefreshBanks();
-            }
-        }
-
-        string lastSourceBankPath;
-
-        private void RefreshBanks()
-        {
-            Settings settings = target as Settings;
-
-            if (lastSourceBankPath != settings.SourceBankPath)
-            {
-                lastSourceBankPath = settings.SourceBankPath;
-                EventManager.RefreshBanks();
-            }
-        }
-
-        static readonly GUIContent BankRefreshLabel = new GUIContent("Refresh Banks");
-
-        static readonly GUIContent[] BankRefreshCooldownLabels = new GUIContent[] {
-            new GUIContent("After 1 second"),
-            new GUIContent("After 5 seconds"), 
-            new GUIContent("After 10 seconds"),
-            new GUIContent("After 20 seconds"),
-            new GUIContent("After 30 seconds"),
-            new GUIContent("After 1 minute"),
-            new GUIContent("Prompt Me"),
-            new GUIContent("Manually"),
-        };
-
-        static readonly int[] BankRefreshCooldownValues = new int[] {
-            1,
-            5, 
-            10,
-            20,
-            30,
-            60,
-            Settings.BankRefreshPrompt,
-            Settings.BankRefreshManual,
-        };
-
-        public static void DisplayBankRefreshSettings(SerializedProperty cooldown, SerializedProperty showWindow,
-            bool inInspector)
-        {
-            Rect controlRect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
-
-            Rect labelRect;
-
-            if (inInspector)
-            {
-                labelRect = LabelRect(controlRect);
-            }
-            else
-            {
-                labelRect = EditorGUI.IndentedRect(controlRect);
-                labelRect.width = GUI.skin.label.CalcSize(BankRefreshLabel).x;
-            }
-
-
-            Rect popupRect = controlRect;
-            popupRect.x = labelRect.xMax;
-            popupRect.width = BankRefreshCooldownLabels.Max(l => EditorStyles.popup.CalcSize(l).x);
-
-            using (new NoIndentScope())
-            {
-                GUI.Label(labelRect, BankRefreshLabel);
-
-                cooldown.intValue = EditorGUI.IntPopup(popupRect, cooldown.intValue,
-                    BankRefreshCooldownLabels, BankRefreshCooldownValues);
-
-                if (cooldown.intValue >= 0)
-                {
-                    Rect toggleRect = controlRect;
-                    toggleRect.xMin = popupRect.xMax + GUI.skin.toggle.margin.left;
-
-                    showWindow.boolValue = EditorGUI.ToggleLeft(toggleRect, "Show Status Window", showWindow.boolValue);
-                }
-            }
-        }
-
-        static Rect LabelRect(Rect controlRect)
-        {
-            Rect result = controlRect;
-            result.width = EditorGUIUtility.labelWidth;
-            result = EditorGUI.IndentedRect(result);
-
-            return result;
-        }
-
-        public static bool BrowseForSourceProjectPath(SerializedObject serializedObject)
-        {
-            serializedObject.Update();
-            var sourceProjectPath = serializedObject.FindProperty("sourceProjectPath");
-            var sourceBankPath = serializedObject.FindProperty("sourceBankPath");
-            var hasSourceProject = serializedObject.FindProperty("HasSourceProject");
-            var hasPlatforms = serializedObject.FindProperty("HasPlatforms");
-
-            string newPath = EditorUtility.OpenFilePanel("Locate Studio Project", sourceProjectPath.stringValue, "fspro");
-
-            if (string.IsNullOrEmpty(newPath))
-            {
-                return false;
-            }
-            else
-            {
-                hasSourceProject.boolValue = true;
-                hasPlatforms.boolValue = true;
-                newPath = MakePathRelative(newPath);
-                sourceProjectPath.stringValue = newPath;
-                sourceBankPath.stringValue = GetBankDirectory(serializedObject);
-                serializedObject.ApplyModifiedProperties();
-                EventManager.RefreshBanks();
-                return true;
-            }
-        }
-
-        public static bool BrowseForSourceBankPath(SerializedObject serializedObject, bool multiPlatform = false)
-        {
-            serializedObject.Update();
-            var sourceBankPath = serializedObject.FindProperty("sourceBankPath");
-            var hasSourceProject = serializedObject.FindProperty("HasSourceProject");
-            var hasPlatforms = serializedObject.FindProperty("HasPlatforms");
-
-            string newPath = EditorUtility.OpenFolderPanel("Locate Build Folder", sourceBankPath.stringValue, null);
-
-            if (string.IsNullOrEmpty(newPath))
-            {
-                return false;
-            }
-            else
-            {
-                hasSourceProject.boolValue = false;
-                hasPlatforms.boolValue = multiPlatform;
-                newPath = MakePathRelative(newPath);
-                sourceBankPath.stringValue = newPath;
-                serializedObject.ApplyModifiedProperties();
-                EventManager.RefreshBanks();
-                return true;
-            }
-        }
-
-        private static string MakePathRelative(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                return "";
-            string fullPath = Path.GetFullPath(path);
-            string fullProjectPath = Path.GetFullPath(Environment.CurrentDirectory + Path.DirectorySeparatorChar);
-
-            // If the path contains the Unity project path remove it and return the result
-            if (fullPath.Contains(fullProjectPath))
-            {
-                fullPath = fullPath.Replace(fullProjectPath, "");
-            }
-            // If not, attempt to find a relative path on the same drive
-            else if (Path.GetPathRoot(fullPath) == Path.GetPathRoot(fullProjectPath))
-            {
-                // Remove trailing slash from project path for split count simplicity
-                if (fullProjectPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.CurrentCulture)) fullProjectPath = fullProjectPath.Substring(0, fullProjectPath.Length - 1);
-
-                string[] fullPathSplit = fullPath.Split(Path.DirectorySeparatorChar);
-                string[] projectPathSplit = fullProjectPath.Split(Path.DirectorySeparatorChar);
-                int minNumSplits = Mathf.Min(fullPathSplit.Length, projectPathSplit.Length);
-                int numCommonElements = 0;
-                for (int i = 0; i < minNumSplits; i++)
-                {
-                    if (fullPathSplit[i] == projectPathSplit[i])
-                    {
-                        numCommonElements++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                string result = "";
-                int fullPathSplitLength = fullPathSplit.Length;
-                for (int i = numCommonElements; i < fullPathSplitLength; i++)
-                {
-                    result += fullPathSplit[i];
-                    if (i < fullPathSplitLength - 1)
-                    {
-                        result += '/';
-                    }
-                }
-
-                int numAdditionalElementsInProjectPath = projectPathSplit.Length - numCommonElements;
-                for (int i = 0; i < numAdditionalElementsInProjectPath; i++)
-                {
-                    result = "../" + result;
-                }
-
-                fullPath = result;
-            }
-
-            return fullPath.Replace(Path.DirectorySeparatorChar, '/');
         }
     }
 }
