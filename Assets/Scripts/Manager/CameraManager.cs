@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
@@ -14,27 +11,24 @@ public class CameraManager : MonoBehaviour
         tpCamera.enabled = false;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (fpCamera.enabled == true)
-            {
+            if (fpCamera.enabled)
                 ThirdPersonCamera();
-            }else
-            {
+            else
                 FirstPersonCamera();
-            }
         }
     }
 
-    void FirstPersonCamera()
+    private void FirstPersonCamera()
     {
         fpCamera.enabled = true;
         tpCamera.enabled = false;
     }
 
-    void ThirdPersonCamera()
+    private void ThirdPersonCamera()
     {
         fpCamera.enabled = false;
         tpCamera.enabled = true;

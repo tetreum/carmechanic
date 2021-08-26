@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4165562906
+CRC: 1764501037
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6ff9141c78750f83a859baa9ffe451b6
+    Hash: 46c5005214b08e35efe2bdb60fdc7d22
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 59a7f03a3b31741743bf8a7cab9a1d71
+    Hash: 827909402ab92804a3e077ba8d64b12a
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,13 +25,15 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 64
   Script: {instanceID: 0}
-- Class: 74
-  Script: {instanceID: 0}
 - Class: 90
   Script: {instanceID: 0}
 - Class: 95
   Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4d30974bf68d61043b1572197db94cdc, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Prefabs/car1.FBX
+- Assets/Prefabs/car1.prefab
 Dependencies: []
