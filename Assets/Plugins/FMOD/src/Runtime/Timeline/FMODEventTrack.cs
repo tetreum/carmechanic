@@ -5,7 +5,9 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+
 #if UNITY_EDITOR
+using UnityEditor;
 #endif
 
 namespace FMODUnity
@@ -42,7 +44,8 @@ namespace FMODUnity
     [Serializable]
     public class FMODEventMixerBehaviour : PlayableBehaviour
     {
-        [Range(0, 1)] public float volume = 1;
+        [Range(0, 1)]
+        public float volume = 1;
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
@@ -52,19 +55,25 @@ namespace FMODUnity
              * Check playing to avoid retriggering sounds while scrubbing or repainting.
              * Check IsQuitting to avoid accessing the RuntimeManager during the Play-In-Editor to Editor transition.
              */
-            var playing = playable.GetGraph().IsPlaying();
-            if (!playing) return;
+            bool playing = playable.GetGraph().IsPlaying();
+            if (!playing)
+            {
+                return;
+            }
             /* When auditioning manually update the StudioSystem in place of the RuntimeManager. */
-            if (!Application.isPlaying) RuntimeManager.StudioSystem.update();
+            if (!Application.isPlaying)
+            {
+                FMODUnity.RuntimeManager.StudioSystem.update();
+            }
 #endif //UNITY_EDITOR
 
-            var inputCount = playable.GetInputCount();
-            var time = (float) playable.GetGraph().GetRootPlayable(0).GetTime();
+            int inputCount = playable.GetInputCount();
+            float time = (float)playable.GetGraph().GetRootPlayable(0).GetTime();
 
-            for (var i = 0; i < inputCount; i++)
+            for (int i = 0; i < inputCount; i++)
             {
-                var inputPlayable = (ScriptPlayable<FMODEventPlayableBehavior>) playable.GetInput(i);
-                var input = inputPlayable.GetBehaviour();
+                ScriptPlayable<FMODEventPlayableBehavior> inputPlayable = (ScriptPlayable<FMODEventPlayableBehavior>)playable.GetInput(i);
+                FMODEventPlayableBehavior input = inputPlayable.GetBehaviour();
 
                 input.UpdateBehavior(time, volume);
             }

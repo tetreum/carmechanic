@@ -285,6 +285,15 @@
  <Reference Include="UnityEditor.UWP.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="unityplastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
+ </Reference>
+ <Reference Include="log4netPlastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
+ </Reference>
+ <Reference Include="SQLite4Unity3d">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Plastic.Newtonsoft.Json">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
  </Reference>
@@ -293,15 +302,6 @@
  </Reference>
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.burst@1.4.11/Unity.Burst.Unsafe.dll</HintPath>
- </Reference>
- <Reference Include="log4netPlastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
- </Reference>
- <Reference Include="SQLite4Unity3d">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
- </Reference>
- <Reference Include="unityplastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
