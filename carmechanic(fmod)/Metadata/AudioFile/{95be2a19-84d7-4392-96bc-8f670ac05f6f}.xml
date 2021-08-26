@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.01.00">
-	<object class="AudioFile" id="{a8595358-c62b-4d29-8bbb-e67e1270dc03}">
+	<object class="AudioFile" id="{95be2a19-84d7-4392-96bc-8f670ac05f6f}">
 		<property name="assetPath">
-			<value>HydraulicLift.wav</value>
+			<value>lift.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>22.0499992</value>
