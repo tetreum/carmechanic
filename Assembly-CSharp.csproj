@@ -902,10 +902,6 @@
       <Project>{650d13a5-f298-204a-364b-326af2dd9fcc}</Project>
       <Name>Mirror</Name>
     </ProjectReference>
-    <ProjectReference Include="Mirror.Examples.csproj">
-      <Project>{5b6ce668-4689-4cb5-af51-77bb4bb4c8aa}</Project>
-      <Name>Mirror.Examples</Name>
-    </ProjectReference>
     <ProjectReference Include="FMODUnityEditor.csproj">
       <Project>{941df9fd-afc6-cdc1-36ac-85b725095260}</Project>
       <Name>FMODUnityEditor</Name>
