@@ -658,7 +658,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh79806
+  m_Name: pb_Mesh17874
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -902,6 +902,7 @@ GameObject:
   - component: {fileID: 1282145221}
   - component: {fileID: 1282145223}
   - component: {fileID: 1282145225}
+  - component: {fileID: 1282145226}
   m_Layer: 0
   m_Name: manager
   m_TagString: Untagged
@@ -978,6 +979,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fpCamera: {fileID: 1636772247}
   tpCamera: {fileID: 643334563}
+--- !u!114 &1282145226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282145220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4465a2c7a6d8e3a43ab0ab7e114c3db4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1288859741
 GameObject:
   m_ObjectHideFlags: 0
