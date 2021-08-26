@@ -52,9 +52,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Editor\Build.cs" />
      <Compile Include="Assets\Scripts\Editor\CarMechanic.cs" />
      <Compile Include="Assets\Scripts\Editor\CreateAssetBundles.cs" />
+     <Compile Include="Assets\Scripts\Editor\Build.cs" />
+     <Compile Include="Assets\Xbox Live\Editor\XboxLivePostProcessing.cs" />
+     <Compile Include="Assets\Xbox Live\Editor\XboxLiveConfigurationEditor.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -286,14 +288,14 @@
  <Reference Include="UnityEditor.UWP.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="unityplastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
- </Reference>
  <Reference Include="log4netPlastic">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
  </Reference>
  <Reference Include="SQLite4Unity3d">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.CecilX.Rocks">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Plastic.Newtonsoft.Json">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
@@ -304,23 +306,71 @@
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.burst@1.4.11/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
+ <Reference Include="Mono.CecilX.Mdb">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll</HintPath>
+ </Reference>
+ <Reference Include="unityplastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Collections.LowLevel.ILSupport">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
  </Reference>
+ <Reference Include="Mono.CecilX.Pdb">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="Mono.CecilX">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Rocks">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
+ <Reference Include="System.Composition.TypedParts">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.TypedParts.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Mdb">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll</HintPath>
+ <Reference Include="Unity.Tasks">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Unity.Tasks.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Pdb">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll</HintPath>
+ <Reference Include="Caliburn.Micro">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Compat">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Unity.Compat.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Convention">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Convention.dll</HintPath>
+ </Reference>
+ <Reference Include="Caliburn.Micro.Platform">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.Platform.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.XboxLive.Xdts.Contracts">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.XboxLive.Xdts.Contracts.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.AttributedModel">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.AttributedModel.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.XboxLive.Xdts.Client">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.XboxLive.Xdts.Client.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Windows.Interactivity">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Windows.Interactivity.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Hosting">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Hosting.dll</HintPath>
+ </Reference>
+ <Reference Include="Caliburn.Micro.Platform.Core">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.Platform.Core.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.Xbox.Services.UnityEditor.CSharp">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Microsoft.Xbox.Services.UnityEditor.CSharp.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Runtime">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -673,26 +723,92 @@
  <Reference Include="System.Xml.XPath.XDocument">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/Facades/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.TestRunner">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.TestRunner">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.TestRunner">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <Reference Include="Unity.Transforms.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
  </Reference>
  <Reference Include="Unity.AssetBundleBrowser.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Havok.Physics">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Properties">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Serialization">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Serialization.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.CacheServer">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.VisualStudio.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+ <Reference Include="Unity.ProBuilder">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Rider.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.Hybrid.EndToEnd.Tests">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Hybrid.EndToEnd.Tests.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Properties.UI.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.UI.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Scenes">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Scenes.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Extensions">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Transforms">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Collections">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ProGrids">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Physics">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Scenes.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Scenes.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Extensions.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.Extensions.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.BuildUtils">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ProBuilder.AddOns.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VisualStudio.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
@@ -700,23 +816,20 @@
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Physics.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.Hybrid.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Burst.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProBuilder">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ProBuilder.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.UI">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
  <Reference Include="Unity.PlasticSCM.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Rider.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ <Reference Include="Unity.Entities">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Postprocessing.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
@@ -724,8 +837,17 @@
  <Reference Include="Unity.ProGrids.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <Reference Include="Unity.Jobs.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Physics.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="Havok.Physics.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.Hybrid.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
@@ -739,95 +861,23 @@
  <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Timeline.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mathematics.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ProGrids">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Properties.UI.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.UI.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Scenes">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Scenes.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mathematics.Extensions.Hybrid">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.Extensions.Hybrid.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Entities.BuildUtils">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Physics.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Properties.UI">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ScriptableBuildPipeline">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Serialization">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Serialization.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Jobs">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Deformations">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Deformations.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Properties">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.CacheServer">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Jobs.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Scenes.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Scenes.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Collections">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Physics.Hybrid">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.Hybrid.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Entities.Hybrid.EndToEnd.Tests">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Hybrid.EndToEnd.Tests.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Entities.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Havok.Physics.Hybrid">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.Hybrid.dll</HintPath>
- </Reference>
  <Reference Include="Havok.Physics.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Entities.Hybrid">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
+ <Reference Include="Unity.Timeline.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Transforms.Hybrid">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
+ <Reference Include="Unity.Properties.UI">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.UI.dll</HintPath>
  </Reference>
- <Reference Include="Havok.Physics">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Mathematics.Extensions">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Transforms">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Physics">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Entities">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
+ <Reference Include="Unity.ScriptableBuildPipeline">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Serialization.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Serialization.Editor.dll</HintPath>
@@ -845,25 +895,13 @@
       <Project>{e0170d60-63a0-c7ef-5f34-8e2312fdce29}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="FMODUnityResonanceEditor.csproj">
-      <Project>{cb9ca8c5-be92-c760-3de9-fe9b29c3ed9b}</Project>
-      <Name>FMODUnityResonanceEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="FMODUnity.csproj">
-      <Project>{c29bc651-fb71-176a-9529-e207db19a09c}</Project>
-      <Name>FMODUnity</Name>
-    </ProjectReference>
-    <ProjectReference Include="FMODUnityEditor.csproj">
-      <Project>{941df9fd-afc6-cdc1-36ac-85b725095260}</Project>
-      <Name>FMODUnityEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="FMODUnityResonance.csproj">
-      <Project>{0668a8e4-c58a-5145-69f6-80a9567cce39}</Project>
-      <Name>FMODUnityResonance</Name>
-    </ProjectReference>
     <ProjectReference Include="kcp2k.csproj">
       <Project>{fd7db07b-81dc-31ac-ad2d-0573647e3007}</Project>
       <Name>kcp2k</Name>
+    </ProjectReference>
+    <ProjectReference Include="FMODUnityResonanceEditor.csproj">
+      <Project>{cb9ca8c5-be92-c760-3de9-fe9b29c3ed9b}</Project>
+      <Name>FMODUnityResonanceEditor</Name>
     </ProjectReference>
     <ProjectReference Include="Mirror.Weaver.csproj">
       <Project>{443d13f0-5aac-f284-2b31-eb1b7b4d9b2b}</Project>
@@ -873,22 +911,6 @@
       <Project>{280d2711-f57a-57e3-70eb-f13e598bba5c}</Project>
       <Name>Mirror.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="where-allocations.csproj">
-      <Project>{26fbf5ff-9d55-1ea3-0289-b733f942720c}</Project>
-      <Name>where-allocations</Name>
-    </ProjectReference>
-    <ProjectReference Include="Telepathy.csproj">
-      <Project>{2703aba1-bf82-52b7-e76c-d5f9036d19b0}</Project>
-      <Name>Telepathy</Name>
-    </ProjectReference>
-    <ProjectReference Include="Mirror.Components.csproj">
-      <Project>{9727f898-1215-4a8d-c4bb-464f1fa36130}</Project>
-      <Name>Mirror.Components</Name>
-    </ProjectReference>
-    <ProjectReference Include="Mirror.Examples.csproj">
-      <Project>{5b6ce668-4689-4cb5-af51-77bb4bb4c8aa}</Project>
-      <Name>Mirror.Examples</Name>
-    </ProjectReference>
     <ProjectReference Include="Mirror.CompilerSymbols.csproj">
       <Project>{36041a15-accd-e404-2ef4-6c706574c462}</Project>
       <Name>Mirror.CompilerSymbols</Name>
@@ -897,9 +919,37 @@
       <Project>{f1e1c128-e8d3-a19a-a838-9663d1c9de9a}</Project>
       <Name>Mirror.Authenticators</Name>
     </ProjectReference>
+    <ProjectReference Include="Telepathy.csproj">
+      <Project>{2703aba1-bf82-52b7-e76c-d5f9036d19b0}</Project>
+      <Name>Telepathy</Name>
+    </ProjectReference>
+    <ProjectReference Include="where-allocations.csproj">
+      <Project>{26fbf5ff-9d55-1ea3-0289-b733f942720c}</Project>
+      <Name>where-allocations</Name>
+    </ProjectReference>
+    <ProjectReference Include="Mirror.Components.csproj">
+      <Project>{9727f898-1215-4a8d-c4bb-464f1fa36130}</Project>
+      <Name>Mirror.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="Mirror.csproj">
       <Project>{650d13a5-f298-204a-364b-326af2dd9fcc}</Project>
       <Name>Mirror</Name>
+    </ProjectReference>
+    <ProjectReference Include="Mirror.Examples.csproj">
+      <Project>{5b6ce668-4689-4cb5-af51-77bb4bb4c8aa}</Project>
+      <Name>Mirror.Examples</Name>
+    </ProjectReference>
+    <ProjectReference Include="FMODUnityEditor.csproj">
+      <Project>{941df9fd-afc6-cdc1-36ac-85b725095260}</Project>
+      <Name>FMODUnityEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="FMODUnity.csproj">
+      <Project>{c29bc651-fb71-176a-9529-e207db19a09c}</Project>
+      <Name>FMODUnity</Name>
+    </ProjectReference>
+    <ProjectReference Include="FMODUnityResonance.csproj">
+      <Project>{0668a8e4-c58a-5145-69f6-80a9567cce39}</Project>
+      <Name>FMODUnityResonance</Name>
     </ProjectReference>
     <ProjectReference Include="SimpleWebTransport.csproj">
       <Project>{49afa991-a116-0659-5e1f-303ee2354d9f}</Project>

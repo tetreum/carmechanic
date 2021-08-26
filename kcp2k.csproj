@@ -54,21 +54,21 @@
   <ItemGroup>
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpServerConnection.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\NonAlloc\KcpClientConnectionNonAlloc.cs" />
+     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp\AssemblyInfo.cs" />
+     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp\Kcp.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpServer.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpConnection.cs" />
-     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\NonAlloc\KcpServerNonAlloc.cs" />
-     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpClientConnection.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpClient.cs" />
+     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\NonAlloc\KcpServerNonAlloc.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp\Pool.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\NonAlloc\KcpServerConnectionNonAlloc.cs" />
-     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp\Utils.cs" />
-     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp\AssemblyInfo.cs" />
+     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpHeader.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp\Segment.cs" />
+     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpClientConnection.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpChannel.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\NonAlloc\KcpClientNonAlloc.cs" />
-     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\KcpHeader.cs" />
+     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp\Utils.cs" />
      <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\highlevel\Log.cs" />
-     <Compile Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp\Kcp.cs" />
      <None Include="Assets\Mirror\Runtime\Transport\KCP\kcp2k\kcp2k.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -301,14 +301,14 @@
  <Reference Include="UnityEditor.UWP.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="unityplastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
- </Reference>
  <Reference Include="log4netPlastic">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
  </Reference>
  <Reference Include="SQLite4Unity3d">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.CecilX.Rocks">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Plastic.Newtonsoft.Json">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
@@ -319,23 +319,71 @@
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.burst@1.4.11/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
+ <Reference Include="Mono.CecilX.Mdb">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll</HintPath>
+ </Reference>
+ <Reference Include="unityplastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Collections.LowLevel.ILSupport">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
  </Reference>
+ <Reference Include="Mono.CecilX.Pdb">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="Mono.CecilX">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Rocks">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
+ <Reference Include="System.Composition.TypedParts">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.TypedParts.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Mdb">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll</HintPath>
+ <Reference Include="Unity.Tasks">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Unity.Tasks.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Pdb">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll</HintPath>
+ <Reference Include="Caliburn.Micro">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Compat">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Unity.Compat.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Convention">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Convention.dll</HintPath>
+ </Reference>
+ <Reference Include="Caliburn.Micro.Platform">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.Platform.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.XboxLive.Xdts.Contracts">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.XboxLive.Xdts.Contracts.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.AttributedModel">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.AttributedModel.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.XboxLive.Xdts.Client">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.XboxLive.Xdts.Client.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Windows.Interactivity">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Windows.Interactivity.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Hosting">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Hosting.dll</HintPath>
+ </Reference>
+ <Reference Include="Caliburn.Micro.Platform.Core">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.Platform.Core.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.Xbox.Services.UnityEditor.CSharp">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Microsoft.Xbox.Services.UnityEditor.CSharp.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Runtime">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

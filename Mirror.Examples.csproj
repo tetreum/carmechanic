@@ -52,48 +52,48 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Mirror\Examples\Benchmark\Scripts\BenchmarkNetworkManager.cs" />
-     <Compile Include="Assets\Mirror\Examples\Room\Scripts\Spawner.cs" />
      <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\MatchGUI.cs" />
+     <Compile Include="Assets\Mirror\Examples\Room\Scripts\RandomColor.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\MultiSceneNetManager.cs" />
+     <Compile Include="Assets\Mirror\Examples\Benchmark\Scripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\AdditiveNetworkManager.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\PlayerGUI.cs" />
+     <Compile Include="Assets\Mirror\Examples\Room\Scripts\Spawner.cs" />
+     <Compile Include="Assets\Mirror\Examples\Pong\Scripts\Player.cs" />
+     <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\RandomColor.cs" />
+     <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Mirror\Examples\Benchmark\Scripts\MonsterMovement.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\MatchController.cs" />
+     <Compile Include="Assets\Mirror\Examples\Chat\Scripts\ChatWindow.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\RandomColor.cs" />
      <Compile Include="Assets\Mirror\Examples\Pong\Scripts\Ball.cs" />
      <Compile Include="Assets\Mirror\Examples\Basic\Scripts\PlayerUI.cs" />
      <Compile Include="Assets\Mirror\Examples\Tanks\Scripts\Projectile.cs" />
      <Compile Include="Assets\Mirror\Examples\Room\Scripts\PlayerScore.cs" />
-     <Compile Include="Assets\Mirror\Examples\Room\Scripts\Reward.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\MatchController.cs" />
-     <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\ZoneHandler.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PhysicsCollision.cs" />
-     <Compile Include="Assets\Mirror\Examples\Pong\Scripts\Player.cs" />
-     <Compile Include="Assets\Mirror\Examples\Chat\Scripts\ChatNetworkManager.cs" />
-     <Compile Include="Assets\Mirror\Examples\Room\Scripts\NetworkRoomManagerExt.cs" />
-     <Compile Include="Assets\Mirror\Examples\Room\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\MatchNetworkManager.cs" />
-     <Compile Include="Assets\Mirror\Examples\Basic\Scripts\Player.cs" />
      <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Mirror\Examples\Basic\Scripts\BasicNetManager.cs" />
-     <Compile Include="Assets\Mirror\Examples\Room\Scripts\RandomColor.cs" />
      <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\MatchMessages.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\Reward.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\MultiSceneNetManager.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\CanvasController.cs" />
-     <Compile Include="Assets\Mirror\Examples\RigidbodyPhysics\Scripts\AddForce.cs" />
      <Compile Include="Assets\Mirror\Examples\Chat\Scripts\Player.cs" />
-     <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\AdditiveNetworkManager.cs" />
-     <Compile Include="Assets\Mirror\Examples\Pong\Scripts\NetworkManagerPong.cs" />
-     <Compile Include="Assets\Mirror\Examples\Tanks\Scripts\Tank.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\CellGUI.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PlayerScore.cs" />
      <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\ShootingTankBehaviour.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PhysicsSimulator.cs" />
-     <Compile Include="Assets\Mirror\Examples\Chat\Scripts\ChatWindow.cs" />
-     <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\RandomColor.cs" />
-     <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Mirror\Examples\Benchmark\Scripts\MonsterMovement.cs" />
      <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\RoomGUI.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\RandomColor.cs" />
-     <Compile Include="Assets\Mirror\Examples\Benchmark\Scripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Mirror\Examples\Benchmark\Scripts\BenchmarkNetworkManager.cs" />
+     <Compile Include="Assets\Mirror\Examples\Room\Scripts\NetworkRoomManagerExt.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\MatchNetworkManager.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\CanvasController.cs" />
+     <Compile Include="Assets\Mirror\Examples\Pong\Scripts\NetworkManagerPong.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\CellGUI.cs" />
+     <Compile Include="Assets\Mirror\Examples\AdditiveScenes\Scripts\ZoneHandler.cs" />
+     <Compile Include="Assets\Mirror\Examples\Room\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Mirror\Examples\RigidbodyPhysics\Scripts\AddForce.cs" />
+     <Compile Include="Assets\Mirror\Examples\Tanks\Scripts\Tank.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PlayerScore.cs" />
+     <Compile Include="Assets\Mirror\Examples\Room\Scripts\Reward.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PhysicsCollision.cs" />
+     <Compile Include="Assets\Mirror\Examples\Chat\Scripts\ChatNetworkManager.cs" />
+     <Compile Include="Assets\Mirror\Examples\Basic\Scripts\Player.cs" />
+     <Compile Include="Assets\Mirror\Examples\Basic\Scripts\BasicNetManager.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\Reward.cs" />
+     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PhysicsSimulator.cs" />
      <Compile Include="Assets\Mirror\Examples\Room\Scripts\NetworkRoomPlayerExt.cs" />
-     <Compile Include="Assets\Mirror\Examples\MultipleMatches\Scripts\PlayerGUI.cs" />
      <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\Spawner.cs" />
      <None Include="Assets\Mirror\Examples\Tanks\Textures\(Public Domain) Dirt Hand Painted Texture\Dirt Hand Painted Texture - License.txt" />
      <None Include="Assets\Mirror\Examples\Tanks\Models\(Public Domain) Recon_Tank\Recon_Tank - License.txt" />
@@ -329,14 +329,14 @@
  <Reference Include="UnityEditor.UWP.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="unityplastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
- </Reference>
  <Reference Include="log4netPlastic">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
  </Reference>
  <Reference Include="SQLite4Unity3d">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.CecilX.Rocks">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Plastic.Newtonsoft.Json">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
@@ -347,23 +347,71 @@
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.burst@1.4.11/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
+ <Reference Include="Mono.CecilX.Mdb">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll</HintPath>
+ </Reference>
+ <Reference Include="unityplastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Collections.LowLevel.ILSupport">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
  </Reference>
+ <Reference Include="Mono.CecilX.Pdb">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="Mono.CecilX">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Rocks">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
+ <Reference Include="System.Composition.TypedParts">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.TypedParts.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Mdb">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Mdb.dll</HintPath>
+ <Reference Include="Unity.Tasks">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Unity.Tasks.dll</HintPath>
  </Reference>
- <Reference Include="Mono.CecilX.Pdb">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Pdb.dll</HintPath>
+ <Reference Include="Caliburn.Micro">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Compat">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Unity.Compat.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Convention">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Convention.dll</HintPath>
+ </Reference>
+ <Reference Include="Caliburn.Micro.Platform">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.Platform.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.XboxLive.Xdts.Contracts">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.XboxLive.Xdts.Contracts.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.AttributedModel">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.AttributedModel.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.XboxLive.Xdts.Client">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.XboxLive.Xdts.Client.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Windows.Interactivity">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Windows.Interactivity.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Hosting">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Hosting.dll</HintPath>
+ </Reference>
+ <Reference Include="Caliburn.Micro.Platform.Core">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/Caliburn.Micro.Platform.Core.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.Xbox.Services.UnityEditor.CSharp">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Libs/UnityEditor/NET35/Microsoft.Xbox.Services.UnityEditor.CSharp.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Composition.Runtime">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Xbox Live/Tools/AssociationWizard/System.Composition.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
