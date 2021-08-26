@@ -54,10 +54,15 @@ public class Player : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
-    }
 
-    private void OnDestroy()
-    {
-        AudioManager.footsteps.release();
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) ||
+            Input.GetKeyDown(KeyCode.D))
+        {
+            AudioManager.footsteps.start();
+            RuntimeManager.AttachInstanceToGameObject(AudioManager.footsteps, transform);
+        }
+
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) ||
+            Input.GetKeyUp(KeyCode.D)) AudioManager.footsteps.stop(STOP_MODE.ALLOWFADEOUT);
     }
 }
