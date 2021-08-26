@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using FMOD.Studio;
-using FMODUnity;
+﻿using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
@@ -19,14 +16,9 @@ public class Lift : MonoBehaviour
     private void OnMouseDown()
     {
         if (isMoving) return;
-        isMoving = true;
         AudioManager.liftInstance.start();
+        isMoving = true;
         StartCoroutine(nameof(StartAscension));
-    }
-
-    private void OnDestroy()
-    {
-        AudioManager.liftInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     private IEnumerator StartAscension()
