@@ -83,6 +83,7 @@
      <Compile Include="Assets\Scripts\UI\Cursors.cs" />
      <Compile Include="Assets\Scripts\Utils\MouseOrbit.cs" />
      <Compile Include="Assets\Scripts\Manager\CameraManager.cs" />
+     <Compile Include="Assets\Scripts\Manager\NetworkManager.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\ScriptTemplates\51-Mirror__Network Authenticator-NewNetworkAuthenticator.cs.txt" />
