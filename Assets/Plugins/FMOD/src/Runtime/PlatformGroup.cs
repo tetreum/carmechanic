@@ -8,20 +8,20 @@ namespace FMODUnity
 {
     public class PlatformGroup : Platform
     {
-        [SerializeField]
-        public string displayName;
+        [SerializeField] public string displayName;
 
-        [SerializeField]
-        private Legacy.Platform legacyIdentifier;
+        [SerializeField] private Legacy.Platform legacyIdentifier;
 
-        public override string DisplayName { get { return displayName; } }
-        public override void DeclareUnityMappings(Settings settings) { }
+        public override string DisplayName => displayName;
+        public override void DeclareUnityMappings(Settings settings)
+        {
+        }
 #if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier { get { return legacyIdentifier; } }
+        public override Legacy.Platform LegacyIdentifier => legacyIdentifier;
 
         public static PlatformGroup Create(string displayName, Legacy.Platform legacyIdentifier)
         {
-            PlatformGroup group = CreateInstance<PlatformGroup>();
+            var group = CreateInstance<PlatformGroup>();
             group.Identifier = GUID.Generate().ToString();
             group.displayName = displayName;
             group.legacyIdentifier = legacyIdentifier;
@@ -30,12 +30,13 @@ namespace FMODUnity
             return group;
         }
 
-        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix)
+        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
+            string suffix)
         {
             yield break;
         }
 
-        public override OutputType[] ValidOutputTypes { get { return null; } }
+        public override OutputType[] ValidOutputTypes => null;
 #endif
     }
 }

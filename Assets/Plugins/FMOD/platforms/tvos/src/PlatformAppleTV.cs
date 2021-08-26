@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using FMOD;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -35,7 +35,8 @@ namespace FMODUnity
             Settings.AddPlatformTemplate<PlatformAppleTV>("e7a046c753c3c3d4aacc91f6597f310d");
         }
 
-        public override string DisplayName { get { return "Apple TV"; } }
+        public override string DisplayName => "Apple TV";
+
         public override void DeclareUnityMappings(Settings settings)
         {
             settings.DeclareRuntimePlatform(RuntimePlatform.tvOS, this);
@@ -46,19 +47,16 @@ namespace FMODUnity
         }
 
 #if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier { get { return Legacy.Platform.AppleTV; } }
+        public override Legacy.Platform LegacyIdentifier => Legacy.Platform.AppleTV;
 
-        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix)
+        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
+            string suffix)
         {
             if (allVariants || PlayerSettings.tvOS.sdkVersion == tvOSSdkVersion.Device)
-            {
                 yield return string.Format("tvos/libfmodstudiounityplugin{0}.a", suffix);
-            }
 
             if (allVariants || PlayerSettings.tvOS.sdkVersion == tvOSSdkVersion.Simulator)
-            {
                 yield return string.Format("tvos/libfmodstudiounitypluginsimulator{0}.a", suffix);
-            }
         }
 
         public override bool SupportsAdditionalCPP(BuildTarget target)
@@ -75,16 +73,11 @@ namespace FMODUnity
 #endif
 
 #if UNITY_EDITOR
-        public override OutputType[] ValidOutputTypes
-        {
-            get
-            {
-                return sValidOutputTypes;
-            }
-        }
+        public override OutputType[] ValidOutputTypes => sValidOutputTypes;
 
-        private static OutputType[] sValidOutputTypes = {
-           new OutputType() { displayName = "Core Audio", outputType = FMOD.OUTPUTTYPE.COREAUDIO },
+        private static readonly OutputType[] sValidOutputTypes =
+        {
+            new OutputType {displayName = "Core Audio", outputType = OUTPUTTYPE.COREAUDIO}
         };
 #endif
     }
