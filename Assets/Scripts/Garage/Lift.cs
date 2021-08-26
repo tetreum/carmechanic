@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
@@ -18,9 +19,14 @@ public class Lift : MonoBehaviour
     private void OnMouseDown()
     {
         if (isMoving) return;
-        AudioManager.liftInstance.start();
         isMoving = true;
+        AudioManager.liftInstance.start();
         StartCoroutine(nameof(StartAscension));
+    }
+
+    private void OnDestroy()
+    {
+        AudioManager.liftInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     private IEnumerator StartAscension()
