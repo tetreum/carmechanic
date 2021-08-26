@@ -595,7 +595,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0b3afcbaa28715941a4f1f586d6dd99f, type: 2}
+  - {fileID: 2100000, guid: 3eb6bf4be5f109b40847e92b290086b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -652,7 +652,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh82624
+  m_Name: pb_Mesh100538
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -821,7 +821,6 @@ GameObject:
   - component: {fileID: 1093104663}
   - component: {fileID: 1093104662}
   - component: {fileID: 1093104661}
-  - component: {fileID: 1093104664}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -884,33 +883,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1093104664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093104660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <isClient>k__BackingField: 0
-  <isServer>k__BackingField: 0
-  <isLocalPlayer>k__BackingField: 0
-  <hasAuthority>k__BackingField: 0
-  <netId>k__BackingField: 0
-  serverOnly: 0
-  destroyCalled: 0
-  <NetworkBehaviours>k__BackingField: []
-  <visibility>k__BackingField: {fileID: 0}
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
-  <SpawnedFromInstantiate>k__BackingField: 0
-  clientStarted: 0
-  hadAuthority: 0
 --- !u!1 &1282145220
 GameObject:
   m_ObjectHideFlags: 0
