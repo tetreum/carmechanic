@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         footsteps = RuntimeManager.CreateInstance("event:/footsteps");
-        liftInstance = RuntimeManager.CreateInstance("event:/HydraulicLift");
+        liftInstance = RuntimeManager.CreateInstance("event:/lift");
     }
 
     private void OnDestroy()
