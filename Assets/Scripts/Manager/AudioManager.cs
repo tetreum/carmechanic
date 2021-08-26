@@ -1,30 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
-using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class AudioManager : MonoBehaviour
 {
+    public static EventInstance liftInstance;
     public static EventInstance footsteps;
     
-    void Awake()
+    private void Awake()
     {
         footsteps = RuntimeManager.CreateInstance("event:/footsteps");
+        liftInstance = RuntimeManager.CreateInstance("event:/HydraulicLift");
     }
-    
-    void Update()
-    {
-        
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) ||
-            Input.GetKeyDown(KeyCode.D))
-        {
-            footsteps.start();
-            RuntimeManager.AttachInstanceToGameObject(footsteps, transform);
-        }
 
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) ||
-            Input.GetKeyUp(KeyCode.D)) footsteps.stop(STOP_MODE.ALLOWFADEOUT);
+    private void OnDestroy()
+    {
+        footsteps.release();
+        liftInstance.release();
     }
 }
