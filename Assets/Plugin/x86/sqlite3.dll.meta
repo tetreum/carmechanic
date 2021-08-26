@@ -1,84 +1,135 @@
 fileFormatVersion: 2
 guid: e26a278a78408c6458e7afb3e9bd5e8e
-timeCreated: 1426852206
-licenseType: Pro
 PluginImporter:
-  serializedVersion: 1
+  externalObjects: {}
+  serializedVersion: 2
   iconMap: {}
   executionOrder: {}
+  defineConstraints: []
   isPreloaded: 0
+  isOverridable: 0
+  isExplicitlyReferenced: 0
+  validateReferences: 1
   platformData:
-    Android:
+  - first:
+      : Any
+    second:
+      enabled: 0
+      settings:
+        Exclude Editor: 0
+        Exclude Linux64: 0
+        Exclude OSXUniversal: 0
+        Exclude Win: 0
+        Exclude Win64: 0
+        Exclude WindowsStoreApps: 0
+  - first:
+      : BlackBerry
+    second:
+      enabled: 1
+      settings: {}
+  - first:
+      : Linux
+    second:
+      enabled: 0
+      settings:
+        CPU: x86
+  - first:
+      : LinuxUniversal
+    second:
+      enabled: 0
+      settings:
+        CPU: x86
+  - first:
+      : OSXIntel
+    second:
       enabled: 0
       settings:
         CPU: AnyCPU
-    Any:
+  - first:
+      : OSXIntel64
+    second:
       enabled: 0
-      settings: {}
-    BlackBerry:
+      settings:
+        CPU: None
+  - first:
+      : WP8
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+        DontProcess: False
+        PlaceholderPath: 
+  - first:
+      : Web
+    second:
       enabled: 1
       settings: {}
-    Editor:
+  - first:
+      : WebStreamed
+    second:
+      enabled: 1
+      settings: {}
+  - first:
+      Android: Android
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      Any: 
+    second:
+      enabled: 0
+      settings: {}
+  - first:
+      Editor: Editor
+    second:
       enabled: 1
       settings:
         CPU: x86
         DefaultValueInitialized: true
         OS: AnyOS
-    Linux:
-      enabled: 0
-      settings:
-        CPU: x86
-    Linux64:
-      enabled: 0
-      settings:
-        CPU: None
-    LinuxUniversal:
-      enabled: 0
-      settings:
-        CPU: x86
-    OSXIntel:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
-    OSXIntel64:
-      enabled: 0
-      settings:
-        CPU: None
-    OSXUniversal:
-      enabled: 0
-      settings:
-        CPU: x86
-    WP8:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
-        DontProcess: False
-        PlaceholderPath: 
-    Web:
+  - first:
+      Standalone: Linux64
+    second:
       enabled: 1
-      settings: {}
-    WebGL:
-      enabled: 0
-      settings: {}
-    WebStreamed:
-      enabled: 1
-      settings: {}
-    Win:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
-    Win64:
-      enabled: 0
       settings:
         CPU: None
-    WindowsStoreApps:
-      enabled: 0
+  - first:
+      Standalone: OSXUniversal
+    second:
+      enabled: 1
       settings:
-        CPU: AnyCPU
-        DontProcess: False
+        CPU: x86
+  - first:
+      Standalone: Win
+    second:
+      enabled: 1
+      settings:
+        CPU: x86
+  - first:
+      Standalone: Win64
+    second:
+      enabled: 1
+      settings:
+        CPU: None
+  - first:
+      WebGL: WebGL
+    second:
+      enabled: 0
+      settings: {}
+  - first:
+      Windows Store Apps: WindowsStoreApps
+    second:
+      enabled: 1
+      settings:
+        CPU: X86
+        DontProcess: false
         PlaceholderPath: 
         SDK: AnySDK
-    iOS:
+        ScriptingBackend: AnyScriptingBackend
+  - first:
+      iPhone: iOS
+    second:
       enabled: 0
       settings:
         CompileFlags: 

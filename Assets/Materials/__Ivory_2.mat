@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: __Ivory_2
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -290,7 +290,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0.09803921}
+    - _BaseColor: {r: 0.96078426, g: 0.96078426, b: 0.96078426, a: 0.09803921}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.96078426, g: 0.96078426, b: 0.96078426, a: 0.09803921}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}

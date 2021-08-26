@@ -400,6 +400,9 @@
  <Reference Include="Mono.CecilX">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.render-pipelines.core@10.5.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
  </Reference>

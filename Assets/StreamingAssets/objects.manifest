@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2868160246
+CRC: 1600987376
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4b55be3c2cd68175d56ebf46d087d6a8
+    Hash: db7f7783da5f25f154c4da440e69dbec
   TypeTreeHash:
     serializedVersion: 2
-    Hash: aad2d23836880d4a8dc5d62c8d14d6aa
+    Hash: b0f195c08eac0c184ac21d3d19d344aa
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -29,13 +29,14 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 82
   Script: {instanceID: 0}
-- Class: 83
-  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4d30974bf68d61043b1572197db94cdc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 42784d4cf87873c44b3b1e55ffffce8b, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/Prefabs/engine.prefab
 - Assets/Prefabs/lift.prefab
 Dependencies: []
