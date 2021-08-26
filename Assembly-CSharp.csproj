@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\DayNight.cs" />
      <Compile Include="Assets\Scripts\Utils\Service.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Plugin\LogDispatcher.cs" />
+     <Compile Include="Assets\Scripts\Manager\AnimManager.cs" />
      <Compile Include="Assets\Scripts\Utils\FpsCounter.cs" />
      <Compile Include="Assets\Scripts\Player\Inventory\Inventory.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Client\Preconditions.cs" />
@@ -114,6 +115,7 @@
      <Compile Include="Assets\UserReporting\Scripts\Client\UserReportEventLevel.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Client\UserReportPreview.cs" />
      <Compile Include="Assets\Scripts\Engine\EditorTrigger.cs" />
+     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Plugin\Version2018_3\Screenshots\PngEncoder.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Plugin\Version2018_3\Screenshots\ScreenshotRecorder.cs" />
@@ -122,10 +124,8 @@
      <Compile Include="Assets\Scripts\UI\Cursors.cs" />
      <Compile Include="Assets\UserReporting\Scripts\Client\SerializableException.cs" />
      <Compile Include="Assets\Scripts\Utils\MouseOrbit.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\UnityUserReporting.cs" />
-     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Manager\CameraManager.cs" />
-     <Compile Include="Assets\Scripts\Manager\AnimManager.cs" />
+     <Compile Include="Assets\UserReporting\Scripts\Plugin\UnityUserReporting.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
