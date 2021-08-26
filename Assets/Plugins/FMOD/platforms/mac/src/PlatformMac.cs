@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FMOD;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -35,8 +34,7 @@ namespace FMODUnity
             Settings.AddPlatformTemplate<PlatformMac>("52eb9df5db46521439908db3a29a1bbb");
         }
 
-        public override string DisplayName => "macOS";
-
+        public override string DisplayName { get { return "macOS"; } }
         public override void DeclareUnityMappings(Settings settings)
         {
             settings.DeclareRuntimePlatform(RuntimePlatform.OSXPlayer, this);
@@ -45,16 +43,10 @@ namespace FMODUnity
 #endif
         }
 
-        public override string GetPluginPath(string pluginName)
-        {
-            return string.Format("{0}/{1}.bundle", GetPluginBasePath(), pluginName);
-        }
-
 #if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier => Legacy.Platform.Mac;
+        public override Legacy.Platform LegacyIdentifier { get { return Legacy.Platform.Mac; } }
 
-        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
-            string suffix)
+        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix)
         {
             yield return string.Format("mac/fmodstudio{0}.bundle", suffix);
         }
@@ -64,12 +56,22 @@ namespace FMODUnity
             return false;
         }
 #endif
-#if UNITY_EDITOR
-        public override OutputType[] ValidOutputTypes => sValidOutputTypes;
 
-        private static readonly OutputType[] sValidOutputTypes =
+        public override string GetPluginPath(string pluginName)
         {
-            new OutputType {displayName = "Core Audio", outputType = OUTPUTTYPE.COREAUDIO}
+            return string.Format("{0}/{1}.bundle", GetPluginBasePath(), pluginName);
+        }
+#if UNITY_EDITOR
+        public override OutputType[] ValidOutputTypes
+        {
+            get
+            {
+                return sValidOutputTypes;
+            }
+        }
+
+        private static OutputType[] sValidOutputTypes = {
+           new OutputType() { displayName = "Core Audio", outputType = FMOD.OUTPUTTYPE.COREAUDIO },
         };
 #endif
     }

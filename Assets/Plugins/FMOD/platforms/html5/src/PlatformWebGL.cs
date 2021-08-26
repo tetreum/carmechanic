@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FMOD;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -35,8 +34,7 @@ namespace FMODUnity
             Settings.AddPlatformTemplate<PlatformWebGL>("46fbfdf3fc43db0458918377fd40293e");
         }
 
-        public override string DisplayName => "WebGL";
-
+        public override string DisplayName { get { return "WebGL"; } }
         public override void DeclareUnityMappings(Settings settings)
         {
             settings.DeclareRuntimePlatform(RuntimePlatform.WebGLPlayer, this);
@@ -46,28 +44,32 @@ namespace FMODUnity
 #endif
         }
 
-        public override string GetPluginPath(string pluginName)
-        {
-            return string.Format("{0}/{1}.bc", GetPluginBasePath(), pluginName);
-        }
-
 #if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier => Legacy.Platform.WebGL;
+        public override Legacy.Platform LegacyIdentifier { get { return Legacy.Platform.WebGL; } }
 
-        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
-            string suffix)
+        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix)
         {
             yield return string.Format("html5/libfmodstudiounityplugin{0}.bc", suffix);
         }
 
-        public override bool IsFMODStaticallyLinked => true;
+        public override bool IsFMODStaticallyLinked { get { return true; } }
 #endif
-#if UNITY_EDITOR
-        public override OutputType[] ValidOutputTypes => sValidOutputTypes;
 
-        private static readonly OutputType[] sValidOutputTypes =
+        public override string GetPluginPath(string pluginName)
         {
-            new OutputType {displayName = "JavaScript webaudio output", outputType = OUTPUTTYPE.WEBAUDIO}
+            return string.Format("{0}/{1}.bc", GetPluginBasePath(), pluginName);
+        }
+#if UNITY_EDITOR
+        public override OutputType[] ValidOutputTypes
+        {
+            get
+            {
+                return sValidOutputTypes;
+            }
+        }
+
+        private static OutputType[] sValidOutputTypes = {
+           new OutputType() { displayName = "JavaScript webaudio output", outputType = FMOD.OUTPUTTYPE.WEBAUDIO },
         };
 #endif
     }

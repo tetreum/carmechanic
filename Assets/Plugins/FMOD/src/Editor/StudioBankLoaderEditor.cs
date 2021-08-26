@@ -18,9 +18,11 @@ namespace FMODUnity
             EditorGUILayout.PropertyField(load, new GUIContent("Load"));
             EditorGUILayout.PropertyField(unload, new GUIContent("Unload"));
 
-            if (load.enumValueIndex >= 3 && load.enumValueIndex <= 6 ||
-                unload.enumValueIndex >= 3 && unload.enumValueIndex <= 6)
+            if ((load.enumValueIndex >= 3 && load.enumValueIndex <= 6) ||
+                (unload.enumValueIndex >= 3 && unload.enumValueIndex <= 6))
+            {
                 tag.stringValue = EditorGUILayout.TagField("Collision Tag", tag.stringValue);
+            }
 
             EditorGUILayout.PropertyField(preload, new GUIContent("Preload Sample Data"));
 
@@ -30,10 +32,10 @@ namespace FMODUnity
             if (GUILayout.Button("Add Bank", GUILayout.ExpandWidth(false)))
             {
                 banks.InsertArrayElementAtIndex(banks.arraySize);
-                var newBank = banks.GetArrayElementAtIndex(banks.arraySize - 1);
+                SerializedProperty newBank = banks.GetArrayElementAtIndex(banks.arraySize - 1);
                 newBank.stringValue = "";
 
-                var browser = CreateInstance<EventBrowser>();
+                EventBrowser browser = CreateInstance<EventBrowser>();
 
                 browser.titleContent = new GUIContent("Select FMOD Bank");
 
@@ -41,8 +43,8 @@ namespace FMODUnity
                 browser.ShowUtility();
             }
 
-            var deleteTexture = EditorGUIUtility.Load("FMOD/Delete.png") as Texture;
-            var deleteContent = new GUIContent(deleteTexture, "Delete Bank");
+            Texture deleteTexture = EditorGUIUtility.Load("FMOD/Delete.png") as Texture;
+            GUIContent deleteContent = new GUIContent(deleteTexture, "Delete Bank");
 
             var buttonStyle = new GUIStyle(GUI.skin.button);
             buttonStyle.padding.top = buttonStyle.padding.bottom = 1;
@@ -50,36 +52,39 @@ namespace FMODUnity
             buttonStyle.padding.left = buttonStyle.padding.right = 4;
             buttonStyle.fixedHeight = GUI.skin.textField.CalcSize(new GUIContent()).y;
 
-            for (var i = 0; i < banks.arraySize; i++)
+            for (int i = 0; i < banks.arraySize; i++)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(banks.GetArrayElementAtIndex(i), GUIContent.none);
 
                 if (GUILayout.Button(deleteContent, buttonStyle, GUILayout.ExpandWidth(false)))
+                {
                     banks.DeleteArrayElementAtIndex(i);
+                }
                 EditorGUILayout.EndHorizontal();
             }
-
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.EndHorizontal();
 
-            var e = Event.current;
+            Event e = Event.current;
             if (e.type == EventType.DragPerform)
+            {
                 if (DragAndDrop.objectReferences.Length > 0 &&
                     DragAndDrop.objectReferences[0] != null &&
                     DragAndDrop.objectReferences[0].GetType() == typeof(EditorBankRef))
                 {
-                    var pos = banks.arraySize;
+                    int pos = banks.arraySize;
                     banks.InsertArrayElementAtIndex(pos);
                     var pathProperty = banks.GetArrayElementAtIndex(pos);
 
-                    pathProperty.stringValue = ((EditorBankRef) DragAndDrop.objectReferences[0]).Name;
+                    pathProperty.stringValue = ((EditorBankRef)DragAndDrop.objectReferences[0]).Name;
 
                     e.Use();
                 }
-
+            }
             if (e.type == EventType.DragUpdated)
+            {
                 if (DragAndDrop.objectReferences.Length > 0 &&
                     DragAndDrop.objectReferences[0] != null &&
                     DragAndDrop.objectReferences[0].GetType() == typeof(EditorBankRef))
@@ -88,6 +93,7 @@ namespace FMODUnity
                     DragAndDrop.AcceptDrag();
                     e.Use();
                 }
+            }
 
             serializedObject.ApplyModifiedProperties();
         }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hktagfile version="3">
+  <type id="type1">
+    <name value="hkMonitorStreamColorTable"/>
+    <parent id="type2" /> <!-- hkReferencedObject -->
+    <format value="7"/> <!-- record -->
+    <fields count="2">
+      <field name="colorPairs" typeid="type3" flags="32" /> <!-- hkArray< hkMonitorStreamColorTable::ColorPair, hkContainerHeapAllocator > -->
+      <field name="defaultColor" typeid="type4" flags="32" /> <!-- hkUint32 -->
+    </fields>
+  </type>
+  <type id="type2">
+    <name value="hkReferencedObject"/>
+    <parent id="type5" /> <!-- hkBaseObject -->
+    <format value="7"/> <!-- record -->
+    <version value="4"/>
+    <fields count="0">
+    </fields>
+  </type>
+  <type id="type3">
+    <name value="hkArray"/>
+    <format value="8"/> <!-- array -->
+    <subtype id="type6" /> <!-- hkMonitorStreamColorTable::ColorPair -->
+    <parameters count="2">
+      <typeparam id="type6" /> <!-- hkMonitorStreamColorTable::ColorPair -->
+      <typeparam id="type7" /> <!-- hkContainerHeapAllocator -->
+    </parameters>
+    <flags value="0"/>
+    <fields count="3">
+      <field name="m_data" typeid="type8" flags="34" /> <!-- T*< void > -->
+      <field name="m_size" typeid="type9" flags="34" /> <!-- int -->
+      <field name="m_capacityAndFlags" typeid="type9" flags="34" /> <!-- int -->
+    </fields>
+  </type>
+  <type id="type4">
+    <name value="hkUint32"/>
+    <parent id="type10" /> <!-- unsigned int -->
+  </type>
+  <type id="type5">
+    <name value="hkBaseObject"/>
+    <format value="7"/> <!-- record -->
+    <flags value="144"/>
+    <fields count="0">
+    </fields>
+  </type>
+  <type id="type6">
+    <name value="hkMonitorStreamColorTable::ColorPair"/>
+    <format value="7"/> <!-- record -->
+    <fields count="2">
+      <field name="colorName" typeid="type11" flags="32" /> <!-- hkStringPtr -->
+      <field name="color" typeid="type12" flags="32" /> <!-- hkColor::Argb -->
+    </fields>
+  </type>
+  <type id="type7">
+    <name value="hkContainerHeapAllocator"/>
+    <format value="7"/> <!-- record -->
+    <flags value="16"/>
+    <fields count="0">
+    </fields>
+  </type>
+  <type id="type8">
+    <name value="T*"/>
+    <format value="6"/> <!-- pointer -->
+    <subtype id="type13" /> <!-- void -->
+    <parameters count="1">
+      <typeparam id="type13" /> <!-- void -->
+    </parameters>
+    <flags value="64"/>
+  </type>
+  <type id="type9">
+    <name value="int"/>
+    <format value="33284"/> <!-- int32 (LE) -->
+  </type>
+  <type id="type10">
+    <name value="unsigned int"/>
+    <format value="32772"/> <!-- uint32 (LE) -->
+  </type>
+  <type id="type11">
+    <name value="hkStringPtr"/>
+    <format value="131"/> <!-- string (ptr) -->
+    <fields count="1">
+      <field name="stringAndFlag" typeid="type15" flags="36" /> <!-- char* -->
+    </fields>
+  </type>
+  <type id="type12">
+    <name value="hkColor::Argb"/>
+    <parent id="type4" /> <!-- hkUint32 -->
+  </type>
+  <type id="type13">
+    <name value="void"/>
+    <format value="0"/> <!-- void -->
+    <flags value="1"/>
+  </type>
+  <type id="type14">
+    <name value="char"/>
+    <format value="8196"/> <!-- uint8 (LE) -->
+  </type>
+  <type id="type15">
+    <name value="char*"/>
+    <format value="3"/> <!-- string (ptr) -->
+  </type>
+  <object id="object1" typeid="type1" > <!-- hkMonitorStreamColorTable -->
+    <record> <!-- hkMonitorStreamColorTable -->
+      <field name="colorPairs">
+        <array count="1" elementtypeid="type6"> <!-- ArrayOf hkMonitorStreamColorTable::ColorPair -->
+          <record> <!-- hkMonitorStreamColorTable::ColorPair -->
+            <field name="colorName"><string value="__ExampleTimerName__(ARGB)"/></field>
+            <field name="color"><integer value="4278190080"/></field>
+          </record>
+        </array>
+      </field>
+      <field name="defaultColor"><integer value="4294967295"/></field>
+    </record>
+  </object>
+</hktagfile>

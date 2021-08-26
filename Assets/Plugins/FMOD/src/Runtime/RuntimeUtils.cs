@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using FMOD;
-using FMOD.Studio;
 using UnityEngine;
 #if UNITY_EDITOR
+using UnityEditor;
 #endif
 
 namespace FMODUnity
@@ -12,7 +11,6 @@ namespace FMODUnity
     {
         public Guid Guid;
         public string Path;
-
         public EventNotFoundException(string path)
             : base("[FMOD] Event not found '" + path + "'")
         {
@@ -29,7 +27,6 @@ namespace FMODUnity
     public class BusNotFoundException : Exception
     {
         public string Path;
-
         public BusNotFoundException(string path)
             : base("[FMOD] Bus not found '" + path + "'")
         {
@@ -40,7 +37,6 @@ namespace FMODUnity
     public class VCANotFoundException : Exception
     {
         public string Path;
-
         public VCANotFoundException(string path)
             : base("[FMOD] VCA not found '" + path + "'")
         {
@@ -51,32 +47,29 @@ namespace FMODUnity
     public class BankLoadException : Exception
     {
         public string Path;
-        public RESULT Result;
+        public FMOD.RESULT Result;
 
-        public BankLoadException(string path, RESULT result)
-            : base(string.Format("[FMOD] Could not load bank '{0}' : {1} : {2}", path, result.ToString(),
-                Error.String(result)))
+        public BankLoadException(string path, FMOD.RESULT result)
+            : base(string.Format("[FMOD] Could not load bank '{0}' : {1} : {2}", path, result.ToString(), FMOD.Error.String(result)))
         {
             Path = path;
             Result = result;
         }
-
         public BankLoadException(string path, string error)
             : base(string.Format("[FMOD] Could not load bank '{0}' : {1}", path, error))
         {
             Path = path;
-            Result = RESULT.ERR_INTERNAL;
+            Result = FMOD.RESULT.ERR_INTERNAL;
         }
     }
 
     public class SystemNotInitializedException : Exception
     {
+        public FMOD.RESULT Result;
         public string Location;
-        public RESULT Result;
 
-        public SystemNotInitializedException(RESULT result, string location)
-            : base(string.Format("[FMOD] Initialization failed : {2} : {0} : {1}", result.ToString(),
-                Error.String(result), location))
+        public SystemNotInitializedException(FMOD.RESULT result, string location)
+            : base(string.Format("[FMOD] Initialization failed : {2} : {0} : {1}", result.ToString(), FMOD.Error.String(result), location))
         {
             Result = result;
             Location = location;
@@ -88,7 +81,7 @@ namespace FMODUnity
         }
     }
 
-    public enum EmitterGameEvent
+    public enum EmitterGameEvent : int
     {
         None,
         ObjectStart,
@@ -106,10 +99,10 @@ namespace FMODUnity
         MouseEnter,
         MouseExit,
         MouseDown,
-        MouseUp
+        MouseUp,
     }
 
-    public enum LoaderGameEvent
+    public enum LoaderGameEvent : int
     {
         None,
         ObjectStart,
@@ -119,7 +112,7 @@ namespace FMODUnity
         TriggerEnter2D,
         TriggerExit2D,
         ObjectEnable,
-        ObjectDisable
+        ObjectDisable,
     }
 
     // We use our own enum to avoid serialization issues if FMOD.THREAD_TYPE changes
@@ -137,7 +130,7 @@ namespace FMODUnity
         Studio_Load_Bank,
         Studio_Load_Sample,
         Convolution_1,
-        Convolution_2
+        Convolution_2,
     }
 
     // We use our own enum to avoid serialization issues if FMOD.THREAD_AFFINITY changes
@@ -160,7 +153,7 @@ namespace FMODUnity
         Core12 = 1 << 12,
         Core13 = 1 << 13,
         Core14 = 1 << 14,
-        Core15 = 1 << 15
+        Core15 = 1 << 15,
     }
 
     [Serializable]
@@ -190,14 +183,17 @@ namespace FMODUnity
     {
         public static string GetCommonPlatformPath(string path)
         {
-            if (string.IsNullOrEmpty(path)) return path;
+            if (string.IsNullOrEmpty(path))
+            {
+                return path;
+            }
 
             return path.Replace('\\', '/');
         }
 
-        public static VECTOR ToFMODVector(this Vector3 vec)
+        public static FMOD.VECTOR ToFMODVector(this Vector3 vec)
         {
-            VECTOR temp;
+            FMOD.VECTOR temp;
             temp.x = vec.x;
             temp.y = vec.y;
             temp.z = vec.z;
@@ -205,9 +201,9 @@ namespace FMODUnity
             return temp;
         }
 
-        public static ATTRIBUTES_3D To3DAttributes(this Vector3 pos)
+        public static FMOD.ATTRIBUTES_3D To3DAttributes(this Vector3 pos)
         {
-            var attributes = new ATTRIBUTES_3D();
+            FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
             attributes.forward = ToFMODVector(Vector3.forward);
             attributes.up = ToFMODVector(Vector3.up);
             attributes.position = ToFMODVector(pos);
@@ -215,9 +211,9 @@ namespace FMODUnity
             return attributes;
         }
 
-        public static ATTRIBUTES_3D To3DAttributes(this Transform transform)
+        public static FMOD.ATTRIBUTES_3D To3DAttributes(this Transform transform)
         {
-            var attributes = new ATTRIBUTES_3D();
+            FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
             attributes.forward = transform.forward.ToFMODVector();
             attributes.up = transform.up.ToFMODVector();
             attributes.position = transform.position.ToFMODVector();
@@ -225,43 +221,104 @@ namespace FMODUnity
             return attributes;
         }
 
-        public static ATTRIBUTES_3D To3DAttributes(this GameObject go)
+        public static FMOD.ATTRIBUTES_3D To3DAttributes(this GameObject go)
         {
             return go.transform.To3DAttributes();
         }
 
-        public static THREAD_TYPE ToFMODThreadType(ThreadType threadType)
+        #if UNITY_PHYSICS_EXIST || !UNITY_2019_1_OR_NEWER
+        public static FMOD.ATTRIBUTES_3D To3DAttributes(Transform transform, Rigidbody rigidbody = null)
+        {
+            FMOD.ATTRIBUTES_3D attributes = transform.To3DAttributes();
+
+            if (rigidbody)
+            {
+                attributes.velocity = rigidbody.velocity.ToFMODVector();
+            }
+
+            return attributes;
+        }
+
+        public static FMOD.ATTRIBUTES_3D To3DAttributes(GameObject go, Rigidbody rigidbody)
+        {
+            FMOD.ATTRIBUTES_3D attributes = go.transform.To3DAttributes();
+
+            if (rigidbody)
+            {
+                attributes.velocity = rigidbody.velocity.ToFMODVector();
+            }
+
+            return attributes;
+        }
+        #endif
+
+        #if UNITY_PHYSICS2D_EXIST || !UNITY_2019_1_OR_NEWER
+        public static FMOD.ATTRIBUTES_3D To3DAttributes(Transform transform, Rigidbody2D rigidbody)
+        {
+            FMOD.ATTRIBUTES_3D attributes = transform.To3DAttributes();
+
+            if (rigidbody)
+            {
+                FMOD.VECTOR vel;
+                vel.x = rigidbody.velocity.x;
+                vel.y = rigidbody.velocity.y;
+                vel.z = 0;
+                attributes.velocity = vel;
+            }
+
+            return attributes;
+        }
+
+
+        public static FMOD.ATTRIBUTES_3D To3DAttributes(GameObject go, Rigidbody2D rigidbody)
+        {
+            FMOD.ATTRIBUTES_3D attributes = go.transform.To3DAttributes();
+
+            if (rigidbody)
+            {
+                FMOD.VECTOR vel;
+                vel.x = rigidbody.velocity.x;
+                vel.y = rigidbody.velocity.y;
+                vel.z = 0;
+                attributes.velocity = vel;
+            }
+
+            return attributes;
+        }
+        #endif
+
+        public static FMOD.THREAD_TYPE ToFMODThreadType(ThreadType threadType)
         {
             switch (threadType)
             {
                 case ThreadType.Mixer:
-                    return THREAD_TYPE.MIXER;
+                    return FMOD.THREAD_TYPE.MIXER;
                 case ThreadType.Feeder:
-                    return THREAD_TYPE.FEEDER;
+                    return FMOD.THREAD_TYPE.FEEDER;
                 case ThreadType.Stream:
-                    return THREAD_TYPE.STREAM;
+                    return FMOD.THREAD_TYPE.STREAM;
                 case ThreadType.File:
-                    return THREAD_TYPE.FILE;
+                    return FMOD.THREAD_TYPE.FILE;
                 case ThreadType.Nonblocking:
-                    return THREAD_TYPE.NONBLOCKING;
+                    return FMOD.THREAD_TYPE.NONBLOCKING;
                 case ThreadType.Record:
-                    return THREAD_TYPE.RECORD;
+                    return FMOD.THREAD_TYPE.RECORD;
                 case ThreadType.Geometry:
-                    return THREAD_TYPE.GEOMETRY;
+                    return FMOD.THREAD_TYPE.GEOMETRY;
                 case ThreadType.Profiler:
-                    return THREAD_TYPE.PROFILER;
+                    return FMOD.THREAD_TYPE.PROFILER;
                 case ThreadType.Studio_Update:
-                    return THREAD_TYPE.STUDIO_UPDATE;
+                    return FMOD.THREAD_TYPE.STUDIO_UPDATE;
                 case ThreadType.Studio_Load_Bank:
-                    return THREAD_TYPE.STUDIO_LOAD_BANK;
+                    return FMOD.THREAD_TYPE.STUDIO_LOAD_BANK;
                 case ThreadType.Studio_Load_Sample:
-                    return THREAD_TYPE.STUDIO_LOAD_SAMPLE;
+                    return FMOD.THREAD_TYPE.STUDIO_LOAD_SAMPLE;
                 case ThreadType.Convolution_1:
-                    return THREAD_TYPE.CONVOLUTION1;
+                    return FMOD.THREAD_TYPE.CONVOLUTION1;
                 case ThreadType.Convolution_2:
-                    return THREAD_TYPE.CONVOLUTION2;
+                    return FMOD.THREAD_TYPE.CONVOLUTION2;
                 default:
-                    throw new ArgumentException("Unrecognised thread type '" + threadType + "'");
+                    throw new ArgumentException("Unrecognised thread type '" + threadType.ToString() + "'");
             }
         }
 
@@ -270,39 +327,43 @@ namespace FMODUnity
             return thread.ToString().Replace('_', ' ');
         }
 
-        public static THREAD_AFFINITY ToFMODThreadAffinity(ThreadAffinity affinity)
+        public static FMOD.THREAD_AFFINITY ToFMODThreadAffinity(ThreadAffinity affinity)
         {
-            var fmodAffinity = THREAD_AFFINITY.CORE_ALL;
+            FMOD.THREAD_AFFINITY fmodAffinity = FMOD.THREAD_AFFINITY.CORE_ALL;
 
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core0, THREAD_AFFINITY.CORE_0, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core1, THREAD_AFFINITY.CORE_1, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core2, THREAD_AFFINITY.CORE_2, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core3, THREAD_AFFINITY.CORE_3, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core4, THREAD_AFFINITY.CORE_4, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core5, THREAD_AFFINITY.CORE_5, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core6, THREAD_AFFINITY.CORE_6, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core7, THREAD_AFFINITY.CORE_7, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core8, THREAD_AFFINITY.CORE_8, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core9, THREAD_AFFINITY.CORE_9, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core10, THREAD_AFFINITY.CORE_10, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core11, THREAD_AFFINITY.CORE_11, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core12, THREAD_AFFINITY.CORE_12, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core13, THREAD_AFFINITY.CORE_13, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core14, THREAD_AFFINITY.CORE_14, ref fmodAffinity);
-            SetFMODAffinityBit(affinity, ThreadAffinity.Core15, THREAD_AFFINITY.CORE_15, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core0, FMOD.THREAD_AFFINITY.CORE_0, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core1, FMOD.THREAD_AFFINITY.CORE_1, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core2, FMOD.THREAD_AFFINITY.CORE_2, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core3, FMOD.THREAD_AFFINITY.CORE_3, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core4, FMOD.THREAD_AFFINITY.CORE_4, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core5, FMOD.THREAD_AFFINITY.CORE_5, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core6, FMOD.THREAD_AFFINITY.CORE_6, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core7, FMOD.THREAD_AFFINITY.CORE_7, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core8, FMOD.THREAD_AFFINITY.CORE_8, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core9, FMOD.THREAD_AFFINITY.CORE_9, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core10, FMOD.THREAD_AFFINITY.CORE_10, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core11, FMOD.THREAD_AFFINITY.CORE_11, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core12, FMOD.THREAD_AFFINITY.CORE_12, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core13, FMOD.THREAD_AFFINITY.CORE_13, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core14, FMOD.THREAD_AFFINITY.CORE_14, ref fmodAffinity);
+            SetFMODAffinityBit(affinity, ThreadAffinity.Core15, FMOD.THREAD_AFFINITY.CORE_15, ref fmodAffinity);
 
             return fmodAffinity;
         }
 
         private static void SetFMODAffinityBit(ThreadAffinity affinity, ThreadAffinity mask,
-            THREAD_AFFINITY fmodMask, ref THREAD_AFFINITY fmodAffinity)
+            FMOD.THREAD_AFFINITY fmodMask, ref FMOD.THREAD_AFFINITY fmodAffinity)
         {
-            if ((affinity & mask) != 0) fmodAffinity |= fmodMask;
+            if ((affinity & mask) != 0)
+            {
+                fmodAffinity |= fmodMask;
+            }
         }
 
         public static void EnforceLibraryOrder()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
+
             AndroidJavaClass jSystem = new AndroidJavaClass("java.lang.System");
             jSystem.CallStatic("loadLibrary", FMOD.VERSION.dll);
             jSystem.CallStatic("loadLibrary", FMOD.Studio.STUDIO_VERSION.dll);
@@ -311,65 +372,10 @@ namespace FMODUnity
 
             // Call a function in fmod.dll to make sure it's loaded before fmodstudio.dll
             int temp1, temp2;
-            Memory.GetStats(out temp1, out temp2);
+            FMOD.Memory.GetStats(out temp1, out temp2);
 
             Guid temp3;
-            Util.parseID("", out temp3);
+            FMOD.Studio.Util.parseID("", out temp3);
         }
-
-#if UNITY_PHYSICS_EXIST || !UNITY_2019_1_OR_NEWER
-        public static ATTRIBUTES_3D To3DAttributes(Transform transform, Rigidbody rigidbody = null)
-        {
-            var attributes = transform.To3DAttributes();
-
-            if (rigidbody) attributes.velocity = rigidbody.velocity.ToFMODVector();
-
-            return attributes;
-        }
-
-        public static ATTRIBUTES_3D To3DAttributes(GameObject go, Rigidbody rigidbody)
-        {
-            var attributes = go.transform.To3DAttributes();
-
-            if (rigidbody) attributes.velocity = rigidbody.velocity.ToFMODVector();
-
-            return attributes;
-        }
-#endif
-
-#if UNITY_PHYSICS2D_EXIST || !UNITY_2019_1_OR_NEWER
-        public static ATTRIBUTES_3D To3DAttributes(Transform transform, Rigidbody2D rigidbody)
-        {
-            var attributes = transform.To3DAttributes();
-
-            if (rigidbody)
-            {
-                VECTOR vel;
-                vel.x = rigidbody.velocity.x;
-                vel.y = rigidbody.velocity.y;
-                vel.z = 0;
-                attributes.velocity = vel;
-            }
-
-            return attributes;
-        }
-
-
-        public static ATTRIBUTES_3D To3DAttributes(GameObject go, Rigidbody2D rigidbody)
-        {
-            var attributes = go.transform.To3DAttributes();
-
-            if (rigidbody)
-            {
-                VECTOR vel;
-                vel.x = rigidbody.velocity.x;
-                vel.y = rigidbody.velocity.y;
-                vel.z = 0;
-                attributes.velocity = vel;
-            }
-
-            return attributes;
-        }
-#endif
     }
 }

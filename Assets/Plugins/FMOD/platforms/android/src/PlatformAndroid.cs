@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FMOD;
+using System;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -35,8 +35,7 @@ namespace FMODUnity
             Settings.AddPlatformTemplate<PlatformAndroid>("2fea114e74ecf3c4f920e1d5cc1c4c40");
         }
 
-        public override string DisplayName => "Android";
-
+        public override string DisplayName { get { return "Android"; } }
         public override void DeclareUnityMappings(Settings settings)
         {
             settings.DeclareRuntimePlatform(RuntimePlatform.Android, this);
@@ -45,6 +44,29 @@ namespace FMODUnity
             settings.DeclareBuildTarget(BuildTarget.Android, this);
 #endif
         }
+
+#if UNITY_EDITOR
+        public override Legacy.Platform LegacyIdentifier { get { return Legacy.Platform.Android; } }
+
+        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix)
+        {
+            yield return "android/fmod.jar";
+
+            foreach (string architecture in new[] { "arm64-v8a", "armeabi-v7a", "x86" })
+            {
+                yield return string.Format("android/{0}/libfmod{1}.so", architecture, suffix);
+                yield return string.Format("android/{0}/libfmodstudio{1}.so", architecture, suffix);
+            }
+        }
+
+        public override bool SupportsAdditionalCPP(BuildTarget target)
+        {
+            // Unity parses --additional-cpp arguments specified via
+            // PlayerSettings.SetAdditionalIl2CppArgs() incorrectly when the Android
+            // Export Project option is set.
+            return false;
+        }
+#endif
 
         public override string GetBankFolder()
         {
@@ -65,41 +87,22 @@ namespace FMODUnity
         {
             return string.Format("lib{0}.so", pluginName);
         }
-
 #if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier => Legacy.Platform.Android;
-
-        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
-            string suffix)
+        public override OutputType[] ValidOutputTypes
         {
-            yield return "android/fmod.jar";
-
-            foreach (var architecture in new[] {"arm64-v8a", "armeabi-v7a", "x86"})
+            get
             {
-                yield return string.Format("android/{0}/libfmod{1}.so", architecture, suffix);
-                yield return string.Format("android/{0}/libfmodstudio{1}.so", architecture, suffix);
+                return sValidOutputTypes;
             }
         }
 
-        public override bool SupportsAdditionalCPP(BuildTarget target)
-        {
-            // Unity parses --additional-cpp arguments specified via
-            // PlayerSettings.SetAdditionalIl2CppArgs() incorrectly when the Android
-            // Export Project option is set.
-            return false;
-        }
-#endif
-#if UNITY_EDITOR
-        public override OutputType[] ValidOutputTypes => sValidOutputTypes;
-
-        private static readonly OutputType[] sValidOutputTypes =
-        {
-            new OutputType {displayName = "Java Audio Track", outputType = OUTPUTTYPE.AUDIOTRACK},
-            new OutputType {displayName = "OpenSL ES", outputType = OUTPUTTYPE.OPENSL},
-            new OutputType {displayName = "AAudio", outputType = OUTPUTTYPE.AAUDIO}
+        private static OutputType[] sValidOutputTypes = {
+           new OutputType() { displayName = "Java Audio Track", outputType = FMOD.OUTPUTTYPE.AUDIOTRACK },
+           new OutputType() { displayName = "OpenSL ES", outputType = FMOD.OUTPUTTYPE.OPENSL },
+           new OutputType() { displayName = "AAudio", outputType = FMOD.OUTPUTTYPE.AAUDIO },
         };
 
-        public override int CoreCount => MaximumCoreCount;
+        public override int CoreCount { get { return MaximumCoreCount; } }
 #endif
     }
 }
