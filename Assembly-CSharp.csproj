@@ -52,80 +52,37 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\ILogListener.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\SerializableStackFrame.cs" />
      <Compile Include="Assets\Scripts\Garage\CarInfo.cs" />
      <Compile Include="Assets\Scripts\Engine\PartStaticInfo.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\UserReportingScript.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportEvent.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\UserReportingConfigureOnly.cs" />
      <Compile Include="Assets\Scripts\UI\Shaders.cs" />
      <Compile Include="Assets\Scripts\DayNight.cs" />
      <Compile Include="Assets\Scripts\Utils\Service.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\LogDispatcher.cs" />
      <Compile Include="Assets\Scripts\Manager\AnimManager.cs" />
      <Compile Include="Assets\Scripts\Utils\FpsCounter.cs" />
      <Compile Include="Assets\Scripts\Player\Inventory\Inventory.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\Preconditions.cs" />
      <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\Version2018_3\AsyncUnityUserReportingPlatform.cs" />
      <Compile Include="Assets\Scripts\Utils\SimpleJSON.cs" />
      <Compile Include="Assets\Scripts\Player\Inventory\PartData.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportScreenshot.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\Version2018_3\Screenshots\ScreenshotType.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\SimpleJson.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\Version2018_3\Screenshots\Downsampler.cs" />
      <Compile Include="Assets\Scripts\Engine\CarEngine.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\UserReportingState.cs" />
      <Compile Include="Assets\Scripts\Utils\DoorHandle.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\NullUserReportingPlatform.cs" />
      <Compile Include="Assets\Scripts\Utils\AudioUtils.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\PartStatusPanel.cs" />
      <Compile Include="Assets\Scripts\Engine\EditorTriggerController.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportList.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\Version2018_3\Screenshots\ScreenshotManager.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportAttachment.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportNamedValue.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\IUserReportingPlatform.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportMeasure.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportingClient.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\UserReportingMonitor.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReport.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\CyclicalList.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\MetricsGatheringMode.cs" />
      <Compile Include="Assets\Scripts\Manager\AssetBundlesManager.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\UnityUserReportingPlatform.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportingClientConfiguration.cs" />
      <Compile Include="Assets\Scripts\Utils\Utils.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\UnityUserReportingUpdater.cs" />
      <Compile Include="Assets\Scripts\Garage\Lift.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\FramerateMonitor.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\UnityUserReportParser.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\MainPanel.cs" />
      <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
      <Compile Include="Assets\Scripts\Engine\CarPart.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\PngHelper.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\UserReportingXRExtensions.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\AttachmentExtensions.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\LicenseLevel.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\EditorModePanel.cs" />
      <Compile Include="Assets\Scripts\UI\Menu.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportMetric.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\UserReportingPlatformType.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportEventLevel.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportPreview.cs" />
      <Compile Include="Assets\Scripts\Engine\EditorTrigger.cs" />
      <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\Version2018_3\Screenshots\PngEncoder.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\Version2018_3\Screenshots\ScreenshotRecorder.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\UserReportAppearanceHint.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\InventoryItemPanel.cs" />
      <Compile Include="Assets\Scripts\UI\Cursors.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Client\SerializableException.cs" />
      <Compile Include="Assets\Scripts\Utils\MouseOrbit.cs" />
      <Compile Include="Assets\Scripts\Manager\CameraManager.cs" />
-     <Compile Include="Assets\UserReporting\Scripts\Plugin\UnityUserReporting.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -378,6 +335,12 @@
  </Reference>
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.burst@1.4.11/Unity.Burst.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Collections.LowLevel.ILSupport">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -795,6 +758,93 @@
  </Reference>
  <Reference Include="Unity.ProGrids">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Properties.UI.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.UI.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Scenes">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Scenes.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Extensions.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.Extensions.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.BuildUtils">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Physics.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Properties.UI">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Serialization">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Serialization.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Jobs">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Deformations">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Deformations.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Properties">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.CacheServer">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Jobs.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Scenes.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Scenes.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Collections">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Physics.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.Hybrid.EndToEnd.Tests">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Hybrid.EndToEnd.Tests.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Havok.Physics.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="Havok.Physics.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Transforms.Hybrid">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="Havok.Physics">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Extensions">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Mathematics.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Transforms">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Physics">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Entities">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Serialization.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Serialization.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

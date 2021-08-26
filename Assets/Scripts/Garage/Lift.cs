@@ -9,7 +9,7 @@ public class Lift : MonoBehaviour
 {
     [SerializeField] public Transform arms;
     public float speed = 0.01f;
-    public float maxHeight = 1.22f;
+    public float maxHeight = 1.3f;
     public float minHeight;
     private GameObject carobj;
     private bool isElevated;

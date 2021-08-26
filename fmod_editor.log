@@ -7,7 +7,7 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x8000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 00000200B44959A8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0000020143C45D48 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -21,64 +21,102 @@
 [LOG] SystemI::createSound                     : filename = carmechanic(fmod)/Build/Desktop/Master.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
 [LOG] Thread::initThread                       : Init FMOD nonblocking thread (0). Affinity: 0x8000000000000003, Priority: 0xFFFF7FFC, Stack Size: 114688, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
-[LOG] SystemI::createSound                     : setdata soundi = 00000200508F7648 : node = 00000200B44ED0B0
-[LOG] SystemI::createSound                     : add node to async list : head = 000002004D2A5368.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000200508F7648
+[LOG] SystemI::createSound                     : setdata soundi = 00000201431388E8 : node = 000002014F5A58D0
+[LOG] SystemI::createSound                     : add node to async list : head = 000002004F777258.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000201431388E8
 [LOG] SystemI::createSoundInternal             :     Create name='carmechanic(fmod)/Build/Desktop/Master.bank', mode=0x02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 520128
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 4288
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000200B44ED1C0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000002014F5A59E0
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             :     Stream 0/1: name='footsteps', format=5, channels=2, frequency=48000, lengthbytes=446816, lengthpcm=1756800, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.700317.
 [LOG] Thread::initThread                       :     Init FMOD file thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFC, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000200508F7648
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000201431388E8
 [LOG] SystemI::createSound                     : filename = carmechanic(fmod)/Build/Desktop/Master.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 00000200D849CF18 : node = 000002002BD8C530
-[LOG] SystemI::createSound                     : add node to async list : head = 000002004D2A5368.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000200D849CF18
+[LOG] SystemI::createSound                     : setdata soundi = 0000020143138DF8 : node = 000002014F5A5150
+[LOG] SystemI::createSound                     : add node to async list : head = 000002004F777258.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020143138DF8
 [LOG] SystemI::createSoundInternal             :     Create name='carmechanic(fmod)/Build/Desktop/Master.bank', mode=0x02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 520128
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 4288
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000002002BD8C640
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000002014F5A5260
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             :     Stream 0/1: name='footsteps', format=5, channels=2, frequency=48000, lengthbytes=446816, lengthpcm=1756800, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.700317.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000200D849CF18
-[LOG] SoundI::release                          : footsteps (00000200508F7648)
-[LOG] SoundI::release                          :     footsteps (00000200238E3138)
-[LOG] SoundI::release                          :     footsteps (00000200D7D963E8)
-[LOG] SoundI::release                          : footsteps (00000200D849CF18)
-[LOG] SoundI::release                          :     footsteps (00000200238E1738)
-[LOG] SoundI::release                          :     footsteps (00000200D7D96598)
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020143138DF8
+[LOG] SoundI::release                          : footsteps (0000020143138DF8)
+[LOG] SoundI::release                          :     footsteps (00000200E7ECC888)
+[LOG] SoundI::release                          :     footsteps (0000020122582398)
+[LOG] SoundI::release                          : footsteps (00000201431388E8)
+[LOG] SoundI::release                          :     footsteps (0000020146E585E8)
+[LOG] SoundI::release                          :     footsteps (000001FFDE5886C8)
 [LOG] SystemI::createSound                     : filename = carmechanic(fmod)/Build/Desktop/Master.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 00000200D7D96598 : node = 00000200505681E0
-[LOG] SystemI::createSound                     : add node to async list : head = 000002004D2A5368.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000200D7D96598
+[LOG] SystemI::createSound                     : setdata soundi = 000001FFDE5886C8 : node = 0000020147A885B0
+[LOG] SystemI::createSound                     : add node to async list : head = 000002004F777258.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FFDE5886C8
 [LOG] SystemI::createSoundInternal             :     Create name='carmechanic(fmod)/Build/Desktop/Master.bank', mode=0x02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 520128
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 4288
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000200505682F0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020147A886C0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='footsteps', format=5, channels=2, frequency=48000, lengthbytes=446816, lengthpcm=1756800, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.700317.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FFDE5886C8
+[LOG] SoundI::release                          : footsteps (000001FFDE5886C8)
+[LOG] SoundI::release                          :     footsteps (00000200E7ECCF08)
+[LOG] SoundI::release                          :     footsteps (0000020122582398)
+[LOG] SystemI::createSound                     : filename = carmechanic(fmod)/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 000001FFDE588F38 : node = 0000020147A885B0
+[LOG] SystemI::createSound                     : add node to async list : head = 000002004F777258.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000001FFDE588F38
+[LOG] SystemI::createSoundInternal             :     Create name='carmechanic(fmod)/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 520128
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 4288
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000020147A886C0
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             :     Stream 0/1: name='lift', format=5, channels=1, frequency=48000, lengthbytes=72800, lengthpcm=395946, pcmblocksize=0, loopstart=18, loopend=395928, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.566406.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000200D7D96598
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000200508F7648
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000200508F7648
-[LOG] SoundI::release                          : lift (00000200D7D96598)
-[LOG] SoundI::release                          :     lift (00000200D7B8E708)
-[LOG] SoundI::release                          :     lift (00000200508F7648)
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000001FFDE588F38
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020123654228
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020123654228
+[LOG] SystemI::createSound                     : filename = carmechanic(fmod)/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000020143138C48 : node = 000002014F5A49D0
+[LOG] SystemI::createSound                     : add node to async list : head = 000002004F777258.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000020143138C48
+[LOG] SystemI::createSoundInternal             :     Create name='carmechanic(fmod)/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 520128
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 4288
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000002014F5A4AE0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='footsteps', format=5, channels=2, frequency=48000, lengthbytes=446816, lengthpcm=1756800, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.700317.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000020143138C48
+[LOG] SoundI::release                          : footsteps (0000020143138C48)
+[LOG] SoundI::release                          :     footsteps (00000201439E24A8)
+[LOG] SoundI::release                          :     footsteps (00000201236543D8)
+[LOG] SoundI::release                          : lift (000001FFDE588F38)
+[LOG] SoundI::release                          :     lift (00000201439E27E8)
+[LOG] SoundI::release                          :     lift (0000020123654228)
 [LOG] Thread::callback                         : FMOD Studio update thread finished.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
