@@ -52,33 +52,33 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\EditorEventRef.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\CreateEventPopup.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\BankRefreshWindow.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\SettingsEditor.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\EventCache.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\BoltIntegration.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\EditorUtils.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Editor\LogViewer.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioBankLoaderEditor.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\Timeline\FMODEventPlayableEditor.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioGlobalParameterTriggerEditor.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\EventBrowser.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\ParamRefDrawer.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\EditorParamRef.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\EventRefDrawer.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Editor\BankRefDrawer.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioEventEmitterEditor.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\SettingsEditor.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\ParamRefDrawer.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\EventManager.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\Timeline\FMODEventTrackEditor.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\FindAndReplace.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\BankRefreshWindow.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\CreateEventPopup.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\EventCache.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\EventBrowser.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\EditorParamRef.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioParameterTriggerEditor.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\EditorUtils.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioBankLoaderEditor.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\EventRefDrawer.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Editor\EditorBankRef.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioListenerEditor.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioEventEmitterGizmoDrawer.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioGlobalParameterTriggerEditor.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\EditorEventRef.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\Timeline\FMODEventPlayableEditor.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioEventEmitterEditor.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Editor\BankRefresher.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Editor\SetupWizard.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\EventManager.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioListenerEditor.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Editor\ListView.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\Timeline\FMODEventTrackEditor.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioParameterTriggerEditor.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioEventEmitterGizmoDrawer.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Editor\FindAndReplace.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Editor\BoltIntegration.cs" />
      <None Include="Assets\Plugins\FMOD\src\Editor\FMODUnityEditor.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -311,6 +311,15 @@
  <Reference Include="UnityEditor.UWP.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="unityplastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
+ </Reference>
+ <Reference Include="log4netPlastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
+ </Reference>
+ <Reference Include="SQLite4Unity3d">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Plastic.Newtonsoft.Json">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
  </Reference>
@@ -320,14 +329,11 @@
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.burst@1.4.11/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
- <Reference Include="log4netPlastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
  </Reference>
- <Reference Include="SQLite4Unity3d">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
- </Reference>
- <Reference Include="unityplastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
+ <Reference Include="Unity.Collections.LowLevel.ILSupport">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -685,6 +691,9 @@
  </Reference>
  <Reference Include="Unity.Timeline">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>

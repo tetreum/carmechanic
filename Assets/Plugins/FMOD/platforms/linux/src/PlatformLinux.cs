@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FMOD;
+﻿using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -36,8 +34,7 @@ namespace FMODUnity
             Settings.AddPlatformTemplate<PlatformLinux>("b7716510a1f36934c87976f3a81dbf3d");
         }
 
-        public override string DisplayName => "Linux";
-
+        public override string DisplayName { get { return "Linux"; } }
         public override void DeclareUnityMappings(Settings settings)
         {
             settings.DeclareRuntimePlatform(RuntimePlatform.LinuxPlayer, this);
@@ -51,27 +48,10 @@ namespace FMODUnity
 #endif
         }
 
-        public override string GetPluginPath(string pluginName)
-        {
-#if UNITY_2019_1_OR_NEWER
-            return string.Format("{0}/lib{1}.so", GetPluginBasePath(), pluginName);
-#else
-            if (System.IntPtr.Size == 8)
-            {
-                return string.Format("{0}/x86_64/lib{1}.so", GetPluginBasePath(), pluginName);
-            }
-            else
-            {
-                return string.Format("{0}/x86/lib{1}.so", GetPluginBasePath(), pluginName);
-            }
-#endif
-        }
-
 #if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier => Legacy.Platform.Linux;
+        public override Legacy.Platform LegacyIdentifier { get { return Legacy.Platform.Linux; } }
 
-        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
-            string suffix)
+        protected override IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix)
         {
             switch (buildTarget)
             {
@@ -88,17 +68,39 @@ namespace FMODUnity
                     break;
 #endif
                 default:
-                    throw new NotSupportedException("Unrecognised Build Target");
+                    throw new System.NotSupportedException("Unrecognised Build Target");
+
             }
         }
 #endif
-#if UNITY_EDITOR
-        public override OutputType[] ValidOutputTypes => sValidOutputTypes;
 
-        private static readonly OutputType[] sValidOutputTypes =
+        public override string GetPluginPath(string pluginName)
         {
-            new OutputType {displayName = "Pulse Audio", outputType = OUTPUTTYPE.PULSEAUDIO},
-            new OutputType {displayName = "Advanced Linux Sound Architecture", outputType = OUTPUTTYPE.ALSA}
+#if UNITY_2019_1_OR_NEWER
+            return string.Format("{0}/lib{1}.so", GetPluginBasePath(), pluginName);
+#else
+            if (System.IntPtr.Size == 8)
+            {
+                return string.Format("{0}/x86_64/lib{1}.so", GetPluginBasePath(), pluginName);
+            }
+            else
+            {
+                return string.Format("{0}/x86/lib{1}.so", GetPluginBasePath(), pluginName);
+            }
+#endif
+        }
+#if UNITY_EDITOR
+        public override OutputType[] ValidOutputTypes
+        {
+            get
+            {
+                return sValidOutputTypes;
+            }
+        }
+
+        private static OutputType[] sValidOutputTypes = {
+           new OutputType() { displayName = "Pulse Audio", outputType = FMOD.OUTPUTTYPE.PULSEAUDIO },
+           new OutputType() { displayName = "Advanced Linux Sound Architecture", outputType = FMOD.OUTPUTTYPE.ALSA },
         };
 #endif
     }
