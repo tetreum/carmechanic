@@ -5,14 +5,22 @@ public class CameraManager : MonoBehaviour
     public Camera fpCamera;
     public Camera tpCamera;
 
-    private void Start()
+    public void Start()
     {
         fpCamera.enabled = true;
+        Player.playerCamera = fpCamera;
         tpCamera.enabled = false;
     }
 
     private void Update()
     {
+        if (fpCamera.enabled)
+        {
+            Player.playerCamera = fpCamera;
+        }else
+        {
+            Player.playerCamera = tpCamera;
+        }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (fpCamera.enabled)

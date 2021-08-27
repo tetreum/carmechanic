@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
-    public Camera playerCamera;
+    public static Camera playerCamera;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 45.0f;
 
@@ -22,8 +22,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
-
-        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
