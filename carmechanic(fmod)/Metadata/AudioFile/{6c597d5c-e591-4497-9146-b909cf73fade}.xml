@@ -4,9 +4,6 @@
 		<property name="assetPath">
 			<value>footsteps.mp3</value>
 		</property>
-		<property name="isStreaming">
-			<value>true</value>
-		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>
 		</property>
