@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using UnityEngine;
 using UnityEditor;
-using System.Collections;
+using UnityEngine;
 
 namespace FMODUnityResonance
 {
@@ -24,37 +23,47 @@ namespace FMODUnityResonance
     [CanEditMultipleObjects]
     public class FmodResonanceAudioRoomEditor : Editor
     {
-        private SerializedProperty leftWall = null;
-        private SerializedProperty rightWall = null;
-        private SerializedProperty floor = null;
-        private SerializedProperty ceiling = null;
-        private SerializedProperty backWall = null;
-        private SerializedProperty frontWall = null;
-        private SerializedProperty reflectivity = null;
-        private SerializedProperty reverbGainDb = null;
-        private SerializedProperty reverbBrightness = null;
-        private SerializedProperty reverbTime = null;
-        private SerializedProperty size = null;
+        private SerializedProperty backWall;
+        private SerializedProperty ceiling;
+        private SerializedProperty floor;
+        private SerializedProperty frontWall;
+        private SerializedProperty leftWall;
+        private SerializedProperty reflectivity;
 
-        private GUIContent surfaceMaterialsLabel = new GUIContent("Surface Materials",
-          "Room surface materials to calculate the acoustic properties of the room.");
-        private GUIContent surfaceMaterialLabel = new GUIContent("Surface Material",
-          "Surface material used to calculate the acoustic properties of the room.");
-        private GUIContent reflectivityLabel = new GUIContent("Reflectivity",
-          "Adjusts what proportion of the direct sound is reflected back by each surface, after an " +
-          "appropriate delay. Reverberation is unaffected by this setting.");
-        private GUIContent reverbGainLabel = new GUIContent("Gain (dB)",
-          "Applies a gain adjustment to the reverberation in the room. The default value will leave " +
-          "reverb unaffected.");
-        private GUIContent reverbPropertiesLabel = new GUIContent("Reverb Properties",
-          "Parameters to adjust the reverb properties of the room.");
-        private GUIContent reverbBrightnessLabel = new GUIContent("Brightness",
-          "Adjusts the balance between high and low frequencies in the reverb.");
-        private GUIContent reverbTimeLabel = new GUIContent("Time",
-          "Adjusts the overall duration of the reverb by a positive scaling factor.");
-        private GUIContent sizeLabel = new GUIContent("Size", "Sets the room dimensions.");
+        private readonly GUIContent reflectivityLabel = new GUIContent("Reflectivity",
+            "Adjusts what proportion of the direct sound is reflected back by each surface, after an " +
+            "appropriate delay. Reverberation is unaffected by this setting.");
 
-        void OnEnable()
+        private SerializedProperty reverbBrightness;
+
+        private readonly GUIContent reverbBrightnessLabel = new GUIContent("Brightness",
+            "Adjusts the balance between high and low frequencies in the reverb.");
+
+        private SerializedProperty reverbGainDb;
+
+        private readonly GUIContent reverbGainLabel = new GUIContent("Gain (dB)",
+            "Applies a gain adjustment to the reverberation in the room. The default value will leave " +
+            "reverb unaffected.");
+
+        private readonly GUIContent reverbPropertiesLabel = new GUIContent("Reverb Properties",
+            "Parameters to adjust the reverb properties of the room.");
+
+        private SerializedProperty reverbTime;
+
+        private readonly GUIContent reverbTimeLabel = new GUIContent("Time",
+            "Adjusts the overall duration of the reverb by a positive scaling factor.");
+
+        private SerializedProperty rightWall;
+        private SerializedProperty size;
+        private readonly GUIContent sizeLabel = new GUIContent("Size", "Sets the room dimensions.");
+
+        private readonly GUIContent surfaceMaterialLabel = new GUIContent("Surface Material",
+            "Surface material used to calculate the acoustic properties of the room.");
+
+        private readonly GUIContent surfaceMaterialsLabel = new GUIContent("Surface Materials",
+            "Room surface materials to calculate the acoustic properties of the room.");
+
+        private void OnEnable()
         {
             leftWall = serializedObject.FindProperty("leftWall");
             rightWall = serializedObject.FindProperty("rightWall");
@@ -75,7 +84,7 @@ namespace FMODUnityResonance
             serializedObject.Update();
 
             // Add clickable script field, as would have been provided by DrawDefaultInspector()
-            MonoScript script = MonoScript.FromMonoBehaviour(target as MonoBehaviour);
+            var script = MonoScript.FromMonoBehaviour(target as MonoBehaviour);
             EditorGUI.BeginDisabledGroup(true);
             EditorGUILayout.ObjectField("Script", script, typeof(MonoScript), false);
             EditorGUI.EndDisabledGroup();
@@ -99,9 +108,9 @@ namespace FMODUnityResonance
             EditorGUILayout.LabelField(reverbPropertiesLabel);
             ++EditorGUI.indentLevel;
             EditorGUILayout.Slider(reverbGainDb, FmodResonanceAudio.minGainDb, FmodResonanceAudio.maxGainDb,
-                                   reverbGainLabel);
+                reverbGainLabel);
             EditorGUILayout.Slider(reverbBrightness, FmodResonanceAudio.minReverbBrightness,
-                                   FmodResonanceAudio.maxReverbBrightness, reverbBrightnessLabel);
+                FmodResonanceAudio.maxReverbBrightness, reverbBrightnessLabel);
             EditorGUILayout.Slider(reverbTime, 0.0f, FmodResonanceAudio.maxReverbTime, reverbTimeLabel);
             --EditorGUI.indentLevel;
 
@@ -111,8 +120,8 @@ namespace FMODUnityResonance
 
             serializedObject.ApplyModifiedProperties();
         }
-        /// @endcond
 
+        /// @endcond
         private void DrawSurfaceMaterial(SerializedProperty surfaceMaterial)
         {
             surfaceMaterialLabel.text = surfaceMaterial.displayName;
