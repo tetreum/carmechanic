@@ -83,8 +83,6 @@
      <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Utils\MouseOrbit.cs" />
-     <Compile Include="Assets\Scripts\DOTS\PrefabEntityComponent.cs" />
-     <Compile Include="Assets\Scripts\DOTS\EntitySpawnSystem.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
