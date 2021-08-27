@@ -75,48 +75,4 @@ public class Build : MonoBehaviour
 
         if (summary.result == BuildResult.Failed) Debug.Log("Build failed");
     }
-
-    [MenuItem("Build/profiling/windows")]
-    private static void BuildProfilingWindows()
-    {
-        var buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[]
-            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/profiling/win/carmechanic-profilingx86.exe";
-        buildPlayerOptions.target = BuildTarget.StandaloneWindows;
-        buildPlayerOptions.options = BuildOptions.Development;
-        buildPlayerOptions.options = BuildOptions.AllowDebugging;
-        buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
-        buildPlayerOptions.options = BuildOptions.EnableDeepProfilingSupport;
-        buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
-
-        var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
-        var summary = report.summary;
-
-        if (summary.result == BuildResult.Succeeded) Debug.Log("Build succeeded: " + summary.totalSize + " bytes");
-
-        if (summary.result == BuildResult.Failed) Debug.Log("Build failed");
-    }
-
-    [MenuItem("Build/profiling/windows64")]
-    private static void BuildProfilingWindows64()
-    {
-        var buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[]
-            {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/Game.unity"};
-        buildPlayerOptions.locationPathName = "Build/profiling/win64/carmechanic-profilingx64.exe";
-        buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
-        buildPlayerOptions.options = BuildOptions.Development;
-        buildPlayerOptions.options = BuildOptions.AllowDebugging;
-        buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
-        buildPlayerOptions.options = BuildOptions.EnableDeepProfilingSupport;
-        buildPlayerOptions.options = BuildOptions.ConnectWithProfiler;
-
-        var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
-        var summary = report.summary;
-
-        if (summary.result == BuildResult.Succeeded) Debug.Log("Build succeeded: " + summary.totalSize + " bytes");
-
-        if (summary.result == BuildResult.Failed) Debug.Log("Build failed");
-    }
 }
