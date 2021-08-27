@@ -64,4 +64,5 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) ||
             Input.GetKeyUp(KeyCode.D)) AudioManager.footsteps.stop(STOP_MODE.ALLOWFADEOUT);
     }
+    
 }
