@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using FMOD;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -38,7 +39,7 @@ namespace FMODUnity
         // A hook for custom initialization logic. RuntimeManager.Initialize calls this
         // just before calling system.Initialize.
         // Call reportResult() with the result of each FMOD call to use FMOD's error handling logic.
-        public virtual void PreInitialize(FMOD.Studio.System system, Action<RESULT, string> reportResult)
+        public virtual void PreInitialize(FMOD.Studio.System system, Action<FMOD.RESULT, string> reportResult)
         {
         }
     }
@@ -60,13 +61,20 @@ namespace FMODUnity
         // * As a key for SettingsEditor UI state
         // It should be kept stable for concrete platforms (like PlatformWindows) to support
         // settings migration in the future.
-        [SerializeField] private string identifier;
+        [SerializeField]
+        private string identifier;
 
         public string Identifier
         {
-            get => identifier;
+            get
+            {
+                return identifier;
+            }
 
-            set => identifier = value;
+            set
+            {
+                identifier = value;
+            }
         }
 
         // The display name to show for this platform in the UI.
@@ -84,20 +92,20 @@ namespace FMODUnity
 
         // The priority to use when finding a platform to support the current Unity runtime
         // platform (higher priorities are tried first).
-        public virtual float Priority => DefaultPriority;
+        public virtual float Priority { get { return DefaultPriority; } }
 
         // Determines whether this platform matches the current environment. When more than one
         // platform implements the current Unity runtime platform, FMOD for Unity will use the
         // highest-priority platform that returns true from MatchesCurrentEnvironment.
-        public virtual bool MatchesCurrentEnvironment => true;
+        public virtual bool MatchesCurrentEnvironment { get { return true; } }
 
         // Whether this platform is a fixed part of the FMOD for Unity settings, or can be
         // added/removed by the user.
-        public virtual bool IsIntrinsic => false;
+        public virtual bool IsIntrinsic { get { return false; } }
 
         // A hook for platform-specific initialization logic. RuntimeManager.Initialize calls this
         // before calling FMOD.Studio.System.create.
-        public virtual void PreSystemCreate(Action<RESULT, string> reportResult)
+        public virtual void PreSystemCreate(Action<FMOD.RESULT, string> reportResult)
         {
         }
 
@@ -124,23 +132,34 @@ namespace FMODUnity
             All = Release | Logging | Optional | AllVariants
         }
 
-        protected virtual IEnumerable<string> GetBinaryPaths(BuildTarget buildTarget, BinaryType binaryType,
-            string prefix)
+        protected virtual IEnumerable<string> GetBinaryPaths(BuildTarget buildTarget, BinaryType binaryType, string prefix)
         {
-            var assetBasePath = GetBinaryAssetBasePath();
-            var allVariants = (binaryType & BinaryType.AllVariants) == BinaryType.AllVariants;
+            string assetBasePath = GetBinaryAssetBasePath();
+            bool allVariants = (binaryType & BinaryType.AllVariants) == BinaryType.AllVariants;
 
             if ((binaryType & BinaryType.Release) == BinaryType.Release)
-                foreach (var path in GetRelativeBinaryPaths(buildTarget, allVariants, ""))
+            {
+                foreach (string path in GetRelativeBinaryPaths(buildTarget, allVariants, ""))
+                {
                     yield return string.Format("{0}/{1}/{2}", prefix, assetBasePath, path);
+                }
+            }
 
             if ((binaryType & BinaryType.Logging) == BinaryType.Logging)
-                foreach (var path in GetRelativeBinaryPaths(buildTarget, allVariants, "L"))
+            {
+                foreach (string path in GetRelativeBinaryPaths(buildTarget, allVariants, "L"))
+                {
                     yield return string.Format("{0}/{1}/{2}", prefix, assetBasePath, path);
+                }
+            }
 
             if ((binaryType & BinaryType.Optional) == BinaryType.Optional)
-                foreach (var path in GetRelativeOptionalBinaryPaths(buildTarget, allVariants))
+            {
+                foreach (string path in GetRelativeOptionalBinaryPaths(buildTarget, allVariants))
+                {
                     yield return string.Format("{0}/{1}/{2}", prefix, assetBasePath, path);
+                }
+            }
         }
 
         // Called by Settings.CanBuildTarget to get the required binaries for the current
@@ -164,15 +183,14 @@ namespace FMODUnity
             return "Plugins/FMOD/lib";
         }
 
-        protected abstract IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants,
-            string suffix);
+        protected abstract IEnumerable<string> GetRelativeBinaryPaths(BuildTarget buildTarget, bool allVariants, string suffix);
 
         protected virtual IEnumerable<string> GetRelativeOptionalBinaryPaths(BuildTarget buildTarget, bool allVariants)
         {
             yield break;
         }
 
-        public virtual bool IsFMODStaticallyLinked => false;
+        public virtual bool IsFMODStaticallyLinked { get { return false; } }
 
         public virtual bool SupportsAdditionalCPP(BuildTarget target)
         {
@@ -199,33 +217,39 @@ namespace FMODUnity
         }
 
         // Loads static and dynamic FMOD plugins for this platform.
-        public virtual void LoadPlugins(FMOD.System coreSystem, Action<RESULT, string> reportResult)
+        public virtual void LoadPlugins(FMOD.System coreSystem, Action<FMOD.RESULT, string> reportResult)
         {
             LoadDynamicPlugins(coreSystem, reportResult);
             LoadStaticPlugins(coreSystem, reportResult);
         }
 
         // Loads dynamic FMOD plugins for this platform.
-        public virtual void LoadDynamicPlugins(FMOD.System coreSystem, Action<RESULT, string> reportResult)
+        public virtual void LoadDynamicPlugins(FMOD.System coreSystem, Action<FMOD.RESULT, string> reportResult)
         {
-            var pluginNames = Plugins;
+            List<string> pluginNames = Plugins;
 
-            if (pluginNames == null) return;
-
-            foreach (var pluginName in pluginNames)
+            if (pluginNames == null)
             {
-                if (string.IsNullOrEmpty(pluginName)) continue;
+                return;
+            }
 
-                var pluginPath = GetPluginPath(pluginName);
+            foreach (string pluginName in pluginNames)
+            {
+                if (string.IsNullOrEmpty(pluginName))
+                {
+                    continue;
+                }
+
+                string pluginPath = GetPluginPath(pluginName);
                 uint handle;
 
-                var result = coreSystem.loadPlugin(pluginPath, out handle);
+                FMOD.RESULT result = coreSystem.loadPlugin(pluginPath, out handle);
 
 #if UNITY_64 || UNITY_EDITOR_64
                 // Add a "64" suffix and try again
-                if (result == RESULT.ERR_FILE_BAD || result == RESULT.ERR_FILE_NOTFOUND)
+                if (result == FMOD.RESULT.ERR_FILE_BAD || result == FMOD.RESULT.ERR_FILE_NOTFOUND)
                 {
-                    var pluginPath64 = GetPluginPath(pluginName + "64");
+                    string pluginPath64 = GetPluginPath(pluginName + "64");
                     result = coreSystem.loadPlugin(pluginPath64, out handle);
                 }
 #endif
@@ -235,7 +259,7 @@ namespace FMODUnity
         }
 
         // Loads static FMOD plugins for this platform.
-        public virtual void LoadStaticPlugins(FMOD.System coreSystem, Action<RESULT, string> reportResult)
+        public virtual void LoadStaticPlugins(FMOD.System coreSystem, Action<FMOD.RESULT, string> reportResult)
         {
             if (StaticPlugins.Count > 0)
             {
@@ -308,33 +332,52 @@ namespace FMODUnity
         // Initializes this platform's properties to their default values.
         public virtual void InitializeProperties()
         {
-            if (!IsIntrinsic) ParentIdentifier = PlatformDefault.ConstIdentifier;
+            if (!IsIntrinsic)
+            {
+                ParentIdentifier = PlatformDefault.ConstIdentifier;
+            }
         }
 
         // Ensures that this platform's properties are valid after loading from file.
         public virtual void EnsurePropertiesAreValid()
         {
             if (!IsIntrinsic && string.IsNullOrEmpty(ParentIdentifier))
+            {
                 ParentIdentifier = PlatformDefault.ConstIdentifier;
+            }
         }
 
-        [SerializeField] private string parentIdentifier;
+        [SerializeField]
+        private string parentIdentifier;
 
         public string ParentIdentifier
         {
-            get => parentIdentifier;
+            get
+            {
+                return parentIdentifier;
+            }
 
-            set => parentIdentifier = value;
+            set
+            {
+                parentIdentifier = value;
+            }
         }
 
 #if UNITY_EDITOR
-        [SerializeField] private float displaySortOrder;
+        [SerializeField]
+        private float displaySortOrder;
 
         public float DisplaySortOrder
         {
-            get => displaySortOrder;
+            get
+            {
+                return displaySortOrder;
+            }
 
-            set => displaySortOrder = value;
+            set
+            {
+                displaySortOrder = value;
+            }
         }
 #endif
 
@@ -365,8 +408,8 @@ namespace FMODUnity
         // A property value that can be inherited from the parent or overridden.
         public class Property<T>
         {
-            public bool HasValue;
             public T Value;
+            public bool HasValue;
         }
 
         // These stub classes are needed because Unity can't serialize generic classes
@@ -381,7 +424,7 @@ namespace FMODUnity
         }
 
         [Serializable]
-        public class PropertySpeakerMode : Property<SPEAKERMODE>
+        public class PropertySpeakerMode : Property<FMOD.SPEAKERMODE>
         {
         }
 
@@ -430,16 +473,24 @@ namespace FMODUnity
             // Get the (possibly inherited) value of the property for the given platform.
             public T Get(Platform platform)
             {
-                for (var current = platform; current != null; current = current.Parent)
+                for (Platform current = platform; current != null; current = current.Parent)
+                {
                     if (current.Active)
                     {
-                        var property = Getter(current.Properties);
+                        Property<T> property = Getter(current.Properties);
 
-                        if (property.HasValue) return property.Value;
+                        if (property.HasValue)
+                        {
+                            return property.Value;
+                        }
                     }
+                }
 
 #if UNITY_EDITOR
-                if (platform is PlatformPlayInEditor) return Get(Settings.Instance.CurrentEditorPlatform);
+                if (platform is PlatformPlayInEditor)
+                {
+                    return Get(Settings.Instance.CurrentEditorPlatform);
+                }
 #endif
 
                 return DefaultValue;
@@ -449,7 +500,7 @@ namespace FMODUnity
             // platform's parent.
             public void Set(Platform platform, T value)
             {
-                var property = Getter(platform.Properties);
+                Property<T> property = Getter(platform.Properties);
 
                 property.Value = value;
                 property.HasValue = true;
@@ -483,102 +534,116 @@ namespace FMODUnity
             public PropertyCallbackHandler CallbackHandler = new PropertyCallbackHandler();
         }
 
-        [SerializeField] private bool active;
+        [SerializeField]
+        private bool active = false;
 
         // Whether this platform is active in the settings UI.
-        public bool Active => active;
+        public bool Active { get { return active; } }
 
         // Whether this platform has any properties that are not inherited from the parent.
-        public bool HasAnyOverriddenProperties =>
-            active &&
-            (
-                Properties.LiveUpdate.HasValue
-                || Properties.LiveUpdatePort.HasValue
-                || Properties.Overlay.HasValue
-                || Properties.Logging.HasValue
-                || Properties.SampleRate.HasValue
-                || Properties.BuildDirectory.HasValue
-                || Properties.SpeakerMode.HasValue
-                || Properties.VirtualChannelCount.HasValue
-                || Properties.RealChannelCount.HasValue
-                || Properties.DSPBufferLength.HasValue
-                || Properties.DSPBufferCount.HasValue
-                || Properties.Plugins.HasValue
-                || Properties.StaticPlugins.HasValue
-            );
+        public bool HasAnyOverriddenProperties
+        {
+            get
+            {
+                return active &&
+                    (
+                        Properties.LiveUpdate.HasValue
+                        || Properties.LiveUpdatePort.HasValue
+                        || Properties.Overlay.HasValue
+                        || Properties.Logging.HasValue
+                        || Properties.SampleRate.HasValue
+                        || Properties.BuildDirectory.HasValue
+                        || Properties.SpeakerMode.HasValue
+                        || Properties.VirtualChannelCount.HasValue
+                        || Properties.RealChannelCount.HasValue
+                        || Properties.DSPBufferLength.HasValue
+                        || Properties.DSPBufferCount.HasValue
+                        || Properties.Plugins.HasValue
+                        || Properties.StaticPlugins.HasValue
+                    );
+            }
+        }
 
-        [SerializeField] protected PropertyStorage Properties = new PropertyStorage();
+        [SerializeField]
+        protected PropertyStorage Properties = new PropertyStorage();
 
         // These accessors provide (possibly inherited) property values.
-        public TriStateBool LiveUpdate => PropertyAccessors.LiveUpdate.Get(this);
-        public int LiveUpdatePort => PropertyAccessors.LiveUpdatePort.Get(this);
-        public TriStateBool Overlay => PropertyAccessors.Overlay.Get(this);
-        public TriStateBool Logging => PropertyAccessors.Logging.Get(this);
-        public int SampleRate => PropertyAccessors.SampleRate.Get(this);
-        public string BuildDirectory => PropertyAccessors.BuildDirectory.Get(this);
-        public SPEAKERMODE SpeakerMode => PropertyAccessors.SpeakerMode.Get(this);
-        public int VirtualChannelCount => PropertyAccessors.VirtualChannelCount.Get(this);
-        public int RealChannelCount => PropertyAccessors.RealChannelCount.Get(this);
-        public int DSPBufferLength => PropertyAccessors.DSPBufferLength.Get(this);
-        public int DSPBufferCount => PropertyAccessors.DSPBufferCount.Get(this);
-        public List<string> Plugins => PropertyAccessors.Plugins.Get(this);
-        public List<string> StaticPlugins => PropertyAccessors.StaticPlugins.Get(this);
-        public PlatformCallbackHandler CallbackHandler => PropertyAccessors.CallbackHandler.Get(this);
+        public TriStateBool LiveUpdate { get { return PropertyAccessors.LiveUpdate.Get(this); } }
+        public int LiveUpdatePort { get { return PropertyAccessors.LiveUpdatePort.Get(this); } }
+        public TriStateBool Overlay { get { return PropertyAccessors.Overlay.Get(this); } }
+        public TriStateBool Logging { get { return PropertyAccessors.Logging.Get(this); } }
+        public int SampleRate { get { return PropertyAccessors.SampleRate.Get(this); } }
+        public string BuildDirectory { get { return PropertyAccessors.BuildDirectory.Get(this); } }
+        public FMOD.SPEAKERMODE SpeakerMode { get { return PropertyAccessors.SpeakerMode.Get(this); } }
+        public int VirtualChannelCount { get { return PropertyAccessors.VirtualChannelCount.Get(this); } }
+        public int RealChannelCount { get { return PropertyAccessors.RealChannelCount.Get(this); } }
+        public int DSPBufferLength { get { return PropertyAccessors.DSPBufferLength.Get(this); } }
+        public int DSPBufferCount { get { return PropertyAccessors.DSPBufferCount.Get(this); } }
+        public List<string> Plugins { get { return PropertyAccessors.Plugins.Get(this); } }
+        public List<string> StaticPlugins { get { return PropertyAccessors.StaticPlugins.Get(this); } }
+        public PlatformCallbackHandler CallbackHandler { get { return PropertyAccessors.CallbackHandler.Get(this); } }
 
         // These accessors provide full access to properties.
         public static class PropertyAccessors
         {
             public static readonly PropertyAccessor<TriStateBool> LiveUpdate
-                = new PropertyAccessor<TriStateBool>(properties => properties.LiveUpdate, TriStateBool.Disabled);
+                    = new PropertyAccessor<TriStateBool>(properties => properties.LiveUpdate, TriStateBool.Disabled);
 
             public static readonly PropertyAccessor<int> LiveUpdatePort
-                = new PropertyAccessor<int>(properties => properties.LiveUpdatePort, 9264);
+                    = new PropertyAccessor<int>(properties => properties.LiveUpdatePort, 9264);
 
             public static readonly PropertyAccessor<TriStateBool> Overlay
-                = new PropertyAccessor<TriStateBool>(properties => properties.Overlay, TriStateBool.Disabled);
+                    = new PropertyAccessor<TriStateBool>(properties => properties.Overlay, TriStateBool.Disabled);
 
             public static readonly PropertyAccessor<TriStateBool> Logging
-                = new PropertyAccessor<TriStateBool>(properties => properties.Logging, TriStateBool.Disabled);
+                    = new PropertyAccessor<TriStateBool>(properties => properties.Logging, TriStateBool.Disabled);
 
             public static readonly PropertyAccessor<int> SampleRate
-                = new PropertyAccessor<int>(properties => properties.SampleRate, 0);
+                    = new PropertyAccessor<int>(properties => properties.SampleRate, 0);
 
             public static readonly PropertyAccessor<string> BuildDirectory
-                = new PropertyAccessor<string>(properties => properties.BuildDirectory, "Desktop");
+                    = new PropertyAccessor<string>(properties => properties.BuildDirectory, "Desktop");
 
-            public static readonly PropertyAccessor<SPEAKERMODE> SpeakerMode
-                = new PropertyAccessor<SPEAKERMODE>(properties => properties.SpeakerMode, SPEAKERMODE.STEREO);
+            public static readonly PropertyAccessor<FMOD.SPEAKERMODE> SpeakerMode
+                    = new PropertyAccessor<FMOD.SPEAKERMODE>(properties => properties.SpeakerMode, FMOD.SPEAKERMODE.STEREO);
 
             public static readonly PropertyAccessor<int> VirtualChannelCount
-                = new PropertyAccessor<int>(properties => properties.VirtualChannelCount, 128);
+                    = new PropertyAccessor<int>(properties => properties.VirtualChannelCount, 128);
 
             public static readonly PropertyAccessor<int> RealChannelCount
-                = new PropertyAccessor<int>(properties => properties.RealChannelCount, 32);
+                    = new PropertyAccessor<int>(properties => properties.RealChannelCount, 32);
 
             public static readonly PropertyAccessor<int> DSPBufferLength
-                = new PropertyAccessor<int>(properties => properties.DSPBufferLength, 0);
+                    = new PropertyAccessor<int>(properties => properties.DSPBufferLength, 0);
 
             public static readonly PropertyAccessor<int> DSPBufferCount
-                = new PropertyAccessor<int>(properties => properties.DSPBufferCount, 0);
+                    = new PropertyAccessor<int>(properties => properties.DSPBufferCount, 0);
 
             public static readonly PropertyAccessor<List<string>> Plugins
-                = new PropertyAccessor<List<string>>(properties => properties.Plugins, null);
+                    = new PropertyAccessor<List<string>>(properties => properties.Plugins, null);
 
             public static readonly PropertyAccessor<List<string>> StaticPlugins
-                = new PropertyAccessor<List<string>>(properties => properties.StaticPlugins, null);
+                    = new PropertyAccessor<List<string>>(properties => properties.StaticPlugins, null);
 
             public static readonly PropertyAccessor<PlatformCallbackHandler> CallbackHandler
-                = new PropertyAccessor<PlatformCallbackHandler>(properties => properties.CallbackHandler, null);
+                    = new PropertyAccessor<PlatformCallbackHandler>(properties => properties.CallbackHandler, null);
         }
 
 #if UNITY_EDITOR
         // The parent platform from which this platform inherits its property values.
-        public Platform Parent => ParentIdentifier != null ? Settings.Instance.FindPlatform(ParentIdentifier) : null;
+        public Platform Parent
+        {
+            get
+            {
+                return (ParentIdentifier != null) ? Settings.Instance.FindPlatform(ParentIdentifier) : null;
+            }
+        }
 
-        [SerializeField] private List<string> childIdentifiers = new List<string>();
+        [SerializeField]
+        private List<string> childIdentifiers = new List<string>();
 
         // The platforms which inherit their property values from this platform.
-        public List<string> ChildIdentifiers => childIdentifiers;
+        public List<string> ChildIdentifiers { get { return childIdentifiers; } }
 #else
         // The parent platform from which this platform inherits its property values.
         [NonSerialized]
@@ -590,55 +655,71 @@ namespace FMODUnity
         public bool InheritsFrom(Platform platform)
         {
             if (platform == this)
+            {
                 return true;
-            if (Parent != null)
+            }
+            else if (Parent != null)
+            {
                 return Parent.InheritsFrom(platform);
-            return false;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        [SerializeField] public string outputType;
+        [SerializeField]
+        public string outputType;
 
-        public OUTPUTTYPE GetOutputType()
+        public FMOD.OUTPUTTYPE GetOutputType()
         {
-            if (Enum.IsDefined(typeof(OUTPUTTYPE), outputType))
-                return (OUTPUTTYPE) Enum.Parse(typeof(OUTPUTTYPE), outputType);
-            return OUTPUTTYPE.AUTODETECT;
+            if (Enum.IsDefined(typeof(FMOD.OUTPUTTYPE), outputType))
+            {
+                return (FMOD.OUTPUTTYPE)Enum.Parse(typeof(FMOD.OUTPUTTYPE), outputType);
+            }
+            return FMOD.OUTPUTTYPE.AUTODETECT;
         }
 #if UNITY_EDITOR
         public struct OutputType
         {
             public string displayName;
-            public OUTPUTTYPE outputType;
+            public FMOD.OUTPUTTYPE outputType;
         }
 
         public abstract OutputType[] ValidOutputTypes { get; }
 
-        public virtual int CoreCount => 0;
+        public virtual int CoreCount { get { return 0; } }
 
         public const int MaximumCoreCount = 16;
 #endif
 
-        public virtual List<ThreadAffinityGroup> DefaultThreadAffinities => StaticThreadAffinities;
+        public virtual List<ThreadAffinityGroup> DefaultThreadAffinities { get { return StaticThreadAffinities; } }
 
-        private static readonly List<ThreadAffinityGroup> StaticThreadAffinities = new List<ThreadAffinityGroup>();
+        private static List<ThreadAffinityGroup> StaticThreadAffinities = new List<ThreadAffinityGroup>();
 
         [Serializable]
         public class PropertyThreadAffinityList : Property<List<ThreadAffinityGroup>>
         {
         }
 
-        [SerializeField] private PropertyThreadAffinityList threadAffinities = new PropertyThreadAffinityList();
+        [SerializeField]
+        private PropertyThreadAffinityList threadAffinities = new PropertyThreadAffinityList();
 
         public IEnumerable<ThreadAffinityGroup> ThreadAffinities
         {
             get
             {
                 if (threadAffinities.HasValue)
+                {
                     return threadAffinities.Value;
-                return DefaultThreadAffinities;
+                }
+                else
+                {
+                    return DefaultThreadAffinities;
+                }
             }
         }
 
-        public PropertyThreadAffinityList ThreadAffinitiesProperty => threadAffinities;
+        public PropertyThreadAffinityList ThreadAffinitiesProperty { get { return threadAffinities; } }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
-using FMOD.Studio;
 using UnityEngine;
 
 namespace FMODUnity
@@ -9,30 +7,30 @@ namespace FMODUnity
     [AddComponentMenu("FMOD Studio/FMOD Studio Event Emitter")]
     public class StudioEventEmitter : EventHandler
     {
-        private const string SnapshotString = "snapshot";
-
-        [EventRef] public string Event = "";
-
+        [EventRef]
+        public string Event = "";
         public EmitterGameEvent PlayEvent = EmitterGameEvent.None;
         public EmitterGameEvent StopEvent = EmitterGameEvent.None;
         public bool AllowFadeout = true;
-        public bool TriggerOnce;
-        public bool Preload;
+        public bool TriggerOnce = false;
+        public bool Preload = false;
         public ParamRef[] Params = new ParamRef[0];
-        public bool OverrideAttenuation;
+        public bool OverrideAttenuation = false;
         public float OverrideMinDistance = -1.0f;
         public float OverrideMaxDistance = -1.0f;
-        private readonly List<ParamRef> cachedParams = new List<ParamRef>();
 
-        protected EventDescription eventDescription;
+        protected FMOD.Studio.EventDescription eventDescription;
+        public  FMOD.Studio.EventDescription EventDescription { get { return eventDescription; } }
 
-        private bool hasTriggered;
+        protected FMOD.Studio.EventInstance instance;
+        public  FMOD.Studio.EventInstance EventInstance { get { return instance; } }
 
-        protected EventInstance instance;
-        private bool isOneshot;
-        private bool isQuitting;
-        public EventDescription EventDescription => eventDescription;
-        public EventInstance EventInstance => instance;
+        private bool hasTriggered = false;
+        private bool isQuitting = false;
+        private bool isOneshot = false;
+        private List<ParamRef> cachedParams = new List<ParamRef>();
+
+        private const string SnapshotString = "snapshot";
 
         public bool IsActive { get; private set; }
 
@@ -40,9 +38,15 @@ namespace FMODUnity
         {
             get
             {
-                if (OverrideAttenuation) return OverrideMaxDistance;
+                if (OverrideAttenuation)
+                {
+                    return OverrideMaxDistance;
+                }
 
-                if (!eventDescription.isValid()) Lookup();
+                if (!eventDescription.isValid())
+                {
+                    Lookup();
+                }
 
                 float maxDistance;
                 eventDescription.getMaximumDistance(out maxDistance);
@@ -50,7 +54,7 @@ namespace FMODUnity
             }
         }
 
-        private void Start()
+        void Start() 
         {
             RuntimeUtils.EnforceLibraryOrder();
             if (Preload)
@@ -58,23 +62,27 @@ namespace FMODUnity
                 Lookup();
                 eventDescription.loadSampleData();
                 RuntimeManager.StudioSystem.update();
-                LOADING_STATE loadingState;
+                FMOD.Studio.LOADING_STATE loadingState;
                 eventDescription.getSampleLoadingState(out loadingState);
-                while (loadingState == LOADING_STATE.LOADING)
+                while(loadingState == FMOD.Studio.LOADING_STATE.LOADING)
                 {
-#if WINDOWS_UWP
+                    #if WINDOWS_UWP
                     System.Threading.Tasks.Task.Delay(1).Wait();
-#else
-                    Thread.Sleep(1);
-#endif
+                    #else
+                    System.Threading.Thread.Sleep(1);
+                    #endif
                     eventDescription.getSampleLoadingState(out loadingState);
                 }
             }
-
             HandleGameEvent(EmitterGameEvent.ObjectStart);
         }
 
-        private void OnDestroy()
+        void OnApplicationQuit()
+        {
+            isQuitting = true;
+        }
+
+        void OnDestroy()
         {
             if (!isQuitting)
             {
@@ -92,46 +100,63 @@ namespace FMODUnity
 
                 RuntimeManager.DeregisterActiveEmitter(this);
 
-                if (Preload) eventDescription.unloadSampleData();
+                if (Preload)
+                {
+                    eventDescription.unloadSampleData();
+                }
             }
-        }
-
-        private void OnApplicationQuit()
-        {
-            isQuitting = true;
         }
 
         protected override void HandleGameEvent(EmitterGameEvent gameEvent)
         {
-            if (PlayEvent == gameEvent) Play();
-            if (StopEvent == gameEvent) Stop();
+            if (PlayEvent == gameEvent)
+            {
+                Play();
+            }
+            if (StopEvent == gameEvent)
+            {
+                Stop();
+            }
         }
 
-        private void Lookup()
+        void Lookup()
         {
             eventDescription = RuntimeManager.GetEventDescription(Event);
 
             if (eventDescription.isValid())
-                for (var i = 0; i < Params.Length; i++)
+            {
+                for (int i = 0; i < Params.Length; i++)
                 {
-                    PARAMETER_DESCRIPTION param;
+                    FMOD.Studio.PARAMETER_DESCRIPTION param;
                     eventDescription.getParameterDescriptionByName(Params[i].Name, out param);
                     Params[i].ID = param.id;
                 }
+            }
         }
 
         public void Play()
         {
-            if (TriggerOnce && hasTriggered) return;
+            if (TriggerOnce && hasTriggered)
+            {
+                return;
+            }
 
-            if (string.IsNullOrEmpty(Event)) return;
+            if (string.IsNullOrEmpty(Event))
+            {
+                return;
+            }
 
             cachedParams.Clear();
 
-            if (!eventDescription.isValid()) Lookup();
+            if (!eventDescription.isValid())
+            {
+                Lookup();
+            }
 
             if (!Event.StartsWith(SnapshotString, StringComparison.CurrentCultureIgnoreCase))
+            {
                 eventDescription.isOneshot(out isOneshot);
+            }
 
             bool is3D;
             eventDescription.is3D(out is3D);
@@ -148,10 +173,13 @@ namespace FMODUnity
                 PlayInstance();
             }
         }
-
+        
         public void PlayInstance()
         {
-            if (!instance.isValid()) instance.clearHandle();
+            if (!instance.isValid())
+            {
+                instance.clearHandle();
+            }
 
             // Let previous oneshot instances play out
             if (isOneshot && instance.isValid())
@@ -171,16 +199,16 @@ namespace FMODUnity
                 if (is3D)
                 {
                     var transform = GetComponent<Transform>();
-#if UNITY_PHYSICS_EXIST || !UNITY_2019_1_OR_NEWER
+                    #if UNITY_PHYSICS_EXIST || !UNITY_2019_1_OR_NEWER
                     if (GetComponent<Rigidbody>())
                     {
-                        var rigidBody = GetComponent<Rigidbody>();
+                        Rigidbody rigidBody = GetComponent<Rigidbody>();
                         instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject, rigidBody));
                         RuntimeManager.AttachInstanceToGameObject(instance, transform, rigidBody);
                     }
                     else
-#endif
-#if UNITY_PHYSICS2D_EXIST || !UNITY_2019_1_OR_NEWER
+                    #endif
+                    #if UNITY_PHYSICS2D_EXIST || !UNITY_2019_1_OR_NEWER
                     if (GetComponent<Rigidbody2D>())
                     {
                         var rigidBody2D = GetComponent<Rigidbody2D>();
@@ -188,22 +216,28 @@ namespace FMODUnity
                         RuntimeManager.AttachInstanceToGameObject(instance, transform, rigidBody2D);
                     }
                     else
-#endif
+                    #endif
                     {
-                        instance.set3DAttributes(gameObject.To3DAttributes());
+                        instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
                         RuntimeManager.AttachInstanceToGameObject(instance, transform);
                     }
                 }
             }
 
-            foreach (var param in Params) instance.setParameterByID(param.ID, param.Value);
+            foreach (var param in Params)
+            {
+                instance.setParameterByID(param.ID, param.Value);
+            }
 
-            foreach (var cachedParam in cachedParams) instance.setParameterByID(cachedParam.ID, cachedParam.Value);
+            foreach (var cachedParam in cachedParams)
+            {
+                instance.setParameterByID(cachedParam.ID, cachedParam.Value);
+            }
 
             if (is3D && OverrideAttenuation)
             {
-                instance.setProperty(EVENT_PROPERTY.MINIMUM_DISTANCE, OverrideMinDistance);
-                instance.setProperty(EVENT_PROPERTY.MAXIMUM_DISTANCE, OverrideMaxDistance);
+                instance.setProperty(FMOD.Studio.EVENT_PROPERTY.MINIMUM_DISTANCE, OverrideMinDistance);
+                instance.setProperty(FMOD.Studio.EVENT_PROPERTY.MAXIMUM_DISTANCE, OverrideMaxDistance);
             }
 
             instance.start();
@@ -221,7 +255,10 @@ namespace FMODUnity
 
         public void StopInstance()
         {
-            if (TriggerOnce && hasTriggered) RuntimeManager.DeregisterActiveEmitter(this);
+            if (TriggerOnce && hasTriggered)
+            {
+                RuntimeManager.DeregisterActiveEmitter(this);
+            }
 
             if (instance.isValid())
             {
@@ -235,11 +272,11 @@ namespace FMODUnity
         {
             if (Settings.Instance.StopEventsOutsideMaxDistance && IsActive)
             {
-                var cachedParam = cachedParams.Find(x => x.Name == name);
+                ParamRef cachedParam = cachedParams.Find(x => x.Name == name);
 
                 if (cachedParam == null)
                 {
-                    PARAMETER_DESCRIPTION paramDesc;
+                    FMOD.Studio.PARAMETER_DESCRIPTION paramDesc;
                     eventDescription.getParameterDescriptionByName(name, out paramDesc);
 
                     cachedParam = new ParamRef();
@@ -251,18 +288,21 @@ namespace FMODUnity
                 cachedParam.Value = value;
             }
 
-            if (instance.isValid()) instance.setParameterByName(name, value, ignoreseekspeed);
+            if (instance.isValid())
+            {
+                instance.setParameterByName(name, value, ignoreseekspeed);
+            }
         }
 
-        public void SetParameter(PARAMETER_ID id, float value, bool ignoreseekspeed = false)
+        public void SetParameter(FMOD.Studio.PARAMETER_ID id, float value, bool ignoreseekspeed = false)
         {
             if (Settings.Instance.StopEventsOutsideMaxDistance && IsActive)
             {
-                var cachedParam = cachedParams.Find(x => x.ID.Equals(id));
+                ParamRef cachedParam = cachedParams.Find(x => x.ID.Equals(id));
 
                 if (cachedParam == null)
                 {
-                    PARAMETER_DESCRIPTION paramDesc;
+                    FMOD.Studio.PARAMETER_DESCRIPTION paramDesc;
                     eventDescription.getParameterDescriptionByID(id, out paramDesc);
 
                     cachedParam = new ParamRef();
@@ -274,18 +314,20 @@ namespace FMODUnity
                 cachedParam.Value = value;
             }
 
-            if (instance.isValid()) instance.setParameterByID(id, value, ignoreseekspeed);
+            if (instance.isValid())
+            {
+                instance.setParameterByID(id, value, ignoreseekspeed);
+            }
         }
 
         public bool IsPlaying()
         {
             if (instance.isValid())
             {
-                PLAYBACK_STATE playbackState;
+                FMOD.Studio.PLAYBACK_STATE playbackState;
                 instance.getPlaybackState(out playbackState);
-                return playbackState != PLAYBACK_STATE.STOPPED;
+                return (playbackState != FMOD.Studio.PLAYBACK_STATE.STOPPED);
             }
-
             return false;
         }
     }

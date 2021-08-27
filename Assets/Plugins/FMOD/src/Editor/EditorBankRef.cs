@@ -1,35 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace FMODUnity
 {
     public class EditorBankRef : ScriptableObject
     {
-        [SerializeField] public string Path;
-
-        [SerializeField] public string Name;
-
-        [SerializeField] public string StudioPath;
-
-        [SerializeField] private long lastModified;
-
-        [SerializeField] public List<NameValuePair> FileSizes;
-
-        public bool Exists;
-
-        public DateTime LastModified
-        {
-            get => new DateTime(lastModified);
-            set => lastModified = value.Ticks;
-        }
-
         public static string CalculateName(string filePath, string basePath)
         {
-            var relativePath = filePath.Substring(basePath.Length + 1);
-            var extension = System.IO.Path.GetExtension(relativePath);
+            string relativePath = filePath.Substring(basePath.Length + 1);
+            string extension = System.IO.Path.GetExtension(relativePath);
 
-            var name = relativePath.Substring(0, relativePath.Length - extension.Length);
+            string name = relativePath.Substring(0, relativePath.Length - extension.Length);
             name = RuntimeUtils.GetCommonPlatformPath(name);
 
             return name;
@@ -39,7 +20,7 @@ namespace FMODUnity
         {
             Path = RuntimeUtils.GetCommonPlatformPath(filePath);
             Name = CalculateName(filePath, basePath);
-            name = "bank:/" + Name + System.IO.Path.GetExtension(filePath);
+            base.name = "bank:/" + Name + System.IO.Path.GetExtension(filePath);
         }
 
         public void SetStudioPath(string studioPath)
@@ -52,7 +33,6 @@ namespace FMODUnity
                 studioPath = studioPath.Substring(0, studioPath.LastIndexOf("/") + 1);
                 studioPath += stringCmp;
             }
-
             StudioPath = studioPath;
         }
 
@@ -68,5 +48,27 @@ namespace FMODUnity
                 Value = value;
             }
         }
+
+        [SerializeField]
+        public string Path;
+
+        [SerializeField]
+        public string Name;
+
+        [SerializeField]
+        public string StudioPath;
+
+        [SerializeField]
+        Int64 lastModified;
+        public DateTime LastModified
+        {
+            get { return new DateTime(lastModified); }
+            set { lastModified = value.Ticks; }
+        }
+
+        [SerializeField]
+        public List<NameValuePair> FileSizes;
+
+        public bool Exists;
     }
 }

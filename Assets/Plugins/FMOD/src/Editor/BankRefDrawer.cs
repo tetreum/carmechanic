@@ -4,28 +4,30 @@ using UnityEngine;
 namespace FMODUnity
 {
     [CustomPropertyDrawer(typeof(BankRefAttribute))]
-    internal class BankRefDrawer : PropertyDrawer
+    class BankRefDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var browseIcon = EditorGUIUtility.Load("FMOD/SearchIconBlack.png") as Texture;
-
-            var pathProperty = property;
+            Texture browseIcon = EditorGUIUtility.Load("FMOD/SearchIconBlack.png") as Texture;
+            
+            SerializedProperty pathProperty = property;
 
             EditorGUI.BeginProperty(position, label, property);
 
-            var e = Event.current;
+            Event e = Event.current;
             if (e.type == EventType.DragPerform && position.Contains(e.mousePosition))
+            {
                 if (DragAndDrop.objectReferences.Length > 0 &&
                     DragAndDrop.objectReferences[0] != null &&
                     DragAndDrop.objectReferences[0].GetType() == typeof(EditorBankRef))
                 {
-                    pathProperty.stringValue = ((EditorBankRef) DragAndDrop.objectReferences[0]).Name;
+                    pathProperty.stringValue = ((EditorBankRef)DragAndDrop.objectReferences[0]).Name;
 
                     e.Use();
                 }
-
+            }
             if (e.type == EventType.DragUpdated && position.Contains(e.mousePosition))
+            {
                 if (DragAndDrop.objectReferences.Length > 0 &&
                     DragAndDrop.objectReferences[0] != null &&
                     DragAndDrop.objectReferences[0].GetType() == typeof(EditorBankRef))
@@ -34,17 +36,17 @@ namespace FMODUnity
                     DragAndDrop.AcceptDrag();
                     e.Use();
                 }
+            }
 
-            var baseHeight = GUI.skin.textField.CalcSize(new GUIContent()).y;
+            float baseHeight = GUI.skin.textField.CalcSize(new GUIContent()).y;
 
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
             var buttonStyle = new GUIStyle(GUI.skin.button);
             buttonStyle.padding.top = buttonStyle.padding.bottom = 1;
 
-            var searchRect = new Rect(position.x + position.width - browseIcon.width - 15, position.y,
-                browseIcon.width + 10, baseHeight);
-            var pathRect = new Rect(position.x, position.y, searchRect.x - position.x - 5, baseHeight);
+            Rect searchRect = new Rect(position.x + position.width - browseIcon.width - 15, position.y, browseIcon.width + 10, baseHeight);
+            Rect pathRect = new Rect(position.x, position.y, searchRect.x - position.x - 5, baseHeight);
 
             EditorGUI.PropertyField(pathRect, pathProperty, GUIContent.none);
             if (GUI.Button(searchRect, new GUIContent(browseIcon, "Select FMOD Bank"), buttonStyle))
@@ -60,5 +62,5 @@ namespace FMODUnity
 
             EditorGUI.EndProperty();
         }
-    }
+    }    
 }

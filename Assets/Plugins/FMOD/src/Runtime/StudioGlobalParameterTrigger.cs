@@ -1,46 +1,50 @@
-﻿using FMOD;
-using FMOD.Studio;
+﻿using System;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace FMODUnity
 {
     [AddComponentMenu("FMOD Studio/FMOD Studio Global Parameter Trigger")]
-    public class StudioGlobalParameterTrigger : EventHandler
+    public class StudioGlobalParameterTrigger: EventHandler
     {
-        [ParamRef] public string parameter;
-
+        [ParamRef]
+        public string parameter;
         public EmitterGameEvent TriggerEvent;
         public float value;
 
-        private PARAMETER_DESCRIPTION parameterDescription;
-        public PARAMETER_DESCRIPTION ParameterDesctription => parameterDescription;
+        private FMOD.Studio.PARAMETER_DESCRIPTION parameterDescription;
+        public FMOD.Studio.PARAMETER_DESCRIPTION ParameterDesctription { get { return parameterDescription; } }
 
-        private void Awake()
+        FMOD.RESULT Lookup()
         {
-            if (string.IsNullOrEmpty(parameterDescription.name)) Lookup();
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getParameterDescriptionByName(parameter, out parameterDescription);
+            return result;
         }
 
-        private RESULT Lookup()
+        void Awake()
         {
-            var result = RuntimeManager.StudioSystem.getParameterDescriptionByName(parameter, out parameterDescription);
-            return result;
+            if (string.IsNullOrEmpty(parameterDescription.name))
+            {
+                Lookup();
+            }
         }
 
         protected override void HandleGameEvent(EmitterGameEvent gameEvent)
         {
-            if (TriggerEvent == gameEvent) TriggerParameters();
+            if (TriggerEvent == gameEvent)
+            {
+                TriggerParameters();
+            }
         }
 
         public void TriggerParameters()
         {
             if (!string.IsNullOrEmpty(parameter))
             {
-                var result = RuntimeManager.StudioSystem.setParameterByID(parameterDescription.id, value);
-                if (result != RESULT.OK)
-                    Debug.LogError(string.Format(
-                        "[FMOD] StudioGlobalParameterTrigger failed to set parameter {0} : result = {1}", parameter,
-                        result));
+                FMOD.RESULT result = RuntimeManager.StudioSystem.setParameterByID(parameterDescription.id, value);
+                if (result != FMOD.RESULT.OK)
+                {
+                    Debug.LogError(string.Format(("[FMOD] StudioGlobalParameterTrigger failed to set parameter {0} : result = {1}"), parameter, result));
+                }
             }
         }
     }

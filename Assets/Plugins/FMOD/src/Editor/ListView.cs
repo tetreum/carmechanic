@@ -1,19 +1,11 @@
 ﻿using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace FMODUnity
 {
-    public class ListView : ReorderableList
+    public class ListView : UnityEditorInternal.ReorderableList
     {
-        public delegate void DrawElementWithLabelDelegate(Rect rect, float labelRight, int index,
-            bool active, bool focused);
-
-        private const float ElementPadding = 2;
-
-        public DrawElementWithLabelDelegate drawElementWithLabelCallback;
-
-        private float labelRight;
+        const float ElementPadding = 2;
 
         public ListView(SerializedProperty property)
             : base(property.serializedObject, property, true, false, true, true)
@@ -23,16 +15,23 @@ namespace FMODUnity
             drawElementCallback = DrawElementWrapper;
         }
 
+        public DrawElementWithLabelDelegate drawElementWithLabelCallback;
+
+        public delegate void DrawElementWithLabelDelegate(Rect rect, float labelRight, int index,
+            bool active, bool focused);
+
+        private float labelRight;
+
         public void DrawLayout()
         {
-            var rect = EditorGUILayout.GetControlRect(false, GetHeight());
+            Rect rect = EditorGUILayout.GetControlRect(false, GetHeight());
 
             labelRight = rect.x + EditorGUIUtility.labelWidth;
 
             DoList(EditorGUI.IndentedRect(rect));
         }
 
-        private void DrawElementWrapper(Rect rect, int index, bool active, bool focused)
+        void DrawElementWrapper(Rect rect, int index, bool active, bool focused)
         {
             if (drawElementWithLabelCallback != null)
             {
@@ -43,3 +42,4 @@ namespace FMODUnity
         }
     }
 }
+
