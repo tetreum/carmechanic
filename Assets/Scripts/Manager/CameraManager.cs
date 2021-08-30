@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class CameraManager : MonoBehaviour
 
     public void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         fpCamera.enabled = true;
         Movement.playerCamera = fpCamera;
         tpCamera.enabled = false;
