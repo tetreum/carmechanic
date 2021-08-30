@@ -14,26 +14,30 @@ public class Player : MonoBehaviour
     private float rotationX;
     private Vector2 inputMovement;
     public PlayerInput PlayerInput => playerInput;
-    [SerializeField] private float movementSpeed = 5f;
+    [SerializeField] private float moveSpeed;
     private InputAction movement;
     
-    [BurstCompile]
     private void Start()
     {
         Cursor.visible = false;
+        moveSpeed = 0.5f;
     }
     
-    [BurstCompile]
     private void Update()
-    { 
-        Vector3 movement = movementSpeed * (
-            inputMovement.x * Vector3.forward + inputMovement.y * Vector3.right
+    {
+        Movement();
+    }
+
+    [BurstCompile]
+    private void Movement()
+    {
+        Vector3 movement = moveSpeed * (
+            inputMovement.x * Vector3.forward + inputMovement.y * Vector3.left
         );
         transform.position += movement;
         inputMovement = Vector2.zero;
     }
     
-    [BurstCompile]
     public void Move(InputAction.CallbackContext ctx)
     {
         inputMovement += ctx.ReadValue<Vector2>();
