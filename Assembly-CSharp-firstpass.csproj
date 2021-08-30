@@ -837,6 +837,15 @@
  <Reference Include="Unity.InputSystem">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Addressables">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Addressables.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ResourceManager">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="FMODUnityResonanceEditor.csproj">

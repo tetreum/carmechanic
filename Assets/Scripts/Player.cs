@@ -15,9 +15,7 @@ public class Player : MonoBehaviour
     public static Camera playerCamera;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 45.0f;
-
     public static bool canMove = true;
-
     private CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX;
@@ -26,9 +24,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float movementSpeed = 5f;
     public float mouseSensitivity = 100.0f;
     public float clampAngle = 80.0f;
- 
-    private float rotY = 0.0f; 
-    private float rotX = 0.0f;
+    private float rotY; 
+    private float rotX;
 
     private void Start()
     {
@@ -38,12 +35,11 @@ public class Player : MonoBehaviour
         rotY = rot.y;
         rotX = rot.x;
     }
-
     private void Update()
     {
         var finalMovement = inputMovement;
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = -Input.GetAxis("Mouse Y");
+        var mouseX = Input.GetAxis("Mouse X");
+        var mouseY = -Input.GetAxis("Mouse Y");
 
         finalMovement *= movementSpeed * Time.deltaTime;
 

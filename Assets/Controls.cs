@@ -20,9 +20,9 @@ public class @Controls : IInputActionCollection, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""306e9ca7-233a-4be3-8051-4ebef48113bd"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -42,7 +42,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""2b0cc16b-b8e6-48cf-983c-a811bbf9355a"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
@@ -53,7 +53,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""47773edb-c52f-4f56-a01c-19cafdb08878"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
@@ -64,7 +64,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""a95cc78d-dca1-4c9c-a941-1fe47ad08738"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
@@ -75,10 +75,65 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""af865e88-c14d-4a27-a7e7-10b104db0437"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""arrows"",
+                    ""id"": ""9415257c-d493-4332-818b-2a9d2b5892bd"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""e8a36e97-53e2-4f0d-b062-db18525b4e11"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""28e6c7fe-6420-4b8d-b4bf-d86e6773e0b6"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""9262c09d-7f3c-433a-9d59-509e93f44d33"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""3e24371d-d07d-46bd-b626-32019e527e35"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true

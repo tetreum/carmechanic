@@ -1,6 +1,7 @@
 using System.IO;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 public class AssetBundlesManager : MonoBehaviour

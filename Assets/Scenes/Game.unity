@@ -199,7 +199,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -653,7 +653,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23616
+  m_Name: pb_Mesh24440
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 1288859743}
   - component: {fileID: 1288859742}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: garage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
