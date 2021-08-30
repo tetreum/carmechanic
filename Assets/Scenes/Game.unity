@@ -344,7 +344,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643334559}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.156, z: -1.774}
+  m_LocalPosition: {x: 0, y: 1.338, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1093104663}
@@ -823,6 +823,7 @@ GameObject:
   - component: {fileID: 1093104662}
   - component: {fileID: 1093104664}
   - component: {fileID: 1093104661}
+  - component: {fileID: 1093104665}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -843,15 +844,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 1093104664}
-  walkingSpeed: 7.5
-  runningSpeed: 11.5
-  jumpSpeed: 8
-  gravity: 20
-  lookSpeed: 5
-  lookXLimit: 45
+  controller: {fileID: 1093104662}
   movementSpeed: 5
-  mouseSensitivity: 100
-  clampAngle: 80
 --- !u!143 &1093104662
 CharacterController:
   m_ObjectHideFlags: 0
@@ -933,6 +927,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1093104665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093104660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e1aec6325ca9a47b8aa70bf2ba8437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 100
 --- !u!1 &1282145220
 GameObject:
   m_ObjectHideFlags: 0
