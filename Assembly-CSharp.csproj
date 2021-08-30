@@ -84,7 +84,7 @@
      <Compile Include="Assets\Scripts\UI\Panels\MainPanel.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\EditorModePanel.cs" />
      <Compile Include="Assets\Scripts\UI\Menu.cs" />
-     <Compile Include="Assets\Scripts\Manager\InputManager.cs" />
+     <Compile Include="Assets\Controls.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

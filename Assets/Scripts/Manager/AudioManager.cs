@@ -14,10 +14,8 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if (Player.canMove)
-        {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) ||
-                Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) ||
+            Input.GetKeyDown(KeyCode.D))
             {
                 footsteps.start();
                 RuntimeManager.AttachInstanceToGameObject(footsteps, transform);
@@ -25,7 +23,6 @@ public class AudioManager : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) ||
                 Input.GetKeyUp(KeyCode.D)) footsteps.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
     }
 
     private void OnDestroy()

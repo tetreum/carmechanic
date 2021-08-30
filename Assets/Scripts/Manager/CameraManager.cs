@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
     public void Start()
     {
         fpCamera.enabled = true;
-        Player.playerCamera = fpCamera;
+        Movement.playerCamera = fpCamera;
         tpCamera.enabled = false;
     }
 
@@ -16,10 +16,10 @@ public class CameraManager : MonoBehaviour
     {
         if (fpCamera.enabled)
         {
-            Player.playerCamera = fpCamera;
+            Movement.playerCamera = fpCamera;
         }else
         {
-            Player.playerCamera = tpCamera;
+            Movement.playerCamera = tpCamera;
         }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
