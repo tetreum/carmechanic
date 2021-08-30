@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
@@ -18,12 +17,9 @@ public class CameraManager : MonoBehaviour
     private void Update()
     {
         if (fpCamera.enabled)
-        {
             Movement.playerCamera = fpCamera;
-        }else
-        {
+        else
             Movement.playerCamera = tpCamera;
-        }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (fpCamera.enabled)

@@ -730,7 +730,7 @@ namespace SimpleJSON
 
     public class JSONArray : JSONNode, IEnumerable
     {
-        private readonly List<JSONNode> m_List = new List<JSONNode>();
+        private readonly List<JSONNode> m_List = new();
 
         public override JSONNode this[int aIndex]
         {
@@ -848,7 +848,7 @@ namespace SimpleJSON
 
     public class JSONClass : JSONNode, IEnumerable
     {
-        private readonly Dictionary<string, JSONNode> m_Dict = new Dictionary<string, JSONNode>();
+        private readonly Dictionary<string, JSONNode> m_Dict = new();
 
         public override JSONNode this[string aKey]
         {

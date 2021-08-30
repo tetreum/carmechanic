@@ -5,28 +5,22 @@ namespace FMODUnity
 {
     public class BankRefreshWindow : EditorWindow
     {
-        private static BankRefreshWindow instance = null;
+        private const float CloseDelay = 5;
+        private static BankRefreshWindow instance;
+        private float closeTime = float.MaxValue;
+        private SerializedProperty cooldown;
+        private string lastRefreshError;
 
-        public static bool IsVisible { get { return instance != null; } }
+        private bool readyToRefreshBanks;
 
-        public static void ShowWindow()
-        {
-            if (instance == null)
-            {
-                instance = CreateInstance<BankRefreshWindow>();
-                instance.titleContent = new GUIContent("FMOD Bank Refresh Status");
-                instance.minSize = new Vector2(400, 200);
-                instance.maxSize = new Vector2(1000, 200);
+        private SerializedObject serializedSettings;
+        private SerializedProperty showWindow;
 
-                instance.ShowUtility();
-            }
-        }
+        public static bool IsVisible => instance != null;
 
-        SerializedObject serializedSettings;
-        SerializedProperty cooldown;
-        SerializedProperty showWindow;
+        public static bool ReadyToRefreshBanks => instance == null || instance.readyToRefreshBanks;
 
-        void OnEnable()
+        private void OnEnable()
         {
             serializedSettings = new SerializedObject(Settings.Instance);
             cooldown = serializedSettings.FindProperty("BankRefreshCooldown");
@@ -34,66 +28,16 @@ namespace FMODUnity
 
             // instance is set to null when scripts are recompiled
             if (instance == null)
-            {
                 instance = this;
-            }
-            else if (instance != this)
-            {
-                Close();
-            }
+            else if (instance != this) Close();
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
-            if (instance == this)
-            {
-                instance = null;
-            }
+            if (instance == this) instance = null;
         }
 
-        public static bool ReadyToRefreshBanks { get { return instance == null || instance.readyToRefreshBanks; } }
-
-        private bool readyToRefreshBanks = false;
-        private float closeTime = float.MaxValue;
-        private string lastRefreshError = null;
-
-        const float CloseDelay = 5;
-
-        void OnInspectorUpdate()
-        {
-            Repaint();
-
-            if (BankRefresher.TimeUntilBankRefresh() != float.MaxValue)
-            {
-                closeTime = float.MaxValue;
-            }
-
-            if (Time.realtimeSinceStartup > closeTime)
-            {
-                Close();
-            }
-        }
-
-        public static void HandleBankRefresh(string error)
-        {
-            if (error != null)
-            {
-                Debug.LogErrorFormat("FMOD: Bank refresh failed: {0}", error);
-            }
-
-            if (instance != null)
-            {
-                instance.readyToRefreshBanks = false;
-                instance.lastRefreshError = error;
-
-                if (error == null)
-                {
-                    instance.closeTime = Time.realtimeSinceStartup + CloseDelay;
-                }
-            }
-        }
-
-        void OnGUI()
+        private void OnGUI()
         {
             serializedSettings.Update();
 
@@ -108,40 +52,73 @@ namespace FMODUnity
             serializedSettings.ApplyModifiedProperties();
         }
 
+        private void OnInspectorUpdate()
+        {
+            Repaint();
+
+            if (BankRefresher.TimeUntilBankRefresh() != float.MaxValue) closeTime = float.MaxValue;
+
+            if (Time.realtimeSinceStartup > closeTime) Close();
+        }
+
+        public static void ShowWindow()
+        {
+            if (instance == null)
+            {
+                instance = CreateInstance<BankRefreshWindow>();
+                instance.titleContent = new GUIContent("FMOD Bank Refresh Status");
+                instance.minSize = new Vector2(400, 200);
+                instance.maxSize = new Vector2(1000, 200);
+
+                instance.ShowUtility();
+            }
+        }
+
+        public static void HandleBankRefresh(string error)
+        {
+            if (error != null) Debug.LogErrorFormat("FMOD: Bank refresh failed: {0}", error);
+
+            if (instance != null)
+            {
+                instance.readyToRefreshBanks = false;
+                instance.lastRefreshError = error;
+
+                if (error == null) instance.closeTime = Time.realtimeSinceStartup + CloseDelay;
+            }
+        }
+
         private bool ConsumeEscapeKey()
         {
-            if ((focusedWindow == this) && Event.current.isKey && Event.current.keyCode == KeyCode.Escape)
+            if (focusedWindow == this && Event.current.isKey && Event.current.keyCode == KeyCode.Escape)
             {
                 Event.current.Use();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
-        void DrawStatus()
+        private void DrawStatus()
         {
-            GUIStyle labelStyle = new GUIStyle(EditorStyles.whiteLargeLabel);
+            var labelStyle = new GUIStyle(EditorStyles.whiteLargeLabel);
             labelStyle.alignment = TextAnchor.MiddleCenter;
 
-            GUIStyle largeErrorStyle = new GUIStyle(labelStyle);
+            var largeErrorStyle = new GUIStyle(labelStyle);
             largeErrorStyle.normal.textColor = Color.red;
 
-            GUIStyle errorStyle = new GUIStyle(GUI.skin.box);
+            var errorStyle = new GUIStyle(GUI.skin.box);
             errorStyle.alignment = TextAnchor.UpperLeft;
             errorStyle.wordWrap = true;
             errorStyle.normal.textColor = Color.red;
 
-            float timeSinceFileChange = BankRefresher.TimeSinceSourceFileChange();
+            var timeSinceFileChange = BankRefresher.TimeSinceSourceFileChange();
 
             if (timeSinceFileChange != float.MaxValue)
             {
                 GUILayout.Label(string.Format("The FMOD source banks changed {0} ago.",
                     EditorUtils.DurationString(timeSinceFileChange)), labelStyle);
 
-                float timeUntilBankRefresh = BankRefresher.TimeUntilBankRefresh();
+                var timeUntilBankRefresh = BankRefresher.TimeUntilBankRefresh();
 
                 if (timeUntilBankRefresh == 0)
                 {
@@ -150,11 +127,10 @@ namespace FMODUnity
                 }
                 else if (timeUntilBankRefresh != float.MaxValue)
                 {
-                    if (DrawCountdown("Refreshing banks", timeUntilBankRefresh, Settings.Instance.BankRefreshCooldown, labelStyle)
+                    if (DrawCountdown("Refreshing banks", timeUntilBankRefresh, Settings.Instance.BankRefreshCooldown,
+                            labelStyle)
                         || ConsumeEscapeKey())
-                    {
                         BankRefresher.DisableAutoRefresh();
-                    }
                 }
                 else
                 {
@@ -176,62 +152,55 @@ namespace FMODUnity
 
             if (closeTime != float.MaxValue)
             {
-                float timeUntilClose = Mathf.Max(0, closeTime - Time.realtimeSinceStartup);
+                var timeUntilClose = Mathf.Max(0, closeTime - Time.realtimeSinceStartup);
 
                 if (DrawCountdown("Closing", timeUntilClose, CloseDelay, labelStyle) || ConsumeEscapeKey())
-                {
                     closeTime = float.MaxValue;
-                }
             }
         }
 
-        static bool DrawCountdown(string text, float remainingTime, float totalTime, GUIStyle labelStyle)
+        private static bool DrawCountdown(string text, float remainingTime, float totalTime, GUIStyle labelStyle)
         {
-            GUILayout.Label(string.Format("{0} in {1}...", text, EditorUtils.DurationString(remainingTime)), labelStyle);
+            GUILayout.Label(string.Format("{0} in {1}...", text, EditorUtils.DurationString(remainingTime)),
+                labelStyle);
 
             const float boxHeight = 2;
 
-            Rect controlRect = EditorGUILayout.GetControlRect(false, boxHeight * 2);
+            var controlRect = EditorGUILayout.GetControlRect(false, boxHeight * 2);
 
-            Rect boxRect = controlRect;
+            var boxRect = controlRect;
             boxRect.width *= remainingTime / totalTime;
             boxRect.x += (controlRect.width - boxRect.width) / 2;
             boxRect.height = 2;
 
             GUI.DrawTexture(boxRect, EditorGUIUtility.whiteTexture);
 
-            GUIContent cancelContent = new GUIContent("Cancel");
+            var cancelContent = new GUIContent("Cancel");
 
             controlRect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight * 2);
 
-            Rect buttonRect = controlRect;
+            var buttonRect = controlRect;
             buttonRect.width = 100;
             buttonRect.x += (controlRect.width - buttonRect.width) / 2;
 
             return GUI.Button(buttonRect, cancelContent);
         }
 
-        void DrawButtons()
+        private void DrawButtons()
         {
-            Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight * 2);
+            var rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight * 2);
 
-            int buttonCount = 2;
+            var buttonCount = 2;
 
-            Rect closeRect = rect;
+            var closeRect = rect;
             closeRect.width = rect.width / buttonCount;
 
-            Rect refreshRect = rect;
+            var refreshRect = rect;
             refreshRect.xMin = closeRect.xMax;
 
-            if (GUI.Button(closeRect, "Close"))
-            {
-                Close();
-            }
+            if (GUI.Button(closeRect, "Close")) Close();
 
-            if (GUI.Button(refreshRect, "Refresh Banks Now"))
-            {
-                EventManager.RefreshBanks();
-            }
+            if (GUI.Button(refreshRect, "Refresh Banks Now")) EventManager.RefreshBanks();
         }
     }
 }

@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(CharacterController))]
@@ -14,15 +10,16 @@ public class Movement : MonoBehaviour
     public float moveSpeed;
     private Vector2 m_Move;
 
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        m_Move = context.ReadValue<Vector2>();
-    }
-    
     public void Update()
     {
         Move(m_Move);
     }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        m_Move = context.ReadValue<Vector2>();
+    }
+
     private void Move(Vector2 direction)
     {
         if (direction.sqrMagnitude < 0.01)

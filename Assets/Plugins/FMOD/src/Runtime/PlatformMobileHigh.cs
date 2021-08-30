@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
@@ -17,21 +14,18 @@ namespace FMODUnity
             Settings.AddPlatformTemplate<PlatformMobileHigh>("fd7c55dab0fce234b8c25f6ffca523c1");
         }
 
-        public override string DisplayName { get { return "High-End Mobile"; } }
+        public override string DisplayName => "High-End Mobile";
 #if UNITY_EDITOR
-        public override Legacy.Platform LegacyIdentifier { get { return Legacy.Platform.MobileHigh; } }
+        public override Legacy.Platform LegacyIdentifier => Legacy.Platform.MobileHigh;
 #endif
 
-        public override float Priority { get { return base.Priority + 1; } }
+        public override float Priority => base.Priority + 1;
 
         public override bool MatchesCurrentEnvironment
         {
             get
             {
-                if (!Active)
-                {
-                    return false;
-                }
+                if (!Active) return false;
 
 #if UNITY_IOS
                 switch (UnityEngine.iOS.Device.generation)

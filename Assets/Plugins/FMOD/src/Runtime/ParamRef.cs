@@ -1,4 +1,5 @@
 ﻿using System;
+using FMOD.Studio;
 
 namespace FMODUnity
 {
@@ -7,6 +8,6 @@ namespace FMODUnity
     {
         public string Name;
         public float Value;
-        public FMOD.Studio.PARAMETER_ID ID;
+        public PARAMETER_ID ID;
     }
 }

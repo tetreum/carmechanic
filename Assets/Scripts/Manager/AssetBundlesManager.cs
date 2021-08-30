@@ -1,14 +1,12 @@
 using System.IO;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 public class AssetBundlesManager : MonoBehaviour
 {
     private GameObject car1;
-    private GameObject lift;
     private GameObject engine;
+    private GameObject lift;
 
     public void Awake()
     {
@@ -26,7 +24,7 @@ public class AssetBundlesManager : MonoBehaviour
         {
             Instantiate(lift, new Vector3(37, 0, 35), Quaternion.Euler(new Vector3(-90, 0, 0)));
             Instantiate(car1, new Vector3(24, 0.1f, 25), Quaternion.Euler(new Vector3(0, -90, 0)));
-            Instantiate(engine, new Vector3(30,0,15), Quaternion.Euler(new Vector3(-90,0,0)));
+            Instantiate(engine, new Vector3(30, 0, 15), Quaternion.Euler(new Vector3(-90, 0, 0)));
         }
     }
 }

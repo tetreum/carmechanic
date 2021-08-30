@@ -57,7 +57,7 @@ public class CarEngine : MonoBehaviour
     public Mode currentMode = Mode.Disassembly;
     public Section currentSection = Section.Body;
 
-    public Dictionary<int, CarPart> disassembledParts = new Dictionary<int, CarPart>();
+    public Dictionary<int, CarPart> disassembledParts = new();
 
     public Transform selectedCarPart => MouseOrbit.Instance.target;
 
