@@ -9,9 +9,9 @@ using UnityEngine;
 public class Service
 {
     public static Dictionary<CarEngine.Part, PartStaticInfo> partsList =
-        new Dictionary<CarEngine.Part, PartStaticInfo>();
+        new();
 
-    public static Dictionary<string, CarInfo> carList = new Dictionary<string, CarInfo>();
+    public static Dictionary<string, CarInfo> carList = new();
     public static SQLiteConnection _db;
 
     public static SQLiteConnection db

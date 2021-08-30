@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class Lift : MonoBehaviour
 {
@@ -13,11 +13,17 @@ public class Lift : MonoBehaviour
     private GameObject carobj;
     private bool isElevated;
     private bool isMoving;
+    private EventInstance liftInstance;
     private Material mat;
-    EventInstance liftInstance;
 
-    private void Awake(){
+    private void Awake()
+    {
         liftInstance = RuntimeManager.CreateInstance("event:/lift");
+    }
+
+    private void OnDestroy()
+    {
+        liftInstance.release();
     }
 
     private void OnMouseDown()
@@ -26,11 +32,6 @@ public class Lift : MonoBehaviour
         isMoving = true;
         liftInstance.start();
         StartCoroutine(nameof(StartAscension));
-    }
-
-    private void OnDestroy()
-    {
-        liftInstance.release();
     }
 
     private IEnumerator StartAscension()
@@ -49,6 +50,6 @@ public class Lift : MonoBehaviour
 
         isElevated = !isElevated;
         isMoving = false;
-        liftInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        liftInstance.stop(STOP_MODE.IMMEDIATE);
     }
 }

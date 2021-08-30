@@ -7,20 +7,19 @@ public class CameraManager : MonoBehaviour
 
     public void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         fpCamera.enabled = true;
-        Player.playerCamera = fpCamera;
+        Movement.playerCamera = fpCamera;
         tpCamera.enabled = false;
     }
 
     private void Update()
     {
         if (fpCamera.enabled)
-        {
-            Player.playerCamera = fpCamera;
-        }else
-        {
-            Player.playerCamera = tpCamera;
-        }
+            Movement.playerCamera = fpCamera;
+        else
+            Movement.playerCamera = tpCamera;
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (fpCamera.enabled)
