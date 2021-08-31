@@ -38,7 +38,7 @@ If you want to share your vehicle, send the /StreamingAssets/YOU_MODEL/ folder a
 ------------------------------
 
 ===========================
-simplified compile workflow
+simplified compilation workflow
 ===========================
 
 .. image:: Assets/GFX/workflow.PNG
