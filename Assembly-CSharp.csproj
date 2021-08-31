@@ -695,9 +695,6 @@
  <Reference Include="Unity.Transforms.Hybrid">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
  </Reference>
- <Reference Include="Unity.AssetBundleBrowser.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Havok.Physics">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.dll</HintPath>
  </Reference>
