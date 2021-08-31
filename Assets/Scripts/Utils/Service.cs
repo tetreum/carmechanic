@@ -79,9 +79,9 @@ public class Service
 
             partsList.Add((CarEngine.Part) item["id"].AsInt, new PartStaticInfo
             {
-                name = item["name"].Value,
-                description = item["description"].Value,
-                price = item["price"].AsInt
+                Name = item["name"].Value,
+                Description = item["description"].Value,
+                Price = item["price"].AsInt
             });
             i++;
         }

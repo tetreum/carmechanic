@@ -52,46 +52,41 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioListener.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_studio.cs" />
-     <Compile Include="Assets\Plugins\FMOD\platforms\android\src\PlatformAndroid.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformGroup.cs" />
-     <Compile Include="Assets\Plugins\FMOD\obsolete\FmodGvrAudio.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\RuntimeUtils.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioGlobalParameterTrigger.cs" />
-     <Compile Include="Assets\Plugins\FMOD\obsolete\FmodGvrAudioRoom.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\FMODRuntimeManagerOnGUIHelper.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_dsp.cs" />
-     <Compile Include="Assets\Plugins\FMOD\platforms\win\src\PlatformWindows.cs" />
-     <Compile Include="Assets\Plugins\FMOD\platforms\ios\src\PlatformIOS.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\RuntimeManager.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioEventEmitter.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformGroup.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioListener.cs" />
+     <Compile Include="Assets\Plugins\FMOD\platforms\html5\src\PlatformWebGL.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\RuntimeUtils.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Runtime\EventHandler.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\AutomatableSlots.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\EventRefAttribute.cs" />
-     <Compile Include="Assets\Plugins\FMOD\obsolete\LogViewer.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioParameterTrigger.cs" />
+     <Compile Include="Assets\Plugins\FMOD\platforms\android\src\PlatformAndroid.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\Timeline\FMODEventPlayable.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\CodeGeneration.cs" />
+     <Compile Include="Assets\Plugins\FMOD\platforms\ios\src\PlatformIOS.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioBankLoader.cs" />
-     <Compile Include="Assets\Plugins\FMOD\obsolete\FmodGvrAudioRoomEditor.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformPlayInEditor.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\BankRefAttribute.cs" />
-     <Compile Include="Assets\Plugins\FMOD\platforms\tvos\src\PlatformAppleTV.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\ParamRefAttribute.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformMobileLow.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\Timeline\FMODEventTrack.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_errors.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioParameterTrigger.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioEventEmitter.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformPlayInEditor.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformDefault.cs" />
      <Compile Include="Assets\Plugins\FMOD\platforms\linux\src\PlatformLinux.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\Platform.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\ParamRef.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\Settings.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\Timeline\FMODEventPlayable.cs" />
      <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformMobileHigh.cs" />
-     <Compile Include="Assets\Plugins\FMOD\platforms\html5\src\PlatformWebGL.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioGlobalParameterTrigger.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\ParamRef.cs" />
+     <Compile Include="Assets\Plugins\FMOD\platforms\tvos\src\PlatformAppleTV.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\ParamRefAttribute.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\Timeline\FMODEventTrack.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\AutomatableSlots.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_studio.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformMobileLow.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\Settings.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\BankRefAttribute.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\Platform.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\FMODRuntimeManagerOnGUIHelper.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\RuntimeManager.cs" />
+     <Compile Include="Assets\Plugins\FMOD\src\Runtime\EventRefAttribute.cs" />
+     <Compile Include="Assets\Plugins\FMOD\platforms\win\src\PlatformWindows.cs" />
      <Compile Include="Assets\Plugins\FMOD\platforms\mac\src\PlatformMac.cs" />
-     <Compile Include="Assets\Plugins\FMOD\obsolete\OneshotList.cs" />
-     <Compile Include="Assets\Plugins\FMOD\src\Runtime\CodeGeneration.cs" />
      <None Include="Assets\Plugins\FMOD\README.txt" />
      <None Include="Assets\Plugins\FMOD\FMODUnity.asmdef" />
  <Reference Include="UnityEngine">
@@ -325,8 +320,11 @@
  <Reference Include="UnityEditor.UWP.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.17f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Collections.LowLevel.ILSupport">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+ <Reference Include="log4netPlastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
+ </Reference>
+ <Reference Include="SQLite4Unity3d">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Plastic.Newtonsoft.Json">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
@@ -337,20 +335,17 @@
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.burst@1.4.11/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
- <Reference Include="log4netPlastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
- </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.render-pipelines.core@10.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
- <Reference Include="SQLite4Unity3d">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
+ <Reference Include="unityplastic">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Collections.LowLevel.ILSupport">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="unityplastic">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collab-proxy@1.9.0/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.17f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

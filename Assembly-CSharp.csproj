@@ -80,11 +80,11 @@
      <Compile Include="Assets\Scripts\Player\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Utils\AudioUtils.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\PartStatusPanel.cs" />
+     <Compile Include="Assets\Controls.cs" />
      <Compile Include="Assets\Scripts\Manager\AssetBundlesManager.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\MainPanel.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\EditorModePanel.cs" />
      <Compile Include="Assets\Scripts\UI\Menu.cs" />
-     <Compile Include="Assets\Controls.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -332,14 +332,14 @@
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.17f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Collections.LowLevel.ILSupport">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+ <Reference Include="SQLite4Unity3d">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.burst@1.4.11/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
- <Reference Include="SQLite4Unity3d">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Assets/Plugin/SQLite4Unity3d.dll</HintPath>
+ <Reference Include="Unity.Collections.LowLevel.ILSupport">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.collections@0.15.0-preview.21/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
@@ -773,9 +773,6 @@
  <Reference Include="Unity.Addressables.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.ProGrids">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Physics">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.dll</HintPath>
  </Reference>
@@ -830,9 +827,6 @@
  <Reference Include="Unity.Entities.Hybrid">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
  </Reference>
- <Reference Include="Unity.ProGrids.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Jobs.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
  </Reference>
@@ -869,11 +863,11 @@
  <Reference Include="Unity.Properties.UI">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Properties.UI.dll</HintPath>
  </Reference>
- <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
- </Reference>
  <Reference Include="Unity.ScriptableBuildPipeline">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Serialization.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Serialization.Editor.dll</HintPath>
@@ -894,13 +888,13 @@
       <Project>{cb9ca8c5-be92-c760-3de9-fe9b29c3ed9b}</Project>
       <Name>FMODUnityResonanceEditor</Name>
     </ProjectReference>
-    <ProjectReference Include="FMODUnity.csproj">
-      <Project>{c29bc651-fb71-176a-9529-e207db19a09c}</Project>
-      <Name>FMODUnity</Name>
-    </ProjectReference>
     <ProjectReference Include="FMODUnityEditor.csproj">
       <Project>{941df9fd-afc6-cdc1-36ac-85b725095260}</Project>
       <Name>FMODUnityEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="FMODUnity.csproj">
+      <Project>{c29bc651-fb71-176a-9529-e207db19a09c}</Project>
+      <Name>FMODUnity</Name>
     </ProjectReference>
     <ProjectReference Include="FMODUnityResonance.csproj">
       <Project>{0668a8e4-c58a-5145-69f6-80a9567cce39}</Project>
