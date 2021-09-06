@@ -11,9 +11,9 @@ public class Shaders : MonoBehaviour
 
     public static Shader _standardOutlined;
 
-    public static Color Red = new(1f, 0f, 0f);
-    public static Color Orange = new(1f, 0.557f, 0f);
-    public static Color Green = new(0.2f, 1f, 0f);
+    public static Color Red = new Color(1f, 0f, 0f);
+    public static Color Orange = new Color(1f, 0.557f, 0f);
+    public static Color Green = new Color(0.2f, 1f, 0f);
 
     public static Shader transparent
     {
