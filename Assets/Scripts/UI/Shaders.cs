@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class Shaders : MonoBehaviour
 {
-    private static Shader _transparent;
-    private static Shader _outline;
-    private static Shader _silhouetteOnly;
-    private static Shader _standardOutlined;
-    public static Color Red = new(1f, 0f, 0f, 100f);
-    public static Color Orange = new(1f, 0.557f, 0f, 100f);
-    public static Color Green = new(0.2f, 1f, 0f, 100f);
+    public static Shader _transparent;
+
+    public static Shader _outline;
+
+    public static Shader _silhouetteOnly;
+
+    public static Shader _standardOutlined;
+
+    public static Color Red = new Color(1f, 0f, 0f);
+    public static Color Orange = new Color(1f, 0.557f, 0f);
+    public static Color Green = new Color(0.2f, 1f, 0f);
 
     public static Shader transparent
     {
