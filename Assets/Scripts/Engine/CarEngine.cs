@@ -61,7 +61,6 @@ public class CarEngine : MonoBehaviour
 
     public Transform selectedCarPart => MouseOrbit.Instance.target;
 
-
     public void Start()
     {
         Instance = this;
@@ -94,7 +93,7 @@ public class CarEngine : MonoBehaviour
         }
     }
 
-    public void enterEditorMode()
+    public void EnterEditorMode()
     {
         // Disable character and join EngineEditor mode
         var pos = Camera.main.transform.position;
@@ -113,7 +112,7 @@ public class CarEngine : MonoBehaviour
     }
 
     // Leaves engine editor mode and enables character controller
-    public void LeaveEditorMode()
+    private void LeaveEditorMode()
     {
         var pos = Camera.main.transform.position;
         var lastCarPart = selectedCarPart;
@@ -124,16 +123,14 @@ public class CarEngine : MonoBehaviour
         // Disable editor mode camera
         EditorTriggerController.Instance.enableTriggers(true);
         EditorTriggerController.Instance.camera.SetActive(false);
-
         FirstPersonController.Instance.transform.position = pos;
         FirstPersonController.Instance.LookAt(lastCarPart);
         FirstPersonController.Instance.gameObject.SetActive(true);
         Menu.Instance.hidePanel("EditorModePanel");
 
         currentSection = Section.Body;
-#if !UNITY_EDITOR
-		Cursor.lockState = CursorLockMode.Locked;
-#endif
+        if (Application.platform == RuntimePlatform.WindowsPlayer)
+            Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void SetAssemblyMode()
@@ -187,7 +184,7 @@ public class CarEngine : MonoBehaviour
     /**
 	* Temporal, there should be a better way rather than making a global find..
 	 */
-    public void DisableStatusMode()
+    private static void DisableStatusMode()
     {
         var partList = GameObject.FindGameObjectsWithTag("CarPart");
         CarPart carPart;

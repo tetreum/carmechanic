@@ -10,7 +10,7 @@ public class PartStatusPanel : MonoBehaviour
     public void show(CarEngine.Part part, int nStatus)
     {
         status.text = nStatus + "%";
-        name.text = Service.partsList[part].name;
+        name.text = Service.partsList[part].Name;
 
         gameObject.SetActive(true);
     }

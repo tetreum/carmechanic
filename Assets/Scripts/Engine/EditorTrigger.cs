@@ -16,6 +16,6 @@ public class EditorTrigger : MonoBehaviour
 
     public void OnMouseDown()
     {
-        CarEngine.Instance.enterEditorMode();
+        CarEngine.Instance.EnterEditorMode();
     }
 }

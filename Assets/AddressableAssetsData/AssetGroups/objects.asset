@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: objects
+  m_EditorClassIdentifier: 
+  m_GroupName: objects
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 164299db769eec54e92e9b8f8c5071f4
+  m_SerializeEntries:
+  - m_GUID: 3170c9b3727f33e43964b512d7544c96
+    m_Address: Assets/Prefabs/engine1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 70607fed3440b904daf674bd5992f3c8
+    m_Address: Assets/Prefabs/lift.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9eaed57ef9778ea4b9e5ddde75712afe, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 66731cd2cf797f54dae7e1fa0a8ce149, type: 2}
+    - {fileID: 11400000, guid: ee7d64c019da7e54bbc5fad6ae83df8e, type: 2}

@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
             obj.transform.tag = "TemporalPanel";
 
             panelData = obj.GetComponent<InventoryItemPanel>();
-            panelData.name.text = Service.partsList[(CarEngine.Part) item.part].name;
+            panelData.name.text = Service.partsList[(CarEngine.Part) item.part].Name;
             panelData.status.text = item.status + "%";
             panelData.quantity.text = "x" + item.quantity;
 
