@@ -950,10 +950,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1282145222}
   - component: {fileID: 1282145224}
-  - component: {fileID: 1282145221}
   - component: {fileID: 1282145223}
   - component: {fileID: 1282145225}
   - component: {fileID: 1282145226}
+  - component: {fileID: 1282145221}
   m_Layer: 0
   m_Name: manager
   m_TagString: Untagged
@@ -11106,33 +11106,9 @@ MonoBehaviour:
   assetGuid: 
   m_Mesh: {fileID: 939978396}
   m_IsSelectable: 1
-  m_SelectedFaces: d8000000d0000000d2000000
-  m_SelectedEdges:
-  - a: 980
-    b: 981
-  - a: 982
-    b: 980
-  - a: 981
-    b: 983
-  - a: 983
-    b: 982
-  - a: 948
-    b: 949
-  - a: 950
-    b: 948
-  - a: 949
-    b: 951
-  - a: 951
-    b: 950
-  - a: 956
-    b: 957
-  - a: 958
-    b: 956
-  - a: 957
-    b: 959
-  - a: 959
-    b: 958
-  m_SelectedVertices: d4030000d5030000d6030000d7030000b4030000b5030000b6030000b7030000bc030000bd030000be030000bf030000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!4 &1288859746
 Transform:
   m_ObjectHideFlags: 0
