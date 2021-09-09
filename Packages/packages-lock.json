@@ -15,19 +15,12 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.addressables": {
-      "version": "1.18.15",
+    "com.unity.assetbundlebrowser": {
+      "version": "https://github.com/fgsoftware1/AssetBundles-Browser.git",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.19.1",
-        "com.unity.modules.assetbundle": "1.0.0",
-        "com.unity.modules.imageconversion": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
+      "source": "git",
+      "dependencies": {},
+      "hash": "b7c279278d1a343c6957c9f15b45173d3211f01c"
     },
     "com.unity.burst": {
       "version": "1.4.11",
@@ -226,7 +219,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.1",
+      "version": "1.9.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {},

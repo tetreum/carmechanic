@@ -54,15 +54,15 @@
   <ItemGroup>
      <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
      <Compile Include="Assets\Standard Assets\Utility\LerpControlledBob.cs" />
+     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
+     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
      <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
+     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
      <Compile Include="Assets\Standard Assets\Utility\CurveControlledBob.cs" />
+     <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs" />
      <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\RigidbodyFirstPersonController.cs" />
      <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
      <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
-     <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs" />
      <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
      <Compile Include="Assets\Standard Assets\Utility\FOVKick.cs" />
      <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
@@ -657,6 +657,9 @@
  <Reference Include="Unity.Transforms.Hybrid">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.AssetBundleBrowser.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Havok.Physics">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.dll</HintPath>
  </Reference>
@@ -677,9 +680,6 @@
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Addressables">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Searcher.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
@@ -729,9 +729,6 @@
  <Reference Include="Unity.Collections">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Addressables.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Physics">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.dll</HintPath>
  </Reference>
@@ -747,11 +744,11 @@
  <Reference Include="Unity.Entities.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.ProBuilder.AddOns.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Entities.BuildUtils">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ProBuilder.AddOns.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VisualStudio.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
@@ -770,9 +767,6 @@
  </Reference>
  <Reference Include="Unity.RenderPipelines.Core.Runtime">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ResourceManager">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ProBuilder.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>

@@ -53,10 +53,15 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\DayNight.cs" />
+     <Compile Include="Assets\Scripts\Utils\Service.cs" />
      <Compile Include="Assets\Scripts\Utils\FpsCounter.cs" />
      <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\Engine\CarEngine.cs" />
      <Compile Include="Assets\Scripts\Engine\EditorTriggerController.cs" />
      <Compile Include="Assets\Scripts\Garage\Lift.cs" />
+     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
+     <Compile Include="Assets\Scripts\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Engine\EditorTrigger.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\InventoryItemPanel.cs" />
      <Compile Include="Assets\Scripts\UI\Cursors.cs" />
      <Compile Include="Assets\Scripts\Manager\CameraManager.cs" />
@@ -64,27 +69,22 @@
      <Compile Include="Assets\Scripts\Engine\PartStaticInfo.cs" />
      <Compile Include="Assets\Scripts\UI\Shaders.cs" />
      <Compile Include="Assets\Scripts\Manager\AnimManager.cs" />
+     <Compile Include="Assets\Scripts\Player\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Utils\SimpleJSON.cs" />
      <Compile Include="Assets\Scripts\Player\Inventory\PartData.cs" />
      <Compile Include="Assets\Scripts\Utils\DoorHandle.cs" />
-     <Compile Include="Assets\Scripts\Utils\Utils.cs" />
-     <Compile Include="Assets\Scripts\Engine\CarPart.cs" />
-     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
-     <Compile Include="Assets\Scripts\Movement.cs" />
-     <Compile Include="Assets\Scripts\Utils\MouseOrbit.cs" />
-     <Compile Include="Assets\Scripts\Utils\Service.cs" />
-     <Compile Include="Assets\Scripts\Engine\CarEngine.cs" />
-     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
-     <Compile Include="Assets\Scripts\MouseLook.cs" />
-     <Compile Include="Assets\Scripts\Engine\EditorTrigger.cs" />
-     <Compile Include="Assets\Scripts\Player\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Utils\AudioUtils.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\PartStatusPanel.cs" />
      <Compile Include="Assets\Controls.cs" />
      <Compile Include="Assets\Scripts\Manager\AssetBundlesManager.cs" />
+     <Compile Include="Assets\Scripts\Utils\Utils.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\MainPanel.cs" />
+     <Compile Include="Assets\Scripts\Engine\CarPart.cs" />
      <Compile Include="Assets\Scripts\UI\Panels\EditorModePanel.cs" />
      <Compile Include="Assets\Scripts\UI\Menu.cs" />
+     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
+     <Compile Include="Assets\Scripts\Movement.cs" />
+     <Compile Include="Assets\Scripts\Utils\MouseOrbit.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -695,6 +695,9 @@
  <Reference Include="Unity.Transforms.Hybrid">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.AssetBundleBrowser.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Havok.Physics">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Havok.Physics.dll</HintPath>
  </Reference>
@@ -715,9 +718,6 @@
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Addressables">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Searcher.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
@@ -767,9 +767,6 @@
  <Reference Include="Unity.Collections">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Addressables.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Physics">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Physics.dll</HintPath>
  </Reference>
@@ -785,11 +782,11 @@
  <Reference Include="Unity.Entities.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.ProBuilder.AddOns.Editor">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Entities.BuildUtils">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ProBuilder.AddOns.Editor">
+ <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VisualStudio.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
@@ -808,9 +805,6 @@
  </Reference>
  <Reference Include="Unity.RenderPipelines.Core.Runtime">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ResourceManager">
- <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ProBuilder.Editor">
  <HintPath>C:/Users/gabri/Desktop/projects/carmechanic/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
