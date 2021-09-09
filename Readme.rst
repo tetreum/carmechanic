@@ -22,7 +22,7 @@ Notice:
 4. Open CarSimulator project in Unity & open Garage scene (double click on /Scenes/Garage).
 5. In the bottom window, search for your model file and click it. Unity's Inspector window will display model's options. Check the "Generate Colliders" & click on Apply button.
 6. drop your model from /StreamingAssets/YOU_MODEL/ to the scene. If you don't see it. Clic it in Hierarchy window and reset his position in Inspector to: 0,0,0.
-7. You model may look bigger or smaller than expected. To fix this, you can change the model scale in Inspector window.
+7. Your model may look bigger or smaller than expected. To fix this, you can change the model scale in Inspector window.
 
 Now that your car is ready, you will have to set each part. This example will be done with the car doors:
 
