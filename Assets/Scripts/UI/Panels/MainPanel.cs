@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,8 @@ public class MainPanel : MonoBehaviour
     public TMP_Text version;
     public GameObject menu;
     public GameObject loadingScreen;
+    public TMP_Text loading_object;
+    bool active;
 
     private void Start()
     {
@@ -29,11 +32,6 @@ public class MainPanel : MonoBehaviour
             Application.platform == RuntimePlatform.WindowsEditor ||
             Application.platform == RuntimePlatform.OSXEditor)
             Cursor.lockState = CursorLockMode.Locked;
-
-        //TEST - Allow custom cars (modding)
-        /*Lift lift = GameObject.Find("LiftButton").GetComponent<Lift>();
-        GameObject car = Instantiate(Service.carList["MURCIELAGO"].prefab) as GameObject;
-        car.transform.SetParent(lift.arms);*/
     }
 
     public void Quit()
@@ -49,11 +47,18 @@ public class MainPanel : MonoBehaviour
             var progress = Mathf.Clamp01(operation.progress);
             Debug.Log(progress);
             loading_bar.value = progress;
+            loading_object.text = "Loading scene";
             percentage.text = progress * 100 / .9f + "%";
 
             yield return null;
         }
 
-        if (operation.isDone) loadingScreen.SetActive(false);
+        if (operation.isDone)
+            if (GameObject.Find("LoadingScreen") == true)
+                active = true;
+            else
+                active = false;
+                if(active)
+                    loadingScreen.SetActive(false);
     }
 }

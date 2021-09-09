@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1495705971
+CRC: 524675343
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ce03ef953327256ac3fd9b0b95f209c5
+    Hash: c5e94d77f91240172bb6032eb71e4fd3
   TypeTreeHash:
     serializedVersion: 2
     Hash: b2e1e218eedb73f2bed793cf46e042ab
@@ -41,4 +41,5 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Prefabs/lift.prefab
 - Assets/Prefabs/engine1.prefab
+- Assets/Prefabs/engine_crane.prefab
 Dependencies: []

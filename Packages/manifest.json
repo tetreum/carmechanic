@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.havok.physics": "0.6.0-preview.3",
-    "com.unity.addressables": "1.18.15",
+    "com.unity.assetbundlebrowser": "https://github.com/fgsoftware1/AssetBundles-Browser.git",
     "com.unity.burst": "1.4.11",
     "com.unity.collab-proxy": "1.9.0",
     "com.unity.entities": "0.17.0-preview.42",
@@ -12,7 +12,7 @@
     "com.unity.probuilder": "4.5.2",
     "com.unity.render-pipelines.universal": "10.6.0",
     "com.unity.shadergraph": "10.6.0",
-    "com.unity.test-framework": "1.1.27",
+    "com.unity.test-framework": "1.1.29",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.4.8",
     "com.unity.ugui": "1.0.0",
