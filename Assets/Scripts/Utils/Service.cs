@@ -8,9 +8,9 @@ using UnityEngine;
 
 public class Service
 {
-    public static Dictionary<CarEngine.Part, PartStaticInfo> partsList = new Dictionary<CarEngine.Part, PartStaticInfo>();
+    public static Dictionary<CarEngine.Part, PartStaticInfo> partsList = new();
 
-    public static Dictionary<string, CarInfo> carList = new Dictionary<string, CarInfo>();
+    public static Dictionary<string, CarInfo> carList = new();
     public static SQLiteConnection _db;
 
     public static SQLiteConnection db
@@ -84,7 +84,7 @@ public class Service
             });
             i++;
         }
-        
+
         i = 0;
         list = Utils.getJSON("vehicles");
 
@@ -92,9 +92,10 @@ public class Service
         {
             item = list[i];
 
-            carList.Add(item["folder"].Value, new CarInfo{
+            carList.Add(item["folder"].Value, new CarInfo
+            {
                 name = item["name"].Value,
-                folder = item["folder"].Value,
+                folder = item["folder"].Value
             });
             i++;
         }
