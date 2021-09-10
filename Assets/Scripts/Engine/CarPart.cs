@@ -192,10 +192,7 @@ public class CarPart : MonoBehaviour
                 break;
         }
 
-        if (CanAssembly())
-        {
-            
-        }
+        //if (CanAssembly()){ }
     }
 
     private bool CanDisassembly()
