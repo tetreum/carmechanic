@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -51,7 +52,6 @@ public class CarPart : MonoBehaviour
             }
         }
     }
-
 
     private void Start()
     {
@@ -185,16 +185,17 @@ public class CarPart : MonoBehaviour
         switch (type)
         {
             case CarEngine.Part.BOLT:
-                SoundManager.Instance.playSound(SoundManager.EFFECT_SCREW, gameObject);
+                RuntimeManager.PlayOneShotAttached(AudioManager.ScrewPath, gameObject);
                 break;
             case CarEngine.Part.COVER:
-            case CarEngine.Part.OIL_CAP:
-            default:
-                SoundManager.Instance.playSound(SoundManager.EFFECT_OPEN_CASE, gameObject);
+                RuntimeManager.PlayOneShotAttached(AudioManager.OpenCasePath, gameObject);
                 break;
         }
 
-        // @ToDo: if disassembly mode add an end sound of the part hitting the floor
+        if (CanAssembly())
+        {
+            
+        }
     }
 
     private bool CanDisassembly()

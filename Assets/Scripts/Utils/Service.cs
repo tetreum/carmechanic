@@ -84,7 +84,7 @@ public class Service
             });
             i++;
         }
-        /*
+        
         i = 0;
         list = Utils.getJSON("vehicles");
 
@@ -97,6 +97,6 @@ public class Service
                 folder = item["folder"].Value,
             });
             i++;
-        }*/
+        }
     }
 }
