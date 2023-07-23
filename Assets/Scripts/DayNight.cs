@@ -41,12 +41,9 @@ public class DayNight : MonoBehaviour
             // Next day
             ++dayCount;
             currentMin = 0;
-            Debug.Log("NextDay!");
         }
 
         var min = currentMin % 60;
         var hrs = currentMin / 60;
-
-        Debug.Log("Next minute! " + hrs + "   :   " + min);
     }
 }
